@@ -6,6 +6,58 @@
 
 Formato: data · o que mudou · porquê · IDs afectados.
 
+## 2026-09-02 — v0.13 · Ver antes de a aldeia ver
+
+Sem alterações ao produto. Muda a forma de publicar desenho. **`D-018`**.
+
+**Ramo `desenho`**, permanente, publicado pelo Cloudflare em
+`https://desenho.a-eira.pages.dev` e autorizado no `ORIGENS` do Worker.
+Alterações ao `codigo/` passam por lá, vêem-se no telemóvel, e só depois vão ao
+`main`. Alterações só a `.md` continuam a ir directas.
+
+**Um artefacto de pré-visualização foi considerado e rejeitado:** essas páginas
+não podem chamar servidores de fora, e o portal vai buscar tudo ao Worker —
+ver-se-ia a casca sem notícias, sem agenda e sem carta, que é onde o desenho
+mais se nota. E aprovava-se uma adaptação do ficheiro, não o ficheiro.
+
+**É a mitigação que faltava ao R-17**, e estreou-se no mesmo dia: a linguagem
+visual da v0.12 foi vista em pré-visualização antes de ir para o ar.
+
+## 2026-09-02 — v0.12 · Desenho
+
+O portal funcionava e parecia barato. Cinco mudanças de acabamento, nenhuma de
+estrutura, conteúdo ou comportamento. **`D-017`**.
+
+**A letra passa a ser a do telemóvel** — `system-ui`: SF no iPhone, Roboto no
+Android, Segoe UI no Windows. A Verdana era o sinal mais forte de página
+antiga. Sem letra descarregada: seria um pedido de rede a mais, contra o
+ADR-007.
+
+**Os ícones da navegação deixam de ser emoji.** Doze SVG escritos dentro do
+próprio ficheiro, monocromáticos, a herdar a cor do tema. Os emoji mudavam de
+desenho conforme o telemóvel e ficavam coloridos mesmo no tema de alto
+contraste. O separador activo passa a ter uma pastilha atrás do ícone em vez do
+botão todo pintado.
+
+**Linha fina e sombra ténue** em vez de moldura de 2 px, em cartões, avisos,
+notícias, eventos, telefones e campos. Cantos maiores e mais espaço por dentro.
+
+**Menos cor a competir.** Os blocos de mês deixam o verde e passam a maiúsculas
+pequenas; os títulos de secção trocam o sublinhado grosso por uma barra curta
+da cor da marca.
+
+**O tema de alto contraste mantém tudo grosso e sem sombra**, em regras
+próprias. Quem o usa precisa de limites visíveis.
+
+Medido outra vez, porque a letra mudou e com ela todas as larguras: em 320 e
+375 px, nos três tamanhos de letra, sem nada cortado na barra e sem a página
+andar para o lado. `R-17`.
+
+`sw.js` → **v5**.
+
+**Por fazer:** junção dos separadores Notícias + Agenda, que mexe na navegação
+e no ADR-012 e abre ADR próprio.
+
 ## 2026-09-02 — v0.11 · O portal aguenta a letra grande
 
 Três avarias de desenho, encontradas a medir o portal publicado num ecrã de

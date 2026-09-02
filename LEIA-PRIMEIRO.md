@@ -18,8 +18,8 @@ telefones úteis e sugestões.
 
 | Campo | Valor |
 |---|---|
-| Versão | v0.11 |
-| Última alteração | 2026-09-02 · repositório Git, publicação automática e correcções de desenho com a letra grande |
+| Versão | v0.13 |
+| Última alteração | 2026-09-02 · repositório Git, publicação automática, correcções com a letra grande, linguagem visual nova e ramo de pré-visualização |
 | **No ar** | site `a-eira.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
 | **Código** | `github.com/VaultDweller84/aeira` · público |
 | Verificado em produção | notícias, agenda e portal servidos do repositório |
@@ -34,6 +34,7 @@ telefones úteis e sugestões.
 |---|---|---|
 | Repositório | `VaultDweller84/aeira` | `https://github.com/VaultDweller84/aeira` |
 | Site (Pages) | `a-eira` | `https://a-eira.pages.dev` |
+| Pré-visualização | ramo `desenho` | `https://desenho.a-eira.pages.dev` |
 | Worker | `aeira` | `https://aeira.hugompalmeida.workers.dev` |
 | KV | `aeira-sugestoes` | ligado ao Worker como `SUGESTOES` |
 | Página de gestão | — | `…workers.dev/admin?chave=` + `CHAVE_ADMIN` |
@@ -46,8 +47,15 @@ e sugestões em silêncio, deixando as notícias a funcionar — R-14.
 
 ## Como se publica
 
-**Commit no ramo `main`.** O Cloudflare Pages constrói sozinho e põe no ar a
-pasta `codigo/`. Sem comando de construção, pasta de saída `codigo`.
+**Alteração ao `codigo/`? Passa primeiro pelo ramo `desenho`** (ADR-018):
+sobe-se para lá, vê-se em `desenho.a-eira.pages.dev` **no telemóvel** — três
+tamanhos de letra, três temas, notícias e agenda a carregar —, e só depois se
+junta ao `main`. O ramo não se apaga: o endereço só existe enquanto ele existir.
+
+**Alteração só a `.md`? Vai directa ao `main`.** Documentação não muda nada no ar.
+
+**Commit no `main`.** O Cloudflare Pages constrói sozinho e põe no ar a pasta
+`codigo/`. Sem comando de construção, pasta de saída `codigo`.
 
 Três regras que viajam com cada alteração:
 
@@ -97,6 +105,8 @@ Formato das mensagens de commit: no `README.md`.
 | 014 | **Alojamento no Cloudflare Pages, mesma conta do Worker** |
 | 015 | **Repositório Git público; publicação automática a partir do `main`** |
 | 016 | Domínio `aeira.pt`; `aldeia.pt` rejeitado por preço e por âmbito |
+| 017 | **Linguagem visual:** letra do sistema, ícones desenhados, linha fina e sombra |
+| 018 | **Desenho passa pelo ramo `desenho` antes do `main`;** artefacto rejeitado |
 
 ## Vocabulário
 
