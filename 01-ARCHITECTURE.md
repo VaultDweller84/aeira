@@ -91,22 +91,32 @@ Sem ciclos. `[F]`
 |---|---|---|
 | Cloudflare Worker | perde IA, agenda remota, notícias, sugestões | camadas de degradação; portal continua útil |
 | M-04.4 KV | perde avisos e sugestões | degradação para mailto; avisos não têm alternativa `[L]` |
-| Mantenedor único | tudo pára | R-01, por mitigar |
-| **Código num disco só** | perde-se tudo o que não estiver publicado | `[L]` repositório Git por montar |
+| Mantenedor único | tudo pára | R-01 — metade técnica resolvida pelo ADR-015; a outra metade continua |
+| ~~Código num disco só~~ | — | **resolvido a 2/9/2026:** repositório público, ADR-015 |
+| Conta Cloudflare única | site, Worker e KV caem juntos | `[L]` sem mitigação; o código está fora dela desde o ADR-015 |
 
-## Alojamento
+## Alojamento e publicação
 
-**Decidido — ver ADR-014.** Cloudflare Pages, na mesma conta do Worker.
-O requisito duro era HTTPS: sem ele não há PWA nem cache offline.
+**Decidido — ver ADR-014 (onde) e ADR-015 (como).** Cloudflare Pages, na mesma
+conta do Worker, com o código num repositório Git público. O requisito duro
+era HTTPS: sem ele não há PWA nem cache offline.
 
 | Coisa | Nome | Endereço |
 |---|---|---|
-| Site | `aeira-portal` | `https://aeira-portal.pages.dev` |
+| Repositório | `VaultDweller84/aeira` | `https://github.com/VaultDweller84/aeira` |
+| Site (Pages) | `a-eira` | `https://a-eira.pages.dev` |
 | Worker | `aeira` | `https://aeira.hugompalmeida.workers.dev` |
 | KV | `aeira-sugestoes` | ligado como `SUGESTOES` |
+| Domínio | `aeira.pt` | decidido no ADR-016, **por comprar** |
 
-Publicação por upload directo, sem Git. Cada versão nova obriga a mudar a
-`VERSAO` no `sw.js` (R-08).
+**Como se publica.** Commit no ramo `main` → o Cloudflare Pages constrói e põe
+no ar a pasta `codigo/`. Sem comando de construção. Cada alteração dentro de
+`codigo/` obriga a mudar a `VERSAO` no `sw.js` **no mesmo commit** (R-08).
+
+**O `worker.js` está fora deste caminho.** Vive em `worker/`, o Pages não lhe
+toca, e continua a ser actualizado à mão no painel do Cloudflare. Regra para
+não haver duas verdades: a alteração faz-se no ficheiro e vai a commit
+**antes** de ser colada no painel (R-16).
 
 **Acoplamento a vigiar (R-14):** o `CONFIG.API` no `index.html` aponta para o
 Worker, e a variável `ORIGENS` no Worker autoriza o site. São duas pontas do
@@ -114,5 +124,7 @@ mesmo fio. Mudar uma sem a outra deixa o portal com ar de funcionar — as
 notícias continuam a aparecer — enquanto as cartas, a agenda e as sugestões
 falham em silêncio.
 
-`[L]` Domínio próprio (`aeira.pt`) por decidir, em ADR próprio. Traz o
-primeiro custo recorrente, contra a restrição C-02.
+**Sobre a casa (R-15):** a Cloudflare está a empurrar os sites estáticos para
+os Workers e trata os Pages como o caminho antigo. O portal é HTML estático
+puro, portanto a mudança, quando vier, é configuração e não reescrita — mas é
+uma mudança que há-de vir. T-18.

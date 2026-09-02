@@ -18,28 +18,46 @@ telefones úteis e sugestões.
 
 | Campo | Valor |
 |---|---|
-| Versão | v0.9 |
-| Última alteração | 2026-09-01 · **portal publicado** |
-| **No ar** | site `aeira-portal.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
-| Verificado em produção | notícias, agenda, carta gerada pela IA de ponta a ponta |
-| Em falta | Google Calendar (T-03), teste em telemóvel (T-06), repositório Git, domínio |
+| Versão | v0.10 |
+| Última alteração | 2026-09-02 · **repositório Git e publicação automática** |
+| **No ar** | site `a-eira.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
+| **Código** | `github.com/VaultDweller84/aeira` · público |
+| Verificado em produção | notícias, agenda e portal servidos do repositório |
+| Em falta | domínio `aeira.pt` (T-17), Google Calendar (T-03), teste em telemóvel (T-06) |
 | Fase | 6/7 Publicação |
 | Bloqueio | nenhum |
 | Risco principal | R-01 mantenedor único, score 20 |
 
-## Endereços e nomes no Cloudflare
+## Endereços e nomes
 
 | Coisa | Nome | Endereço |
 |---|---|---|
-| Site (Pages) | `aeira-portal` | `https://aeira-portal.pages.dev` |
+| Repositório | `VaultDweller84/aeira` | `https://github.com/VaultDweller84/aeira` |
+| Site (Pages) | `a-eira` | `https://a-eira.pages.dev` |
 | Worker | `aeira` | `https://aeira.hugompalmeida.workers.dev` |
 | KV | `aeira-sugestoes` | ligado ao Worker como `SUGESTOES` |
 | Página de gestão | — | `…workers.dev/admin?chave=` + `CHAVE_ADMIN` |
+| Domínio | `aeira.pt` | decidido no ADR-016, **por comprar** |
 
-Ver ADR-014. **Estes dois apontam um para o outro:** o `CONFIG.API` no
-`index.html` aponta para o Worker, e a variável `ORIGENS` no Worker autoriza
-o site. Mudar um sem o outro parte cartas, agenda e sugestões em silêncio,
-deixando as notícias a funcionar — R-14.
+Ver ADR-014 (onde) e ADR-015 (como). **O site e o Worker apontam um para o
+outro:** o `CONFIG.API` no `index.html` aponta para o Worker, e a variável
+`ORIGENS` no Worker autoriza o site. Mudar um sem o outro parte cartas, agenda
+e sugestões em silêncio, deixando as notícias a funcionar — R-14.
+
+## Como se publica
+
+**Commit no ramo `main`.** O Cloudflare Pages constrói sozinho e põe no ar a
+pasta `codigo/`. Sem comando de construção, pasta de saída `codigo`.
+
+Três regras que viajam com cada alteração:
+
+1. Mexeu em `codigo/`? Muda a `VERSAO` no `sw.js` **no mesmo commit** (R-08).
+2. Mudou o produto? Muda o `CHANGELOG.md` **no mesmo commit**.
+3. Mexeu no Worker? A alteração faz-se no ficheiro `worker/worker.js` e vai a
+   commit **antes** de ser colada no painel do Cloudflare (R-16). O Pages não
+   publica o Worker.
+
+Formato das mensagens de commit: no `README.md`.
 
 ## Onde está cada coisa
 
@@ -56,7 +74,8 @@ deixando as notícias a funcionar — R-14.
 | telefones, prazos legais, romarias, fontes | `08-CONTEUDOS.md` |
 | **saber porque é que uma coisa foi feita assim** | `decisions/ADR-*.md` |
 | saber o que mudou e quando | `CHANGELOG.md` |
-| instalar e configurar tudo | `codigo/INSTALAR.md` |
+| instalar e configurar tudo | `INSTALAR.md` (raiz) |
+| entrar no repositório pela primeira vez | `README.md` |
 
 ## As decisões, em uma linha cada
 
@@ -76,13 +95,15 @@ deixando as notícias a funcionar — R-14.
 | 012 | Notícias e avisos como separador inicial |
 | 013 | Nome «A Eira»; identidade da aldeia, conteúdo do concelho |
 | 014 | **Alojamento no Cloudflare Pages, mesma conta do Worker** |
+| 015 | **Repositório Git público; publicação automática a partir do `main`** |
+| 016 | Domínio `aeira.pt`; `aldeia.pt` rejeitado por preço e por âmbito |
 
 ## Vocabulário
 
 **Câmara** = Câmara Municipal de Penamacor. **Junta** = União de Freguesias de
 Aldeia do Bispo, Águas e Aldeia de João Pires. **Worker** = o Cloudflare Worker
-(`worker.js`), publicado como `aeira`. **Portal** = o `index.html`, publicado
-como `aeira-portal`. **Avisos** = mensagens curtas da terra, escritas na
+(`worker/worker.js`), publicado como `aeira`. **Portal** = o `codigo/index.html`,
+publicado como `a-eira`. **Avisos** = mensagens curtas da terra, escritas na
 página de gestão. **Notícias** = o que a Câmara publica. **Romarias fixas** =
 as festas dentro do `index.html`, que funcionam sem rede.
 
@@ -90,12 +111,13 @@ as festas dentro do `index.html`, que funcionam sem rede.
 
 1. Decisão tomada em conversa **não existe** até estar num ADR. O histórico de
    conversas do Projecto não é conhecimento: não é lido nas sessões seguintes.
-2. Quem muda o produto muda o ficheiro afectado **e** o `CHANGELOG.md`, na
-   mesma sessão.
+2. Quem muda o produto muda o ficheiro afectado **e** o `CHANGELOG.md`, no
+   mesmo commit.
 3. ADRs não se editam para mudar de ideias — abre-se um novo que substitui o
    anterior, e marca-se o antigo como substituído.
 4. IDs (`M-`, `E-`, `F-`, `R-`, `D-`, `T-`, `K-`) nunca se reutilizam nem se
    renumeram.
 5. Este ficheiro leva sempre a data e a versão actuais.
-6. **Publicar é manual** enquanto não houver repositório: arrastar os
-   ficheiros para o Cloudflare Pages e **mudar a `VERSAO` no `sw.js`** (R-08).
+6. **O repositório manda.** Os ficheiros carregados no conhecimento do Projecto
+   Claude são uma cópia de trabalho: no fim de cada sessão que mude alguma
+   coisa, recarregam-se os que mudaram.

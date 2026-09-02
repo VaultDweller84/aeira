@@ -42,6 +42,77 @@ buscar nada de novo.
 O `worker/worker.js` **não** é publicado pelo Pages. Actualiza-se à parte, no
 painel do Cloudflare Workers.
 
+## Como se escrevem os commits
+
+Um *commit* é uma alteração gravada no histórico, com uma mensagem a dizer o
+que mudou. A mensagem é escrita uma vez e lida durante anos — normalmente por
+alguém a tentar perceber porque é que uma coisa está como está. Escreve-se para
+esse leitor, não para o próprio dia.
+
+Formato:
+
+```
+area: o que mudou
+
+Porquê, em uma ou duas frases. O que se partia sem isto, ou que
+decisão manda nisto.
+
+IDs: M-02.1, R-13
+```
+
+**Áreas** — sempre uma destas: `portal` (o `index.html`), `worker`, `pwa`
+(`sw.js`, `manifest`, `instalar.html`), `conteudo` (textos, telefones, festas),
+`docs`, `adr`, `infra` (Cloudflare, repositório, domínio).
+
+**Regras:**
+
+1. **Em português**, como o resto do dossiê.
+2. **A primeira linha diz o que mudou, no infinitivo, e cabe numa linha**
+   (60 caracteres). Sem ponto final.
+3. **O corpo diz o porquê, não o como.** O que se fez já se vê na alteração;
+   o motivo, esse, morre com quem o fez se não ficar escrito.
+4. **Um assunto por commit.** Se a mensagem precisar de um «e», são dois
+   commits.
+5. **Mudou alguma coisa em `codigo/`? O mesmo commit muda a `VERSAO` no
+   `sw.js`.** Não é um passo à parte — sem isso os telemóveis já instalados
+   continuam na versão antiga, e ninguém se queixa porque ninguém percebe.
+6. **Mudou o produto? O mesmo commit muda o `CHANGELOG.md`.** Decisão nova?
+   O ADR entra no mesmo commit.
+7. **IDs no fim**, os que existem — `M-`, `E-`, `F-`, `R-`, `D-`, `T-`, `K-`.
+   Não se inventam nem se renumeram.
+8. **Nunca escrever uma chave, uma palavra-passe ou um endereço de gestão numa
+   mensagem de commit.** Apagar o ficheiro a seguir não a tira do histórico —
+   fica lá para sempre, e num repositório público fica à vista de toda a gente.
+
+**Assim:**
+
+```
+worker: subir o limite de saída para 3000 tokens
+
+Os modelos novos gastam o orçamento a «pensar» antes de escrever, e a
+carta saía cortada a meio de uma frase. Pior do que um erro: seria
+enviada assim à Câmara.
+
+IDs: M-02.1
+```
+
+```
+pwa: esconder o botão da APK
+
+Apontava para um ficheiro que ainda não existe. Quem lá carregasse
+apanhava uma página de erro — precisamente o utilizador menos capaz
+de perceber porquê.
+
+IDs: M-03, T-12
+```
+
+**Assim não:** `update`, `correcções`, `vários ajustes`, `alterado o
+maxOutputTokens de 900 para 3000` (isso vê-se na alteração; o que falta é
+saber porquê).
+
+No GitHub pelo browser, a caixa de cima é a primeira linha e a de baixo é o
+corpo.
+
 ## Configuração
 
 Nenhuma chave, palavra-passe ou endereço secreto vive neste repositório, e não

@@ -6,6 +6,63 @@
 
 Formato: data · o que mudou · porquê · IDs afectados.
 
+## 2026-09-02 — v0.10 · **Repositório e publicação automática**
+
+O código deixou de viver num disco só. É a primeira mitigação técnica do R-01
+desde que o projecto começou.
+
+**Repositório.** `github.com/VaultDweller84/aeira`, público. Antes de subir,
+verificou-se ficheiro a ficheiro que não há uma única chave, palavra-passe ou
+endereço de gestão em nenhum ficheiro: os `A-SUA-CHAVE` do `INSTALAR.md` são
+marcadores e o `worker.js` lê tudo de `env`. Sem isso a decisão teria sido
+repositório privado. **`D-015`**, `R-01`.
+
+**Estrutura.** `worker.js` saiu de `codigo/` para `worker/`, e o `INSTALAR.md`
+e o `LEIA-ME.md` saíram de `codigo/` para a raiz. O Pages publica a pasta
+`codigo/` tal e qual, e não havia motivo para servir o Worker e as instruções
+de configuração a quem escrevesse o endereço. `publicar/` ficou fora do
+repositório. `D-015`.
+
+**Site novo.** Projecto Pages `a-eira` → `https://a-eira.pages.dev`, ligado ao
+ramo `main`, sem comando de construção, pasta de saída `codigo`. Teve de ser
+um projecto **novo**: a Cloudflare não converte um projecto de upload directo
+em projecto ligado ao Git. Criou-se ao lado, confirmou-se, e só depois se
+apagou o antigo — o portal nunca esteve em baixo. `D-014`, `D-015`.
+
+O nome `aeira` não estava disponível: `aeira.pages.dev` pertence a outra
+pessoa, com conteúdo ofensivo. Verificado antes de criar seja o que for.
+
+**Verificado em produção**, do lado de fora: `a-eira.pages.dev` serve o portal
+e o `instalar.html`; as notícias trazem 12 itens do Município e a agenda mostra
+as romarias fixas e os eventos da Câmara pela ordem certa. Como ambas vêm do
+Worker, isto prova que o `ORIGENS` ficou bem.
+
+**`ORIGENS`.** Passou a `https://a-eira.pages.dev`, e o endereço antigo saiu
+quando o `aeira-portal` foi apagado. `R-14`.
+
+**Convenção de commits**, fixada no `README.md`: `área: o que mudou`, linha em
+branco, o porquê, IDs no fim. Duas regras não são de estilo — mexer em
+`codigo/` obriga a mudar a `VERSAO` no `sw.js` no mesmo commit, e mudar o
+produto obriga a mexer neste ficheiro no mesmo commit. `R-08`, `D-015`.
+
+**Domínio decidido:** `aeira.pt`, por comprar. O `aldeia.pt` foi verificado e
+rejeitado: está à venda por 2 800 USD e, mesmo de graça, contraria o ADR-013 —
+um domínio genérico promete um serviço nacional de aldeias e apaga a
+identidade que o nome «A Eira» carrega. **`D-016`**.
+
+**Riscos novos:** R-15 (Cloudflare Pages em fim de vida — a Cloudflare empurra
+os estáticos para os Workers) e R-16 (`worker.js` do repositório diferente do
+que está a correr, porque o Worker continua a ser actualizado à mão).
+O R-08 desceu de 8 para 6 e o R-01 mantém o score mas perdeu a metade técnica.
+
+**Documentação:** `README.md` novo (porta de entrada do repositório, com a
+convenção de commits), `.gitignore` novo. Actualizados `01-ARCHITECTURE.md`,
+`05-ROADMAP.md`, `06-RISKS.md` e `LEIA-PRIMEIRO.md`.
+
+**Por fazer:** comprar o `aeira.pt` (T-17), o calendário Google (T-03), o teste
+real em telemóvel (T-06). O `INSTALAR.md` ainda descreve a publicação por
+upload manual e precisa de uma revisão numa próxima sessão.
+
 ## 2026-09-01 — v0.9 · **No ar**
 
 O portal deixou de ser um ficheiro no disco. Fase 1 do roadmap fechada,

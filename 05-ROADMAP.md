@@ -1,5 +1,5 @@
 > **A Eira** · portal da Aldeia de João Pires, concelho de Penamacor.
-> Ficheiro `05-ROADMAP.md` — tarefas T-01 a T-16 priorizadas por RICE.
+> Ficheiro `05-ROADMAP.md` — tarefas T-01 a T-18 priorizadas por RICE.
 > Decisões em `decisions/ADR-*.md`. Mapa em `LEIA-PRIMEIRO.md`.
 
 # 05 — Roadmap
@@ -10,18 +10,23 @@ Esforço em horas-pessoa.
 
 ## Fase 1 — Pôr no ar (agora)
 
-| ID | Tarefa | R | I | C | E | RICE | Dono |
+| ID | Tarefa | R | I | C | E | RICE | Estado |
 |---|---|---|---|---|---|---|---|
-| T-01 | Escolher alojamento HTTPS e publicar os ficheiros | 200 | 3 | 1,0 | 2 | **300** | Hugo |
-| T-02 | Publicar o Worker e definir as variáveis | 200 | 3 | 0,9 | 1,5 | **360** | Hugo |
-| T-03 | Criar o Google Calendar público e ligar `CALENDARIO_ICS` | 150 | 2 | 0,9 | 0,5 | **540** | Hugo |
-| T-04 | Criar o KV, ligar `SUGESTOES`, definir `CHAVE_ADMIN` | 200 | 2 | 1,0 | 0,5 | **800** | Hugo |
-| T-05 | Chave do fornecedor de IA (Gemini ou Groq) | 100 | 2 | 0,9 | 0,5 | **360** | Hugo |
-| T-06 | Testar com uma queixa real do grupo de Facebook | 200 | 3 | 0,8 | 1 | **480** | Hugo |
+| T-01 | Escolher alojamento HTTPS e publicar os ficheiros | 200 | 3 | 1,0 | 2 | **300** | ✔ 1/9 |
+| T-02 | Publicar o Worker e definir as variáveis | 200 | 3 | 0,9 | 1,5 | **360** | ✔ 1/9 |
+| T-03 | Criar o Google Calendar público e ligar `CALENDARIO_ICS` | 150 | 2 | 0,9 | 0,5 | **540** | por fazer |
+| T-04 | Criar o KV, ligar `SUGESTOES`, definir `CHAVE_ADMIN` | 200 | 2 | 1,0 | 0,5 | **800** | ✔ 1/9 |
+| T-05 | Chave do fornecedor de IA (Gemini ou Groq) | 100 | 2 | 0,9 | 0,5 | **360** | ✔ 1/9 |
+| T-06 | Testar com uma queixa real do grupo de Facebook | 200 | 3 | 0,8 | 1 | **480** | por fazer |
+| T-17 | **Comprar o `aeira.pt` e ligá-lo ao Pages** (ADR-016) | 200 | 3 | 0,9 | 1 | **540** | por fazer |
 
 **Critério de aceitação da Fase 1:** um telemóvel de terceiro abre o portal
 pelo domínio, instala-o no ecrã principal, gera uma carta com o assistente,
 vê um aviso publicado nos 10 minutos anteriores, e tudo isto sem instruções.
+
+**T-17 antes da T-09.** O que se diz a uma população que aponta endereços em
+papel não se desdiz. E ao ligar o domínio há que acrescentar `https://aeira.pt`
+ao `ORIGENS` do Worker — R-14.
 
 ## Fase 2 — Não morrer (primeiro mês) — **a fase que decide o projecto**
 
@@ -45,11 +50,22 @@ publicar, e K-08 (dias sem avisos) nunca acima de 7.
 | T-14 | Verificar trimestralmente se o robô da Câmara ainda traz itens | 200 | 2 | 1,0 | 0,25 | **1600** |
 | T-15 | Política de retenção: apagar sugestões tratadas | 20 | 2 | 1,0 | 0,5 | **80** |
 | T-16 | Alargar o guia com o que aparecer nas sugestões | 100 | 2 | 0,6 | 4 | **30** |
+| T-18 | **Avaliar a migração dos Pages para os Workers** (R-15) | 200 | 1 | 0,5 | 3 | **33** |
+
+**T-18 não é urgente e não se faz por antecipação.** O portal é HTML estático
+puro, portanto a migração é configuração e não reescrita. O sinal para a fazer
+é a Cloudflare anunciar descontinuação ou a opção de criar projectos Pages
+desaparecer do painel. Rever de seis em seis meses.
+
+## Dívida documental
+
+- O `INSTALAR.md` ainda descreve a publicação por upload manual, que deixou de
+  existir com o ADR-015. Precisa de revisão numa próxima sessão.
 
 ## Ordem de execução recomendada
 
-T-04 → T-02 → T-05 → T-03 → T-01 → T-06 → **T-09** → T-08 → T-07 → T-13/T-14
-(rotinas) → T-11 → T-16 → T-12.
+T-17 → T-03 → T-06 → **T-09** → T-08 → T-07 → T-13/T-14 (rotinas) → T-11 →
+T-16 → T-18 → T-12.
 
 T-12 (APK) fica deliberadamente no fim: RICE mais baixo de toda a lista e é a
 tarefa com risco associado (R-11).
