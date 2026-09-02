@@ -1,0 +1,21 @@
+# Nada de segredos no repositório
+.env
+.env.*
+*.key
+segredos.txt
+.dev.vars
+
+# Pacotes de upload manual — deixaram de ser precisos com o Git
+publicar/
+*.zip
+
+# Cloudflare / Node
+.wrangler/
+node_modules/
+dist/
+.vscode/
+
+# Windows / macOS
+Thumbs.db
+desktop.ini
+.DS_Store
