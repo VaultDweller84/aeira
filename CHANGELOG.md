@@ -6,6 +6,41 @@
 
 Formato: data · o que mudou · porquê · IDs afectados.
 
+## 2026-09-02 — v0.11 · O portal aguenta a letra grande
+
+Três avarias de desenho, encontradas a medir o portal publicado num ecrã de
+telemóvel nos três tamanhos de letra. Nenhuma dava erro; todas atingiam
+exactamente quem aumenta a letra por não ver bem.
+
+**A página andava para o lado.** No tamanho maior, o conteúdo ficava mais largo
+do que o ecrã: Notícias 496 px, Telefones 483, Agenda 432, contra 375 do ecrã.
+A culpa era de palavras que não partem — sobretudo emails como
+`cspenamacor@ulscb.min-saude.pt`. Uma linha resolve: `overflow-wrap:break-word`
+no `body`. `M-01`, **`R-17`**.
+
+**Os nomes na barra de baixo saíam cortados.** Seis botões a 63 px com
+`overflow:hidden`: no tamanho médio perdia-se o «Números», no maior o
+«Notícias», «Agenda», «Números» e «Sugerir». O nome do separador passou a ter
+um tecto de crescimento (`clamp`) e deixou de ser cortado. `M-01.7`, `R-17`.
+
+**O cabeçalho comia o primeiro ecrã** — 37% no tamanho normal, 60% no maior. No
+telemóvel, o título e o subtítulo passam a crescer menos do que o texto que se
+lê, e a língua e as opções ficam na mesma linha. Passou a 21% e 26%. O rótulo
+«Língua» saiu: os botões dizem «Português» e «English». `M-01.7`, `R-17`.
+
+**Princípio que fica escrito:** o botão de letra grande existe para o texto que
+se lê crescer, não a mobília. Cabeçalho, barra e botões crescem menos.
+
+`sw.js` → **v4**.
+
+**Risco novo:** R-17, regressão silenciosa de desenho com a letra grande. O
+`06-RISKS.md` passa a ter as três medidas a verificar antes de publicar, com os
+números de antes e depois.
+
+**Por decidir:** modernização visual (letra de sistema, ícones desenhados,
+menos molduras) e junção dos separadores Notícias + Agenda. Ficou acordado o
+princípio; falta o ADR e o trabalho.
+
 ## 2026-09-02 — v0.10 · **Repositório e publicação automática**
 
 O código deixou de viver num disco só. É a primeira mitigação técnica do R-01

@@ -1,5 +1,5 @@
 > **A Eira** · portal da Aldeia de João Pires, concelho de Penamacor.
-> Ficheiro `06-RISKS.md` — registo de riscos R-01 a R-16.
+> Ficheiro `06-RISKS.md` — registo de riscos R-01 a R-17.
 > Decisões em `decisions/ADR-*.md`. Mapa em `LEIA-PRIMEIRO.md`.
 
 # 06 — Riscos
@@ -24,6 +24,7 @@ Escala 1-5. Score = Probabilidade × Impacto.
 | R-14 | **Desalinhamento entre `CONFIG.API` e `ORIGENS`.** Mudar o endereço do site ou do Worker sem mudar o outro | 3 | 3 | **9** | Anotado nos ADR-014 e ADR-015; verificar as duas pontas em cada mudança de endereço | cartas, agenda e sugestões param **mas as notícias continuam** | Hugo |
 | R-15 | **Cloudflare Pages em fim de vida.** A Cloudflare está a empurrar os sites estáticos para os Workers e trata os Pages como caminho antigo; um dia fecha a porta e o portal tem de mudar de casa | 3 | 3 | **9** | O site é HTML estático puro — a migração é configuração, não reescrita; T-18 avalia quando | anúncio de descontinuação; opção de criar Pages desaparece do painel | Hugo |
 | R-16 | **`worker.js` do repositório diferente do que está a correr.** O Pages publica `codigo/` sozinho, mas o Worker continua a ser actualizado à mão no painel — uma correcção feita no painel e não no repositório perde-se; uma feita no repositório e não no painel nunca chega ao ar | 3 | 4 | **12** | Regra: qualquer alteração ao Worker faz-se no ficheiro e vai a commit **antes** de ser colada no painel | comportamento do Worker que não se explica pelo código do repositório | Hugo |
+| R-17 | **Regressão silenciosa de desenho com a letra grande.** Qualquer alteração ao CSS pode voltar a cortar nomes na barra, empurrar o conteúdo para fora do ecrã ou encher o primeiro ecrã de mobília — e nada disto dá erro | 4 | 3 | **12** | Verificar as três medidas antes de publicar (ver secção abaixo) | página anda para o lado; nomes cortados na barra; conteúdo só abaixo da dobra | Hugo |
 
 ## Top 3 por score
 
@@ -48,6 +49,30 @@ Escala 1-5. Score = Probabilidade × Impacto.
 - **Código público** (ADR-015): aceite. Sem segredos no repositório, o que
   fica exposto é a lógica do Worker. Em troca, o projecto deixa de depender de
   uma pessoa e de um disco.
+
+## Como se verifica o desenho antes de publicar (R-17)
+
+Três medidas, num ecrã estreito (320 px é o pior caso realista) e nos três
+tamanhos de letra. Nenhuma delas dá erro visível — todas passam por «está
+publicado».
+
+1. **A página não anda para o lado.** A largura do documento tem de ser igual à
+   do ecrã em todos os separadores. Se for maior, há uma palavra que não parte —
+   quase sempre um email ou um endereço.
+2. **Nenhum nome da barra de baixo está cortado.** Seis botões num ecrã de
+   telemóvel dão cerca de 60 px cada; o nome tem de caber nesses 60 px no
+   tamanho de letra maior.
+3. **O cabeçalho não come o primeiro ecrã.** Referência: abaixo de um terço da
+   altura, no tamanho de letra maior.
+
+Medições de 2/9/2026, antes e depois da correcção, num ecrã de 375 px:
+
+| Medida | Antes (letra grande) | Depois |
+|---|---|---|
+| Largura da página — Notícias | 496 px num ecrã de 375 | 375 |
+| Largura da página — Telefones | 483 px | 375 |
+| Nomes cortados na barra | 4 de 6 | nenhum |
+| Cabeçalho no primeiro ecrã | 60% | 26% |
 
 ## Nota sobre o R-13, que deixou de ser hipótese
 
