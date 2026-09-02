@@ -20,6 +20,8 @@
  *    ORIGENS         domínios autorizados, por vírgulas
  *                    ex.: https://aldeiajoaopires.pt
  *    CALENDARIO_ICS  endereço .ics do Google Calendar público
+ *                    (horas convertidas para hora de Portugal; eventos
+ *                     que se repetem são desdobrados — ver dataICS)
  *    ROBO_CAMARA     'sim' para ler a agenda e as notícias da Câmara,
  *                    'nao' para desligar as duas
  *    CHAVE_ADMIN     palavra-passe da página de gestão   [Secret]
@@ -194,15 +196,154 @@ function valorICS(s) {
     .replace(/\\;/g, ';').replace(/\\\\/g, '\\').trim();
 }
 
+/* ------------------------------------------------------------------
+   Datas do Google Calendar — fuso horário e eventos que se repetem.
+
+   O ficheiro .ics escreve as horas de três maneiras:
+     DTSTART:20260908T190000Z            → hora universal (UTC)
+     DTSTART;TZID=Europe/Lisbon:20260908T200000  → hora de um fuso
+     DTSTART;VALUE=DATE:20260908         → dia inteiro, sem hora
+   Ler os algarismos tal e qual dava uma hora errada no Verão — e num
+   evento depois da meia-noite, o dia errado. Ver 06-RISKS.md, R-03.
+------------------------------------------------------------------ */
+const FUSO_PORTAL = 'Europe/Lisbon';
+
+function partesNoFuso(ms, zona) {
+  const f = new Intl.DateTimeFormat('en-CA', {
+    timeZone: zona, year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hour12: false
+  });
+  const p = {};
+  for (const x of f.formatToParts(new Date(ms))) p[x.type] = x.value;
+  return { ano: +p.year, mes: +p.month, dia: +p.day,
+           hora: p.hour === '24' ? 0 : +p.hour, minuto: +p.minute };
+}
+
+function comoData(p) {
+  const dois = n => String(n).padStart(2, '0');
+  return { data: `${p.ano}-${dois(p.mes)}-${dois(p.dia)}`,
+           hora: `${dois(p.hora)}:${dois(p.minuto)}` };
+}
+
+/* hora de parede num fuso → instante universal (duas passagens chegam) */
+function instanteDeParede(ano, mes, dia, hora, minuto, zona) {
+  const querido = Date.UTC(ano, mes - 1, dia, hora, minuto);
+  let ms = querido;
+  for (let i = 0; i < 2; i++) {
+    const p = partesNoFuso(ms, zona);
+    ms += querido - Date.UTC(p.ano, p.mes - 1, p.dia, p.hora, p.minuto);
+  }
+  return ms;
+}
+
 function dataICS(valor, parametros) {
-  /* devolve { data:'2026-09-08', hora:'19:00'|null } */
+  /* devolve { data:'2026-09-08', hora:'19:00'|null } já em hora de Portugal */
   const so = String(valor || '').trim();
-  const diaInteiro = /VALUE=DATE/i.test(parametros || '') || /^\d{8}$/.test(so);
+  const par = String(parametros || '');
+  const diaInteiro = /VALUE=DATE/i.test(par) || /^\d{8}$/.test(so);
   const m = so.match(/^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2}))?/);
   if (!m) return null;
+
   const data = `${m[1]}-${m[2]}-${m[3]}`;
   if (diaInteiro || !m[4]) return { data, hora: null };
+
+  const ano = +m[1], mes = +m[2], dia = +m[3], hora = +m[4], minuto = +m[5];
+  const tz = par.match(/TZID=([^;:]+)/i);
+
+  try {
+    if (/Z$/i.test(so)) {
+      return comoData(partesNoFuso(Date.UTC(ano, mes - 1, dia, hora, minuto), FUSO_PORTAL));
+    }
+    if (tz && tz[1] && tz[1] !== FUSO_PORTAL) {
+      const ms = instanteDeParede(ano, mes, dia, hora, minuto, tz[1]);
+      return comoData(partesNoFuso(ms, FUSO_PORTAL));
+    }
+  } catch {
+    /* fuso desconhecido ou Intl em falta: fica a hora escrita, sem converter.
+       Um evento à hora errada é mau; um portal sem agenda é pior (ADR-007). */
+  }
   return { data, hora: `${m[4]}:${m[5]}` };
+}
+
+/* ------------------------------------------------------------------
+   Eventos que se repetem (RRULE).
+   Suporta o que uma aldeia usa: DIÁRIO, SEMANAL (com dias da semana),
+   MENSAL e ANUAL, com INTERVAL, COUNT, UNTIL e EXDATE.
+   Não suporta BYMONTHDAY, BYSETPOS e afins — quem precisar disso cria
+   os eventos um a um, e é melhor assim do que inventar datas.
+------------------------------------------------------------------ */
+const DIAS_SEMANA = { SU:0, MO:1, TU:2, WE:3, TH:4, FR:5, SA:6 };
+const MAX_OCORRENCIAS = 60;
+
+const emDias = iso => Date.UTC(+iso.slice(0,4), +iso.slice(5,7) - 1, +iso.slice(8,10));
+const paraISO = ms => new Date(ms).toISOString().slice(0, 10);
+
+function ocorrencias(dataInicial, rrule, excluidas, hoje, diasAdiante) {
+  const janelaFim = paraISO(emDias(hoje) + (diasAdiante || 400) * 86400000);
+  const fora = new Set(excluidas || []);
+  const guarda = d => d >= hoje && d <= janelaFim && !fora.has(d);
+
+  if (!rrule) return guarda(dataInicial) ? [dataInicial] : [];
+
+  const r = {};
+  for (const par of String(rrule).split(';')) {
+    const [k, v] = par.split('=');
+    if (k) r[k.toUpperCase()] = (v || '').toUpperCase();
+  }
+  const freq = r.FREQ;
+  if (!freq) return guarda(dataInicial) ? [dataInicial] : [];
+
+  const intervalo = Math.max(1, parseInt(r.INTERVAL || '1', 10) || 1);
+  const conta = r.COUNT ? parseInt(r.COUNT, 10) : null;
+  const ate = r.UNTIL ? `${r.UNTIL.slice(0,4)}-${r.UNTIL.slice(4,6)}-${r.UNTIL.slice(6,8)}` : null;
+  const dias = r.BYDAY ? r.BYDAY.split(',').map(d => DIAS_SEMANA[d.slice(-2)]).filter(n => n !== undefined) : [];
+
+  const todas = [];
+  const inicio = emDias(dataInicial);
+
+  const juntar = ms => {
+    const d = paraISO(ms);
+    if (ate && d > ate) return false;
+    if (d >= dataInicial) todas.push(d);
+    return true;
+  };
+
+  if (freq === 'DAILY') {
+    for (let i = 0; todas.length < MAX_OCORRENCIAS * 3; i++) {
+      const ms = inicio + i * intervalo * 86400000;
+      if (paraISO(ms) > janelaFim) break;
+      if (!juntar(ms)) break;
+    }
+  } else if (freq === 'WEEKLY') {
+    const base = dias.length ? dias : [new Date(inicio).getUTCDay()];
+    const domingoDaSemana = inicio - new Date(inicio).getUTCDay() * 86400000;
+    for (let semana = 0; todas.length < MAX_OCORRENCIAS * 3; semana++) {
+      const ms0 = domingoDaSemana + semana * intervalo * 7 * 86400000;
+      if (paraISO(ms0) > janelaFim) break;
+      let parar = false;
+      for (const d of base.slice().sort((a, b) => a - b)) {
+        if (!juntar(ms0 + d * 86400000)) { parar = true; break; }
+      }
+      if (parar) break;
+    }
+  } else if (freq === 'MONTHLY' || freq === 'YEARLY') {
+    const passo = freq === 'MONTHLY' ? intervalo : intervalo * 12;
+    const a0 = +dataInicial.slice(0,4), m0 = +dataInicial.slice(5,7), d0 = +dataInicial.slice(8,10);
+    for (let i = 0; todas.length < MAX_OCORRENCIAS * 3; i++) {
+      const total = (m0 - 1) + i * passo;
+      const ano = a0 + Math.floor(total / 12), mes = (total % 12) + 1;
+      const ms = Date.UTC(ano, mes - 1, d0);
+      /* 31 de Fevereiro não existe: salta-se em vez de escorregar para Março */
+      if (new Date(ms).getUTCDate() !== d0) continue;
+      if (paraISO(ms) > janelaFim) break;
+      if (!juntar(ms)) break;
+    }
+  } else {
+    return guarda(dataInicial) ? [dataInicial] : [];
+  }
+
+  const limitadas = conta ? todas.slice(0, conta) : todas;
+  return limitadas.filter(guarda).slice(0, MAX_OCORRENCIAS);
 }
 
 async function lerGoogleCalendar(url) {
@@ -222,18 +363,27 @@ async function lerGoogleCalendar(url) {
     if (linha === 'BEGIN:VEVENT') { actual = {}; continue; }
     if (linha === 'END:VEVENT') {
       if (actual && actual.titulo && actual.inicio) {
-        eventos.push({
-          id: 'gcal:' + (actual.uid || actual.titulo).slice(0, 60),
-          titulo: actual.titulo,
-          descricao: actual.descricao || '',
-          local: actual.local || '',
-          mapa: actual.local || '',
-          data: actual.inicio.data,
-          hora: actual.inicio.hora,
-          dataFim: actual.fim ? actual.fim.data : null,
-          fonte: 'agenda',
-          link: actual.url || ''
-        });
+        /* um evento que se repete dá origem a uma entrada por ocorrência */
+        const ontem = paraISO(Date.now() - 86400000);
+        const inicio = actual.inicio.data;
+        const datas = ocorrencias(inicio, actual.rrule, actual.exdatas, ontem, 400);
+        const duracao = actual.fim && actual.fim.data
+          ? Math.round((emDias(actual.fim.data) - emDias(inicio)) / 86400000)
+          : null;
+        for (const d of datas) {
+          eventos.push({
+            id: 'gcal:' + (actual.uid || actual.titulo).slice(0, 60) + (datas.length > 1 ? ':' + d : ''),
+            titulo: actual.titulo,
+            descricao: actual.descricao || '',
+            local: actual.local || '',
+            mapa: actual.local || '',
+            data: d,
+            hora: actual.inicio.hora,
+            dataFim: duracao === null ? null : paraISO(emDias(d) + duracao * 86400000),
+            fonte: 'agenda',
+            link: actual.url || ''
+          });
+        }
       }
       actual = null; continue;
     }
@@ -253,6 +403,12 @@ async function lerGoogleCalendar(url) {
     else if (campo === 'URL')         actual.url = valorICS(corpo).slice(0, 400);
     else if (campo === 'DTSTART')     actual.inicio = dataICS(corpo, params);
     else if (campo === 'DTEND')       actual.fim = dataICS(corpo, params);
+    else if (campo === 'RRULE')       actual.rrule = corpo.trim();
+    else if (campo === 'EXDATE') {
+      actual.exdatas = (actual.exdatas || []).concat(
+        corpo.split(',').map(v => { const d = dataICS(v.trim(), params); return d && d.data; }).filter(Boolean)
+      );
+    }
   }
   return eventos;
 }
