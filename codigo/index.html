@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html lang="pt-PT" data-tema="sereno">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B5E8C">
+<title>A Eira — Aldeia de João Pires</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icone-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="icone-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="A Eira">
+<meta name="description" content="A Eira — o portal da Aldeia de João Pires. Avisos da terra, agenda do concelho de Penamacor e ajuda para tratar de assuntos com a Câmara. Village notices, what is on locally, and help with Câmara matters.">
+<style>
+/* =========================================================
+   TEMAS — cada tema é só um conjunto de cores.
+   Para criar um tema novo, copie um bloco e mude os valores.
+   ========================================================= */
+:root, :root[data-tema="sereno"]{
+  --bg:#F2F6FA; --card:#FFFFFF; --ink:#16232E; --ink-soft:#4B5D6B;
+  --marca:#1B5E8C; --marca-esc:#12435F; --marca-txt:#FFFFFF;
+  --apoio:#2E7D5B; --apoio-esc:#215C43;
+  --link:#12557E; --linha:#D3E0EA;
+  --alerta-bg:#FFF4DA; --alerta-borda:#E3BE6A; --alerta-txt:#7A5600;
+  --perigo-bg:#FDE7E4; --perigo-borda:#E0968A; --perigo-txt:#9B2E1C;
+  --info-bg:#E6F0F7; --info-borda:#A5C6DD; --info-txt:#12557E;
+  --chip:#E8EFF5; --rodape:#16232E; --rodape-txt:#D6E3EC;
+}
+:root[data-tema="terra"]{
+  --bg:#FBF6EC; --card:#FFFFFF; --ink:#2B2118; --ink-soft:#5B4A38;
+  --marca:#B4441F; --marca-esc:#8A3216; --marca-txt:#FFFFFF;
+  --apoio:#4F6B2A; --apoio-esc:#3B5020;
+  --link:#1F5B87; --linha:#E2D6C0;
+  --alerta-bg:#FFF3D6; --alerta-borda:#E8C86A; --alerta-txt:#7A5A00;
+  --perigo-bg:#FFE7E1; --perigo-borda:#E39880; --perigo-txt:#8A3216;
+  --info-bg:#E8F1F8; --info-borda:#A9C9E0; --info-txt:#1F5B87;
+  --chip:#F0E7D6; --rodape:#2B2118; --rodape-txt:#E8DCC8;
+}
+:root[data-tema="contraste"]{
+  --bg:#000000; --card:#000000; --ink:#FFFFFF; --ink-soft:#EAEAEA;
+  --marca:#FFD400; --marca-esc:#FFD400; --marca-txt:#000000;
+  --apoio:#FFD400; --apoio-esc:#FFD400;
+  --link:#7FD4FF; --linha:#FFFFFF;
+  --alerta-bg:#000000; --alerta-borda:#FFD400; --alerta-txt:#FFD400;
+  --perigo-bg:#000000; --perigo-borda:#FF6B57; --perigo-txt:#FF8C7A;
+  --info-bg:#000000; --info-borda:#7FD4FF; --info-txt:#7FD4FF;
+  --chip:#1A1A1A; --rodape:#000000; --rodape-txt:#FFFFFF;
+}
+
+/* =========================================================
+   BASE — escrito primeiro para telemóvel
+   ========================================================= */
+*{box-sizing:border-box}
+html{font-size:var(--base,19px);-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Verdana","Segoe UI",Tahoma,Arial,sans-serif;
+  font-size:1rem;line-height:1.6;
+  padding-bottom:5.6rem; /* espaço para a barra de baixo */
+  -webkit-font-smoothing:antialiased;
+}
+:root[data-tema="contraste"] .card,
+:root[data-tema="contraste"] .box{border-width:3px}
+.wrap{width:100%;margin:0 auto;padding:0 .9rem}
+
+/* ---- Cabeçalho ---- */
+header.top{background:var(--marca);color:var(--marca-txt);padding:.9rem 0 .8rem}
+header.top h1{margin:0;font-size:1.3rem;line-height:1.25}
+header.top .sub{margin:.35rem 0 0;font-size:.9rem;opacity:.95}
+.controlos{margin-top:.8rem;display:flex;flex-direction:column;gap:.5rem}
+.grupoctl{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.grupoctl > .rot{font-size:.8rem;opacity:.95;flex:0 0 auto;min-width:5.2rem}
+.controlos button{
+  background:transparent;color:var(--marca-txt);border:2px solid rgba(255,255,255,.65);
+  border-radius:.5rem;cursor:pointer;font-weight:700;font-family:inherit;
+  padding:.35rem .75rem;line-height:1.2;font-size:.9rem;min-height:2.4rem;
+}
+.controlos button.on{background:var(--marca-txt);color:var(--marca);border-color:var(--marca-txt)}
+.controlos button.s1{font-size:.9rem}
+details.opcoes{margin-top:.2rem}
+details.opcoes summary{
+  list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;
+  border:2px solid rgba(255,255,255,.65);border-radius:.5rem;
+  padding:.45rem .8rem;font-size:.85rem;font-weight:700;min-height:2.4rem;
+}
+details.opcoes summary::-webkit-details-marker{display:none}
+details.opcoes[open] summary{background:var(--marca-txt);color:var(--marca);border-color:var(--marca-txt)}
+details.opcoes .painel{display:flex;flex-direction:column;gap:.5rem;margin-top:.6rem}
+.controlos button.s2{font-size:1.15rem}
+.controlos button.s3{font-size:1.4rem}
+
+/* ---- Cartões de menu (só em ecrã largo) ---- */
+nav.menu{display:none}
+
+/* ---- Barra de navegação em baixo (telemóvel) ---- */
+nav.barra{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  display:grid;grid-template-columns:repeat(6,1fr);
+  background:var(--card);border-top:3px solid var(--linha);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+nav.barra button{
+  background:none;border:none;font-family:inherit;cursor:pointer;
+  padding:.45rem .1rem .5rem;color:var(--ink-soft);
+  display:flex;flex-direction:column;align-items:center;gap:.1rem;
+  font-size:.58rem;font-weight:700;line-height:1.15;min-height:3.8rem;
+  overflow:hidden;
+}
+nav.barra button .ic{font-size:1.25rem;line-height:1}
+nav.barra button.on{color:var(--marca);background:var(--chip)}
+
+/* ---- Secções ---- */
+section{padding:1.2rem 0 .5rem}
+section h2{font-size:1.35rem;margin:0 0 .5rem;line-height:1.25;
+  border-bottom:4px solid var(--marca);display:inline-block;padding-bottom:.2rem}
+.lead{font-size:.98rem;color:var(--ink-soft);margin:.5rem 0 1.1rem;max-width:44rem}
+.hidden{display:none}
+
+.box{background:var(--card);border:2px solid var(--linha);border-radius:.9rem;
+  padding:1rem;margin-bottom:1rem}
+.box h3{margin:.1rem 0 .5rem;font-size:1.1rem}
+.aviso{background:var(--alerta-bg);border:2px solid var(--alerta-borda);border-radius:.9rem;
+  padding:.9rem 1rem;margin:.9rem 0;font-size:.95rem}
+.aviso strong{color:var(--alerta-txt)}
+.urgente{background:var(--perigo-bg);border-color:var(--perigo-borda)}
+.urgente strong{color:var(--perigo-txt)}
+.nota-en{background:var(--info-bg);border:2px solid var(--info-borda);border-radius:.9rem;
+  padding:.9rem 1rem;margin:.9rem 0;font-size:.95rem}
+.nota-en strong{color:var(--info-txt)}
+a{color:var(--link)}
+
+/* ---- Formulário ---- */
+label{display:block;font-weight:700;margin:1rem 0 .3rem;font-size:1rem}
+label .dica{display:block;font-weight:400;font-size:.83rem;color:var(--ink-soft);margin-top:.1rem}
+input[type=text],input[type=email],input[type=tel],select,textarea{
+  width:100%;font-family:inherit;font-size:1.05rem;padding:.75rem .8rem;
+  border:2px solid var(--linha);border-radius:.6rem;background:var(--card);color:var(--ink);
+  min-height:3rem;
+}
+input:focus,select:focus,textarea:focus{outline:3px solid var(--marca);outline-offset:1px;border-color:var(--marca)}
+textarea{min-height:7rem;resize:vertical}
+select{cursor:pointer}
+.check{display:flex;gap:.7rem;align-items:flex-start;margin-top:.9rem;font-size:.98rem}
+.check input{width:2rem;height:2rem;margin-top:.1rem;flex:0 0 auto;accent-color:var(--marca)}
+
+.botoes{display:flex;flex-direction:column;gap:.6rem;margin-top:1.2rem}
+.btn{font-family:inherit;font-size:1.05rem;font-weight:700;padding:.9rem 1.1rem;
+  border-radius:.7rem;border:2px solid transparent;cursor:pointer;text-decoration:none;
+  display:block;text-align:center;width:100%;min-height:3.2rem}
+.btn-principal{background:var(--marca);color:var(--marca-txt);border-color:var(--marca)}
+.btn-2{background:var(--card);color:var(--ink);border-color:var(--linha)}
+.btn-verde{background:var(--apoio);color:var(--marca-txt);border-color:var(--apoio)}
+:root[data-tema="contraste"] .btn-verde,
+:root[data-tema="contraste"] .btn-principal{color:#000}
+
+#textoCarta{white-space:pre-wrap;background:var(--card);border:2px dashed var(--linha);
+  border-radius:.7rem;padding:1rem;font-size:.97rem;line-height:1.65;margin-top:1rem}
+.copiado{color:var(--apoio-esc);font-weight:700;margin-top:.6rem;font-size:.98rem}
+.privacidade{font-size:.85rem;color:var(--ink-soft);margin:.8rem 0 0;line-height:1.5}
+.estado{margin:.9rem 0 0;font-size:.95rem;font-weight:700;padding:.7rem .85rem;border-radius:.6rem;
+  background:var(--info-bg);border:2px solid var(--info-borda);color:var(--info-txt)}
+.estado.mau{background:var(--alerta-bg);border-color:var(--alerta-borda);color:var(--alerta-txt)}
+.btn[disabled]{opacity:.65;cursor:progress}
+.girar{display:inline-block;animation:gira 1s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.girar{animation:none}}
+:root[data-tema="contraste"] .copiado{color:var(--marca)}
+
+/* ---- Glossário ---- */
+.procura{margin-bottom:.8rem}
+.procura input{margin-bottom:.6rem}
+.filtros{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.filtro{font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;background:var(--card);
+  border:2px solid var(--linha);border-radius:2rem;padding:.5rem .9rem;color:var(--ink-soft);min-height:2.6rem}
+.filtro.on{background:var(--marca);border-color:var(--marca);color:var(--marca-txt)}
+details.item{background:var(--card);border:2px solid var(--linha);border-radius:.8rem;margin-bottom:.6rem;overflow:hidden}
+details.item[open]{border-color:var(--marca)}
+details.item summary{cursor:pointer;padding:.9rem 1rem;font-size:1.02rem;font-weight:700;
+  list-style:none;display:flex;gap:.6rem;align-items:baseline;min-height:3rem}
+details.item summary::-webkit-details-marker{display:none}
+details.item summary::before{content:"▸";color:var(--marca);font-size:1.15rem;flex:0 0 auto}
+details.item[open] summary::before{content:"▾"}
+.corpo{padding:.8rem 1rem 1rem;border-top:2px solid var(--linha)}
+.corpo ol,.corpo ul{padding-left:1.3rem;margin:.5rem 0}
+.corpo li{margin-bottom:.45rem}
+.corpo p{margin:.5rem 0}
+.tag{display:inline-block;font-size:.78rem;font-weight:700;background:var(--chip);color:var(--ink-soft);
+  border-radius:1rem;padding:.15rem .7rem;margin-bottom:.5rem}
+.semresultado{padding:1.3rem;text-align:center;color:var(--ink-soft);font-size:1rem}
+
+/* ---- Notícias e avisos ---- */
+.aviso-terra{background:var(--card);border:2px solid var(--linha);border-left-width:8px;
+  border-radius:.8rem;padding:.9rem 1rem;margin-bottom:.7rem}
+.aviso-terra.cat-urgente{border-left-color:var(--perigo-borda);background:var(--perigo-bg)}
+.aviso-terra.cat-servico{border-left-color:var(--marca)}
+.aviso-terra.cat-comunidade{border-left-color:var(--apoio)}
+.aviso-terra.cat-luto{border-left-color:var(--ink-soft)}
+.cabeca-aviso,.cabeca-noticia{display:flex;align-items:center;gap:.5rem;margin:0 0 .35rem;
+  font-size:.82rem;color:var(--ink-soft)}
+.cabeca-aviso .icone{font-size:1.15rem}
+.novo{background:var(--marca);color:var(--marca-txt);font-size:.68rem;font-weight:700;
+  border-radius:1rem;padding:.1rem .55rem;letter-spacing:.03em}
+:root[data-tema="contraste"] .novo{color:#000}
+.aviso-terra h4{margin:0 0 .25rem;font-size:1.08rem;line-height:1.35}
+.texto-aviso{margin:.3rem 0 0;font-size:.95rem;color:var(--ink-soft)}
+.noticia{display:flex;gap:.8rem;background:var(--card);border:2px solid var(--linha);
+  border-radius:.8rem;padding:.9rem;margin-bottom:.7rem;text-decoration:none;color:var(--ink);
+  align-items:flex-start}
+.noticia:hover{border-color:var(--marca)}
+.noticia .miniatura{width:5rem;height:5rem;object-fit:cover;border-radius:.5rem;flex:0 0 auto}
+.texto-noticia{flex:1;min-width:0}
+.noticia h4{margin:0 0 .3rem;font-size:1rem;line-height:1.35}
+.noticia .resumo{margin:.2rem 0;font-size:.88rem;color:var(--ink-soft)}
+.fontes{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 0}
+.fontes a{display:inline-block;border:2px solid var(--linha);border-radius:.6rem;
+  padding:.5rem .85rem;text-decoration:none;font-size:.9rem;font-weight:700;
+  color:var(--link);background:var(--card);min-height:2.6rem}
+
+/* ---- Agenda cultural ---- */
+.cabecaAgenda .aviso{margin-top:0}
+.festa{background:var(--card);border:2px solid var(--linha);border-radius:.8rem;padding:.9rem;
+  margin-bottom:.7rem;width:100%;text-align:left;font-family:inherit;font-size:1rem;
+  color:var(--ink);cursor:pointer;display:block}
+.festa:hover{border-color:var(--marca)}
+.corpo-festa{flex:1;min-width:0}
+.ver-mais{display:block;margin-top:.45rem;font-size:.85rem;font-weight:700;color:var(--link)}
+.tag.fonte-cm{background:var(--info-bg);color:var(--info-txt)}
+.tag.fonte-ag{background:var(--chip);color:var(--apoio-esc)}
+.detalhe h3{font-size:1.25rem;margin:.4rem 0 .6rem;line-height:1.3}
+.detalhe .quando{font-size:1.05rem;margin:.3rem 0}
+.detalhe .onde{margin:.3rem 0;color:var(--ink-soft)}
+.detalhe .desc{margin:.9rem 0;white-space:normal}
+.detalhe .desc.quieto{color:var(--ink-soft);font-style:italic}
+.detalhe .foto{width:100%;height:auto;border-radius:.6rem;margin:.8rem 0;border:2px solid var(--linha)}
+.voltar{margin-bottom:1rem;width:auto;display:inline-block}
+.festa.destaque{border-color:var(--apoio);border-width:3px}
+.cabeca{display:flex;gap:.8rem;align-items:flex-start}
+.data{flex:0 0 4.4rem;background:var(--apoio);color:var(--marca-txt);border-radius:.55rem;
+  text-align:center;padding:.45rem .25rem;font-weight:700;line-height:1.2}
+:root[data-tema="contraste"] .data{color:#000}
+.data .dia{display:block;font-size:1.35rem}
+.data .dia.pequeno{font-size:.78rem;line-height:1.3}
+.data .mes{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.04em}
+.festa h4{margin:0 0 .15rem;font-size:1.05rem;line-height:1.3}
+.festa p{margin:.1rem 0;font-size:.92rem;color:var(--ink-soft)}
+.mapa{display:inline-flex;align-items:center;gap:.4rem;margin-top:.6rem;
+  font-size:.9rem;font-weight:700;text-decoration:none;color:var(--link);
+  border:2px solid var(--linha);border-radius:.6rem;padding:.5rem .8rem;min-height:2.6rem}
+.mesbloco{margin:1.5rem 0 .7rem;font-size:1.12rem;color:var(--apoio-esc);
+  border-bottom:3px solid var(--linha);padding-bottom:.25rem}
+:root[data-tema="contraste"] .mesbloco{color:var(--marca)}
+
+/* ---- Telefones ---- */
+.tel{background:var(--card);border:2px solid var(--linha);border-radius:.7rem;padding:.85rem 1rem;margin-bottom:.55rem}
+.tel .quem{font-weight:700;font-size:1rem;display:block}
+.tel .quem small{display:block;font-weight:400;font-size:.85rem;color:var(--ink-soft);margin-top:.15rem}
+.tel a.num{display:inline-block;margin-top:.5rem;font-size:1.25rem;font-weight:700;color:var(--link);
+  text-decoration:none;border-bottom:3px solid var(--linha)}
+.tel .mapa{margin-top:.5rem;margin-left:.6rem}
+.emergencia{background:var(--marca);color:var(--marca-txt);border-color:var(--marca-esc)}
+.emergencia .quem small{color:var(--marca-txt);opacity:.9}
+.emergencia a.num{color:var(--marca-txt);border-color:rgba(255,255,255,.55)}
+.emergencia .mapa{color:var(--marca-txt);border-color:rgba(255,255,255,.55)}
+:root[data-tema="contraste"] .emergencia{background:#000;border-color:var(--marca)}
+:root[data-tema="contraste"] .emergencia .quem,
+:root[data-tema="contraste"] .emergencia .quem small{color:var(--marca)}
+:root[data-tema="contraste"] .emergencia a.num{color:var(--marca);border-color:var(--marca)}
+:root[data-tema="contraste"] .emergencia .mapa{color:var(--marca);border-color:var(--marca)}
+
+footer{background:var(--rodape);color:var(--rodape-txt);margin-top:2rem;padding:1.5rem 0;font-size:.9rem}
+footer a{color:var(--rodape-txt)}
+:root[data-tema="contraste"] footer{border-top:3px solid var(--marca)}
+
+/* =========================================================
+   ECRÃS MAIORES
+   ========================================================= */
+@media (min-width:40rem){
+  html{font-size:var(--base,20px)}
+  .wrap{max-width:44rem;padding:0 1.2rem}
+  header.top{padding:1.3rem 0 1.1rem}
+  header.top h1{font-size:1.7rem}
+  header.top .sub{font-size:1rem}
+  .controlos{flex-direction:row;flex-wrap:wrap;gap:.5rem 1.6rem;align-items:center}
+  .grupoctl > .rot{min-width:0}
+  details.opcoes{margin-top:0}
+  details.opcoes summary{display:none}
+  details.opcoes .painel{display:flex;flex-direction:row;flex-wrap:wrap;gap:.5rem 1.6rem;margin-top:0}
+  .botoes{flex-direction:row;flex-wrap:wrap}
+  .btn{width:auto;display:inline-block}
+  .procura{display:flex;gap:.6rem;align-items:center}
+  .procura input{margin-bottom:0;flex:1 1 16rem}
+  .procura .btn{flex:0 0 auto}
+  .tel{display:flex;flex-wrap:wrap;gap:.3rem 1rem;justify-content:space-between;align-items:center}
+  .tel .quem{flex:1 1 18rem}
+  .tel a.num{margin-top:0;font-size:1.3rem}
+}
+@media (min-width:56rem){
+  .wrap{max-width:56rem}
+  body{padding-bottom:1rem}
+  nav.barra{display:none}
+  nav.menu{display:block;padding:1.5rem 0 .3rem}
+  .menu-grid{display:grid;gap:1rem;grid-template-columns:repeat(2,1fr)}
+  .menu-card{display:flex;align-items:center;gap:.9rem;background:var(--card);
+    border:2px solid var(--linha);border-radius:1rem;padding:1.1rem 1rem;color:var(--ink);
+    cursor:pointer;text-align:left;font-family:inherit;font-size:1.1rem;font-weight:700;width:100%}
+  .menu-card.on{border-color:var(--marca);border-width:3px}
+  .menu-card .ic{font-size:2rem;line-height:1}
+  .menu-card small{display:block;font-weight:400;font-size:.85rem;color:var(--ink-soft);margin-top:.15rem}
+  section h2{font-size:1.6rem}
+  .festa{display:flex;gap:1rem;align-items:flex-start}
+  .cabeca{flex:1;gap:1rem}
+  .festa .mapa{margin-top:0;flex:0 0 auto;align-self:center}
+}
+
+@media print{
+  header.top,nav.barra,nav.menu,.botoes,footer,.filtros,.procura,.aviso,.nota-en,.mapa{display:none!important}
+  #textoCarta{border:none;padding:0;font-size:12pt}
+  body{background:#fff;color:#000;padding:0}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <h1 data-i18n="titulo"></h1>
+    <p class="sub" data-i18n="subtitulo"></p>
+    <div class="controlos">
+      <div class="grupoctl">
+        <span class="rot" data-i18n="lbl_lingua"></span>
+        <button class="lang on" id="btnPT" onclick="setLang('pt')">Português</button>
+        <button class="lang" id="btnEN" onclick="setLang('en')">English</button>
+      </div>
+      <details class="opcoes" id="opcoes">
+        <summary data-i18n="lbl_opcoes"></summary>
+        <div class="painel">
+          <div class="grupoctl">
+            <span class="rot" data-i18n="lbl_letra"></span>
+            <button class="s1" onclick="letra(19,this)">A</button>
+            <button class="s2" onclick="letra(23,this)">A</button>
+            <button class="s3" onclick="letra(28,this)">A</button>
+          </div>
+          <div class="grupoctl">
+            <span class="rot" data-i18n="lbl_tema"></span>
+            <button class="tema on" data-tema="sereno" onclick="setTema('sereno',this)" data-i18n="tema_sereno"></button>
+            <button class="tema" data-tema="terra" onclick="setTema('terra',this)" data-i18n="tema_terra"></button>
+            <button class="tema" data-tema="contraste" onclick="setTema('contraste',this)" data-i18n="tema_contraste"></button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<nav class="menu">
+  <div class="wrap">
+    <div class="menu-grid">
+      <button class="menu-card" data-alvo="carta" onclick="abrir('carta')">
+        <span class="ic">✉️</span><span data-i18n="menu1t"></span></button>
+      <button class="menu-card" data-alvo="glossario" onclick="abrir('glossario')">
+        <span class="ic">📖</span><span data-i18n="menu2t"></span></button>
+      <button class="menu-card on" data-alvo="noticias" onclick="abrir('noticias')">
+        <span class="ic">📰</span><span data-i18n="menu6t"></span></button>
+      <button class="menu-card" data-alvo="agenda" onclick="abrir('agenda')">
+        <span class="ic">🎉</span><span data-i18n="menu3t"></span></button>
+      <button class="menu-card" data-alvo="telefones" onclick="abrir('telefones')">
+        <span class="ic">☎️</span><span data-i18n="menu4t"></span></button>
+      <button class="menu-card" data-alvo="sugestoes" onclick="abrir('sugestoes')">
+        <span class="ic">💡</span><span data-i18n="menu5t"></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= CARTA ================= -->
+<section id="carta" class="wrap hidden">
+  <h2 data-i18n="carta_h2"></h2>
+  <p class="lead" data-i18n="carta_lead"></p>
+  <div class="aviso urgente" data-i18n="carta_urgente"></div>
+  <div class="nota-en hidden" id="notaEN" data-i18n="carta_nota_en"></div>
+
+  <div class="box">
+    <label for="assunto"><span data-i18n="q1"></span><span class="dica" data-i18n="q1d"></span></label>
+    <select id="assunto"></select>
+
+    <label for="nome"><span data-i18n="q2"></span><span class="dica" data-i18n="q2d"></span></label>
+    <input type="text" id="nome" data-i18n-ph="q2p" autocomplete="name">
+
+    <label for="morada"><span data-i18n="q3"></span></label>
+    <input type="text" id="morada" data-i18n-ph="q3p" autocomplete="street-address">
+
+    <label for="telefone"><span data-i18n="q4"></span><span class="dica" data-i18n="q4d"></span></label>
+    <input type="tel" id="telefone" data-i18n-ph="q4p" autocomplete="tel">
+
+    <label for="email"><span data-i18n="q5"></span><span class="dica" data-i18n="q5d"></span></label>
+    <input type="email" id="email" data-i18n-ph="q5p" autocomplete="email">
+
+    <label for="local"><span data-i18n="q6"></span><span class="dica" data-i18n="q6d"></span></label>
+    <input type="text" id="local" data-i18n-ph="q6p">
+
+    <label for="desde"><span data-i18n="q7"></span></label>
+    <input type="text" id="desde" data-i18n-ph="q7p">
+
+    <label for="descricao"><span data-i18n="q8"></span><span class="dica" data-i18n="q8d"></span></label>
+    <textarea id="descricao" data-i18n-ph="q8p"></textarea>
+
+    <div class="check"><input type="checkbox" id="junta" checked>
+      <label for="junta" style="margin:0"><span data-i18n="ck1"></span><span class="dica" data-i18n="ck1d"></span></label></div>
+    <div class="check"><input type="checkbox" id="fotos">
+      <label for="fotos" style="margin:0"><span data-i18n="ck2"></span><span class="dica" data-i18n="ck2d"></span></label></div>
+    <div class="check"><input type="checkbox" id="grupo">
+      <label for="grupo" style="margin:0"><span data-i18n="ck3"></span><span class="dica" data-i18n="ck3d"></span></label></div>
+
+    <div class="botoes">
+      <button class="btn btn-principal" id="btnGerar" onclick="gerar()" data-i18n="btn_gerar"></button>
+      <button class="btn btn-2" onclick="limpar()" data-i18n="btn_limpar"></button>
+    </div>
+    <p class="estado hidden" id="estado"></p>
+    <p class="privacidade" data-i18n="nota_privacidade"></p>
+  </div>
+
+  <div id="resultado" class="hidden">
+    <div class="box">
+      <h3 data-i18n="res_h3"></h3>
+      <p style="margin-top:0;color:var(--ink-soft)" data-i18n="res_p"></p>
+      <div class="nota-en hidden" id="resumoEN"></div>
+      <p class="privacidade" id="notaIA"></p>
+      <div id="textoCarta" contenteditable="true" spellcheck="false"></div>
+      <p class="copiado hidden" id="msgCopiado" data-i18n="msg_copiado"></p>
+      <div class="botoes">
+        <button class="btn btn-principal" onclick="copiar()" data-i18n="btn_copiar"></button>
+        <a class="btn btn-verde" id="btnEmail" href="#" data-i18n="btn_email"></a>
+        <button class="btn btn-2" onclick="window.print()" data-i18n="btn_imprimir"></button>
+      </div>
+      <div class="aviso" data-i18n="aviso_semmail"></div>
+      <div class="aviso" data-i18n="aviso_semresposta"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GLOSSÁRIO ================= -->
+<section id="glossario" class="wrap hidden">
+  <h2 data-i18n="gloss_h2"></h2>
+  <p class="lead" data-i18n="gloss_lead"></p>
+  <div class="procura">
+    <input type="text" id="busca" data-i18n-ph="busca_ph" oninput="filtrar()">
+    <button class="btn btn-2" onclick="document.getElementById('busca').value='';filtrar()" data-i18n="btn_vertudo"></button>
+  </div>
+  <div class="filtros" id="filtros"></div>
+  <div id="listaGlossario"></div>
+  <div class="semresultado hidden" id="semResultado" data-i18n="semresultado"></div>
+</section>
+
+<!-- ================= FESTAS ================= -->
+<section id="noticias" class="wrap">
+  <h2 data-i18n="not_h2"></h2>
+  <p class="lead" data-i18n="not_lead"></p>
+  <div id="listaNoticias"></div>
+  <div class="aviso" data-i18n="not_aviso"></div>
+  <h3 class="mesbloco" data-i18n="not_fontes_titulo"></h3>
+  <p class="lead" data-i18n="not_fontes_lead"></p>
+  <div class="fontes">
+    <a href="https://www.cm-penamacor.pt/autarquia/comunicacao/noticias" target="_blank" rel="noopener">Município de Penamacor</a>
+    <a href="https://www.reconquista.pt" target="_blank" rel="noopener">Reconquista</a>
+    <a href="https://www.diariodigitalcastelobranco.pt" target="_blank" rel="noopener">Diário Digital de Castelo Branco</a>
+    <a href="https://radio-covilha.pt" target="_blank" rel="noopener">Rádio Cova da Beira</a>
+  </div>
+</section>
+
+<section id="agenda" class="wrap hidden">
+  <div id="cabecaAgenda" class="cabecaAgenda">
+    <h2 data-i18n="festas_h2"></h2>
+    <p class="lead" data-i18n="festas_lead"></p>
+  </div>
+  <div id="detalheEvento" class="hidden"></div>
+  <div id="listaAgenda"></div>
+  <div class="aviso" id="avisoAgenda" data-i18n="festas_aviso"></div>
+</section>
+
+<!-- ================= SUGESTÕES ================= -->
+<section id="sugestoes" class="wrap hidden">
+  <h2 data-i18n="sug_h2"></h2>
+  <p class="lead" data-i18n="sug_lead"></p>
+  <div class="box">
+    <label for="sugTipo"><span data-i18n="sug_tipo"></span></label>
+    <select id="sugTipo">
+      <option value="melhoria" data-i18n="sug_t1"></option>
+      <option value="evento" data-i18n="sug_t2"></option>
+      <option value="erro" data-i18n="sug_t3"></option>
+      <option value="outro" data-i18n="sug_t4"></option>
+    </select>
+
+    <label for="sugTexto"><span data-i18n="sug_texto"></span><span class="dica" data-i18n="sug_texto_d"></span></label>
+    <textarea id="sugTexto" data-i18n-ph="sug_texto_p"></textarea>
+
+    <label for="sugNome"><span data-i18n="sug_nome"></span><span class="dica" data-i18n="sug_nome_d"></span></label>
+    <input type="text" id="sugNome" data-i18n-ph="sug_nome_p">
+
+    <label for="sugContacto"><span data-i18n="sug_contacto"></span><span class="dica" data-i18n="sug_contacto_d"></span></label>
+    <input type="text" id="sugContacto" data-i18n-ph="sug_contacto_p">
+
+    <div class="botoes">
+      <button class="btn btn-principal" id="btnSugerir" onclick="enviarSugestao()" data-i18n="btn_sugerir"></button>
+    </div>
+    <p class="estado hidden" id="sugEstado"></p>
+    <p class="privacidade" data-i18n="sug_privacidade"></p>
+  </div>
+  <div class="aviso" data-i18n="sug_aviso"></div>
+</section>
+
+<!-- ================= TELEFONES ================= -->
+<section id="telefones" class="wrap hidden">
+  <h2 data-i18n="tel_h2"></h2>
+  <p class="lead" data-i18n="tel_lead"></p>
+  <div id="listaTelefones"></div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p data-i18n="foot1"></p>
+    <p data-i18n="foot2"></p>
+    <p><a href="instalar.html" data-i18n="foot_instalar"></a>
+       <button class="btn btn-2 hidden" id="btnInstalar" onclick="instalarApp()"
+               style="width:auto;margin-left:.6rem;font-size:.9rem;padding:.5rem .9rem;min-height:0"
+               data-i18n="btn_instalar"></button></p>
+    <p style="opacity:.75" data-i18n="foot3"></p>
+  </div>
+</footer>
+
+<nav class="barra">
+  <button data-alvo="carta" onclick="abrir('carta')">
+    <span class="ic">✉️</span><span data-i18n="bar1"></span></button>
+  <button data-alvo="glossario" onclick="abrir('glossario')">
+    <span class="ic">📖</span><span data-i18n="bar2"></span></button>
+  <button class="on" data-alvo="noticias" onclick="abrir('noticias')">
+    <span class="ic">📰</span><span data-i18n="bar6"></span></button>
+  <button data-alvo="agenda" onclick="abrir('agenda')">
+    <span class="ic">🎉</span><span data-i18n="bar3"></span></button>
+  <button data-alvo="telefones" onclick="abrir('telefones')">
+    <span class="ic">☎️</span><span data-i18n="bar4"></span></button>
+  <button data-alvo="sugestoes" onclick="abrir('sugestoes')">
+    <span class="ic">💡</span><span data-i18n="bar5"></span></button>
+</nav>
+
+<script>
+/* =========================================================
+   CONFIGURAÇÃO — mexa só aqui
+   ---------------------------------------------------------
+   API: endereço do seu Worker no Cloudflare, SEM barra no fim.
+        Exemplo: 'https://aldeia.o-seu-nome.workers.dev'
+        O portal usa três rotas desse endereço:
+          /carta     escreve a exposição para a Câmara
+          /agenda    traz a agenda cultural do concelho
+          /sugestao  guarda as sugestões dos munícipes
+        Deixe vazio ('') e tudo continua a funcionar em modo
+        simples: carta pelo modelo, agenda só com as romarias
+        fixas, e as sugestões abrem o email da pessoa.
+   ========================================================= */
+var CONFIG = {
+  API: 'https://aeira.hugompalmeida.workers.dev', // endereço do Worker no Cloudflare
+  TEMPO_LIMITE: 25000 // milissegundos até desistir e usar o modelo
+};
+
+/* =========================================================
+   TEXTOS DA INTERFACE / INTERFACE TEXTS
+   Nomes de terras, santos e festas NÃO se traduzem.
+   ========================================================= */
+var T = {
+pt:{
+ htmlLang:'pt-PT',
+ titulo:'A Eira',
+ tituloPagina:'A Eira — Aldeia de João Pires',
+ subtitulo:'Aldeia de João Pires · concelho de Penamacor',
+ lbl_lingua:'Língua', lbl_letra:'Letra', lbl_tema:'Cores',
+ lbl_opcoes:'⚙ Letra e cores',
+ tema_sereno:'Clara', tema_terra:'Quente', tema_contraste:'Contraste',
+
+ bar1:'Queixa', bar2:'Guia', bar3:'Agenda', bar4:'Números', bar5:'Sugerir', bar6:'Notícias',
+ menu1t:'Escrever uma queixa ou pedido<small>O portal escreve a carta por si</small>',
+ menu2t:'Como se faz…<small>Passo a passo para cada assunto</small>',
+ menu3t:'Agenda cultural<small>Tudo o que se faz no concelho</small>',
+ menu4t:'Telefones úteis<small>Câmara, Junta, Bombeiros, GNR, Saúde</small>',
+ menu5t:'Sugestões<small>Diga-nos o que falta ou o que está mal</small>',
+ menu6t:'Notícias e avisos<small>O que há de novo na terra e no concelho</small>',
+ not_h2:'Notícias e avisos',
+ not_lead:'Os avisos da terra e as notícias do Município. Vale a pena espreitar todos os dias.',
+ not_a_carregar:'A ir buscar as novidades…',
+ not_falhou:'Não foi possível ir buscar as novidades agora. Sem rede, fica o que já tinha sido lido da última vez.',
+ not_avisos_titulo:'Avisos da nossa terra',
+ not_sem_avisos:'Não há avisos neste momento. Boa notícia, provavelmente.',
+ not_camara_titulo:'Notícias do Município',
+ not_sem_camara:'Sem notícias do Município de momento.',
+ not_ler:'Ler no site da Câmara →',
+ not_aviso:'<strong>Tem um aviso para dar?</strong> Corte de água, missa mudada de hora, uma máquina que não vem — diga no separador <em>Sugerir</em> ou fale com quem trata do portal, e é publicado aqui.',
+ not_fontes_titulo:'Onde mais se lê sobre o concelho',
+ not_fontes_lead:'Os jornais e rádios da região. As ligações abrem o site deles — o trabalho é dessa gente e é lá que deve ser lido.',
+ novo:'NOVO', agora:'agora mesmo', ontem:'ontem',
+ ha_min:'há {n} min', ha_horas:'há {n} horas', ha_dias:'há {n} dias',
+
+ carta_h2:'Escrever uma queixa ou pedido',
+ carta_lead:'Responda às perguntas em baixo. No fim aparece a carta já escrita, com as palavras certas, pronta a enviar por email ou a imprimir e entregar em mão.',
+ carta_urgente:'<strong>Se for uma urgência não escreva — telefone.</strong><br>Rotura de água ou falta de água: <a href="tel:963183208">963 183 208</a> (piquete, dia e noite). Incêndio, acidente ou doença grave: <a href="tel:112">112</a>.',
+ carta_nota_en:'',
+
+ q1:'1. Do que se trata?', q1d:'Escolha o assunto mais parecido com o seu caso.',
+ q2:'2. O seu nome completo', q2d:'Como está no cartão de cidadão.', q2p:'Ex.: Maria dos Santos Pires',
+ q3:'3. A sua morada', q3p:'Ex.: Rua da Fonte, n.º 12, 6090-159 Aldeia de João Pires',
+ q4:'4. O seu telemóvel ou telefone', q4d:'Para a Câmara poder falar consigo.', q4p:'Ex.: 912 345 678',
+ q5:'5. O seu email', q5d:'Se não tiver, deixe em branco.', q5p:'Ex.: maria@gmail.com',
+ q6:'6. Onde é o problema?', q6d:'Diga a rua e um sinal que qualquer pessoa reconheça.', q6p:'Ex.: Rua do Outeiro, em frente ao café',
+ q7:'7. Desde quando?', q7p:'Ex.: há cerca de três semanas',
+ q8:'8. Conte o que se passa, por palavras suas', q8d:'Não se preocupe com a maneira de escrever. Escreva como fala.',
+ q8p:'Ex.: O contentor do lixo está sempre a transbordar e o lixo fica no chão. Já apareceram ratos e o cheiro é muito mau.',
+
+ ck1:'Enviar também à Junta de Freguesia', ck1d:'Costuma ajudar: a Junta conhece bem a aldeia.',
+ ck2:'Vou juntar fotografias', ck2d:'Fotos ajudam muito. A carta passa a dizer que seguem em anexo.',
+ ck3:'Somos várias pessoas a fazer este pedido', ck3d:'Um pedido assinado por vários moradores tem mais peso.',
+
+ btn_gerar:'Escrever a minha carta', btn_limpar:'Limpar tudo',
+ btn_gerar_ocupado:'<span class="girar">⏳</span> A escrever a sua carta…',
+ estado_espera:'A escrever a sua carta. Demora alguns segundos — não feche a página.',
+ estado_falhou:'Não foi possível ligar ao assistente de escrita. A carta foi feita pelo modelo normal — está correcta e pode enviá-la à mesma.',
+ nota_privacidade:'O seu nome, morada, telefone e email <strong>não saem deste telemóvel</strong>. Para escrever a carta só é enviada a descrição do problema e o local.',
+ nota_ia:'Este texto foi redigido por um assistente automático a partir do que escreveu. <strong>Leia antes de enviar</strong> e mude o que quiser — pode escrever directamente na caixa.',
+ nota_modelo:'Texto feito a partir de um modelo. Leia antes de enviar e mude o que quiser — pode escrever directamente na caixa.',
+ res_h3:'A sua carta está pronta',
+ res_p:'Leia com calma e mude o que quiser. Depois escolha um dos botões.',
+ msg_copiado:'✔ Texto copiado. Já pode colá-lo no email.',
+ btn_copiar:'Copiar o texto', btn_email:'Enviar por email', btn_imprimir:'Imprimir',
+ aviso_semmail:'<strong>Não tem email?</strong> Carregue em <em>Imprimir</em>, assine em baixo à mão e entregue na Junta de Freguesia (às quartas-feiras, a partir das 19h30, em Aldeia de João Pires) ou na Câmara, em Penamacor. Peça sempre um papel a dizer que entregou — chama-se <em>comprovativo de entrada</em>. Guarde-o.',
+ aviso_semresposta:'<strong>E se não responderem?</strong> A lei dá à Câmara um prazo para decidir sobre um pedido formal. Se passar um mês sem qualquer resposta, volte a enviar a mesma carta a dizer «reforço do pedido enviado em [data]». Se continuar sem resposta, pode reclamar no <a href="https://www.livroreclamacoes.pt" target="_blank" rel="noopener">Livro de Reclamações Eletrónico</a> ou pedir ajuda ao <a href="https://www.provedor-jus.pt" target="_blank" rel="noopener">Provedor de Justiça</a> (é gratuito).',
+
+ gloss_h2:'Como se faz…',
+ gloss_lead:'Escreva uma palavra do seu caso — por exemplo <em>lixo</em>, <em>água</em>, <em>candeeiro</em>, <em>terreno</em> — ou carregue num dos assuntos.',
+ busca_ph:'Escreva aqui o que procura…',
+ btn_vertudo:'Ver tudo', filtro_todas:'Todos os assuntos',
+ semresultado:'Não encontrámos nada com essa palavra. Experimente uma palavra mais simples — por exemplo <em>lixo</em> em vez de <em>resíduos sólidos urbanos</em>.',
+
+ festas_h2:'Agenda cultural do concelho',
+ festas_lead:'Tudo o que se organiza no concelho, pela ordem do ano — romarias, festivais, feiras, concertos e sessões da Câmara. Carregue num evento para ver a descrição, o mapa e para o guardar na sua agenda.',
+ festas_aviso:'<strong>Organiza alguma coisa e não está aqui?</strong> Use o separador <em>Sugerir</em> e nós acrescentamos — é para isso que ele serve. A agenda oficial do Município está em <a href="https://www.cm-penamacor.pt/autarquia/comunicacao/agenda-cultural" target="_blank" rel="noopener">cm-penamacor.pt → Agenda Cultural</a>.',
+ festas_estemes:' — este mês', festas_de:' de ',
+ ver_mapa:'Ver no mapa',
+ agenda_a_carregar:'A ir buscar a agenda do concelho…',
+ agenda_falhou:'Não foi possível ir buscar a agenda do concelho. Ficam as romarias e feiras que se repetem todos os anos.',
+ agenda_sem_data:'Sem data certa',
+ fonte_camara:'Câmara Municipal', fonte_agenda:'Agenda da aldeia', fonte_fixo:'Todos os anos',
+ ver_detalhe:'Ver o evento →', voltar:'← Voltar à agenda',
+ as_horas:'às', fmt_data:'{d} de {M} de {a}',
+ fixo_quando:'Repete-se todos os anos — confirme a data antes de ir.',
+ sem_descricao:'Ainda não temos descrição deste evento.',
+ btn_mapa:'Ver no mapa', btn_agenda:'Guardar na minha agenda',
+ btn_google:'Google Agenda', btn_partilhar:'Partilhar', btn_fonte:'Ver no site da Câmara',
+ aviso_camara:'Evento publicado pelo Município de Penamacor. As datas e horas lidas automaticamente podem falhar — confirme no site da Câmara antes de sair de casa.',
+ partilha_copiada:'Copiado. Já pode colar onde quiser.',
+ btn_instalar:'📲 Instalar', foot_instalar:'📲 Como pôr isto no telemóvel',
+
+ meses:['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+ mescurto:['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'],
+ fixo_dia:'1.ª e 3.ª<br>quarta', fixo_mes:'cada mês',
+
+ sug_h2:'Sugestões e melhorias',
+ sug_lead:'Este portal é da terra e vive de quem o usa. Diga o que falta, o que está errado ou o que daria mais jeito. Lemos tudo.',
+ sug_tipo:'1. Do que se trata?',
+ sug_t1:'Uma ideia para melhorar o portal',
+ sug_t2:'Um evento que devia estar na agenda',
+ sug_t3:'Alguma coisa que está errada ou não funciona',
+ sug_t4:'Outro assunto',
+ sug_texto:'2. Escreva aqui', sug_texto_d:'Sem formalidades. Escreva como fala.',
+ sug_texto_p:'Ex.: Falta a festa dos Santos Populares da Bemposta, é sempre no fim-de-semana a seguir ao São João.',
+ sug_nome:'3. O seu nome', sug_nome_d:'Não é obrigatório.', sug_nome_p:'Ex.: Maria Pires',
+ sug_contacto:'4. Telemóvel ou email', sug_contacto_d:'Só se quiser que lhe respondam. Não é obrigatório.',
+ sug_contacto_p:'Ex.: 912 345 678',
+ btn_sugerir:'Enviar a minha sugestão',
+ sug_a_enviar:'A enviar…',
+ sug_obrigado:'✔ Recebido. Obrigado — vai ser lido por quem trata do portal.',
+ sug_falhou:'Não foi possível enviar agora. Tente daqui a pouco, ou diga no grupo do Facebook da aldeia.',
+ sug_curta:'Escreva um bocadinho mais, para se perceber o que quer dizer.',
+ sug_privacidade:'O nome e o contacto são opcionais e só servem para lhe responder. Não são publicados nem usados para mais nada.',
+ sug_aviso:'<strong>Isto não substitui uma queixa à Câmara.</strong> Se o assunto é para o Município resolver — lixo, buracos, água — use o separador <em>Queixa</em>: só assim fica registo oficial.',
+
+ tel_h2:'Telefones úteis',
+ tel_lead:'No telemóvel, basta carregar no número para ligar.',
+
+ foot1:'<strong>A Eira</strong> — a eira é onde a aldeia se junta. Este portal é feito por gente da terra, para a gente da terra. Não é um site oficial da Câmara nem da Junta.',
+ foot2:'As informações foram recolhidas do sítio oficial do <a href="https://www.cm-penamacor.pt" target="_blank" rel="noopener">Município de Penamacor</a> e de fontes públicas. Regras e prazos podem mudar: em caso de dúvida, confirme pelo telefone <a href="tel:277394106">277 394 106</a>.',
+ foot3:'Última actualização: Setembro de 2026.'
+},
+en:{
+ htmlLang:'en-GB',
+ titulo:'A Eira',
+ tituloPagina:'A Eira — Aldeia de João Pires',
+ subtitulo:'Aldeia de João Pires · concelho de Penamacor',
+ lbl_lingua:'Language', lbl_letra:'Text', lbl_tema:'Colours',
+ lbl_opcoes:'⚙ Text size and colours',
+ tema_sereno:'Light', tema_terra:'Warm', tema_contraste:'Contrast',
+
+ bar1:'Letter', bar2:'Guide', bar3:'Events', bar4:'Numbers', bar5:'Ideas', bar6:'News',
+ menu1t:'Write a complaint or request<small>The portal writes the letter for you</small>',
+ menu2t:'How to…<small>Step by step, subject by subject</small>',
+ menu3t:'What’s on<small>Everything happening in the municipality</small>',
+ menu4t:'Useful numbers<small>Câmara, Junta, fire, police, health</small>',
+ menu5t:'Suggestions<small>Tell us what is missing or wrong</small>',
+ menu6t:'News and notices<small>What is new in the village and the municipality</small>',
+ not_h2:'News and notices',
+ not_lead:'Village notices and news from the Município. Worth a look every day.',
+ not_a_carregar:'Fetching the latest…',
+ not_falhou:'Could not fetch the latest just now. With no connection, what shows is whatever was read last time.',
+ not_avisos_titulo:'Notices from the village',
+ not_sem_avisos:'No notices at the moment. Probably good news.',
+ not_camara_titulo:'News from the Município',
+ not_sem_camara:'No council news at the moment.',
+ not_ler:'Read on the Câmara website →',
+ not_aviso:'<strong>Got a notice to share?</strong> A water cut, a change of mass time, a delivery van not coming — use the <em>Ideas</em> tab or speak to whoever looks after the portal, and it gets posted here.',
+ not_fontes_titulo:'Where else the municipality is covered',
+ not_fontes_lead:'The regional papers and radio. The links open their own sites — the work is theirs and that is where it should be read.',
+ novo:'NEW', agora:'just now', ontem:'yesterday',
+ ha_min:'{n} min ago', ha_horas:'{n} hours ago', ha_dias:'{n} days ago',
+
+ carta_h2:'Write a complaint or request',
+ carta_lead:'Answer the questions below. A finished letter appears at the end, properly worded, ready to email or to print and hand in.',
+ carta_urgente:'<strong>If it is an emergency, do not write — telephone.</strong><br>Burst pipe or no water: <a href="tel:963183208">963 183 208</a> (standby crew, day and night). Fire, accident or serious illness: <a href="tel:112">112</a>.',
+ carta_nota_en:'<strong>Please note:</strong> the letter itself is written in Portuguese, because that is the language the Câmara Municipal works in — an English letter is far less likely to get a result. You will get a plain-English summary of what it says before you send it. Fill in the form in English or Portuguese, whichever you prefer; only what you write yourself in box 8 appears in your own words, so if you can manage that bit in Portuguese, do.',
+
+ q1:'1. What is it about?', q1d:'Pick the subject closest to your case.',
+ q2:'2. Your full name', q2d:'As it appears on your ID or passport.', q2p:'e.g. John Smith',
+ q3:'3. Your address', q3p:'e.g. Rua da Fonte 12, 6090-159 Aldeia de João Pires',
+ q4:'4. Your mobile or telephone', q4d:'So the Câmara can reach you.', q4p:'e.g. 912 345 678',
+ q5:'5. Your email', q5d:'Leave blank if you have none.', q5p:'e.g. john@gmail.com',
+ q6:'6. Where is the problem?', q6d:'Give the street and a landmark anyone would recognise.', q6p:'e.g. Rua do Outeiro, opposite the café',
+ q7:'7. Since when?', q7p:'e.g. for about three weeks',
+ q8:'8. Tell us what is happening, in your own words', q8d:'Do not worry about the wording. Write it as you would say it.',
+ q8p:'e.g. The rubbish bin is always overflowing and waste ends up on the ground. There are rats now and the smell is very bad.',
+
+ ck1:'Send a copy to the Junta de Freguesia too', ck1d:'Usually helps: the parish council knows the village well.',
+ ck2:'I will attach photographs', ck2d:'Photos help a great deal. The letter will say they are enclosed.',
+ ck3:'Several of us are making this request', ck3d:'A request signed by several residents carries more weight.',
+
+ btn_gerar:'Write my letter', btn_limpar:'Clear everything',
+ btn_gerar_ocupado:'<span class="girar">⏳</span> Writing your letter…',
+ estado_espera:'Writing your letter. It takes a few seconds — please do not close the page.',
+ estado_falhou:'Could not reach the writing assistant. The letter was built from the standard template instead — it is perfectly good and you can send it as it is.',
+ nota_privacidade:'Your name, address, telephone and email <strong>never leave this phone</strong>. Only the description of the problem and the location are sent, so the letter can be written.',
+ nota_ia:'This text was drafted by an automatic assistant from what you wrote. <strong>Read it before sending</strong> and change anything you like — you can type straight into the box.',
+ nota_modelo:'Text built from a standard template. Read it before sending and change anything you like — you can type straight into the box.',
+ res_h3:'Your letter is ready',
+ res_p:'Read it through and change anything you like. Then choose one of the buttons.',
+ msg_copiado:'✔ Text copied. You can now paste it into an email.',
+ btn_copiar:'Copy the text', btn_email:'Send by email', btn_imprimir:'Print',
+ aviso_semmail:'<strong>No email?</strong> Press <em>Print</em>, sign at the bottom by hand and hand it in at the Junta de Freguesia office (Wednesdays from 7.30 pm in Aldeia de João Pires) or at the Câmara Municipal in Penamacor. Always ask for a receipt of submission — a <em>comprovativo de entrada</em>. Keep it.',
+ aviso_semresposta:'<strong>And if nobody replies?</strong> The law gives the Câmara a set period to decide on a formal request. If a month passes with no reply at all, send the same letter again with the words «reforço do pedido enviado em [date]» (follow-up to the request sent on…). If there is still nothing, you can complain through the <a href="https://www.livroreclamacoes.pt" target="_blank" rel="noopener">Livro de Reclamações Eletrónico</a>, the national complaints book, or ask the <a href="https://www.provedor-jus.pt" target="_blank" rel="noopener">Provedor de Justiça</a> (the Ombudsman) for help — it is free.',
+
+ gloss_h2:'How to…',
+ gloss_lead:'Type a word about your situation — for instance <em>rubbish</em>, <em>water</em>, <em>street light</em>, <em>land</em> — or tap one of the subjects. Two words worth knowing: the <strong>Câmara Municipal</strong> is the town council in Penamacor, the <strong>Junta de Freguesia</strong> is the parish council here in the village.',
+ busca_ph:'Type what you are looking for…',
+ btn_vertudo:'Show all', filtro_todas:'All subjects',
+ semresultado:'Nothing found for that word. Try a simpler one — <em>rubbish</em> rather than <em>municipal solid waste</em>.',
+
+ festas_h2:'What’s on in the municipality',
+ festas_lead:'Everything organised in the municipality, in calendar order — feasts, festivals, markets, concerts and council events. Names stay in Portuguese so you can ask about them locally. Tap an event for the description, the map, and to save it to your calendar.',
+ festas_aviso:'<strong>Organising something that is not listed?</strong> Use the <em>Ideas</em> tab and we will add it — that is what it is for. The official council listing is at <a href="https://www.cm-penamacor.pt/autarquia/comunicacao/agenda-cultural" target="_blank" rel="noopener">cm-penamacor.pt → Agenda Cultural</a>.',
+ festas_estemes:' — this month', festas_de:' ',
+ ver_mapa:'See on map',
+ agenda_a_carregar:'Fetching what’s on in the municipality…',
+ agenda_falhou:'Could not fetch the municipal listing. What remains are the feasts and markets that recur every year.',
+ agenda_sem_data:'Date not confirmed',
+ fonte_camara:'Câmara Municipal', fonte_agenda:'Village listing', fonte_fixo:'Every year',
+ ver_detalhe:'See the event →', voltar:'← Back to the listing',
+ as_horas:'at', fmt_data:'{d} {M} {a}',
+ fixo_quando:'Recurs every year — check the date before setting off.',
+ sem_descricao:'We do not have a description for this one yet.',
+ btn_mapa:'See on map', btn_agenda:'Save to my calendar',
+ btn_google:'Google Calendar', btn_partilhar:'Share', btn_fonte:'See on the Câmara website',
+ aviso_camara:'Published by the Município de Penamacor. Dates and times are read automatically and can be wrong — check the Câmara website before setting off.',
+ partilha_copiada:'Copied. You can paste it anywhere.',
+ btn_instalar:'📲 Install', foot_instalar:'📲 How to put this on your phone',
+
+ meses:['January','February','March','April','May','June','July','August','September','October','November','December'],
+ mescurto:['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'],
+ fixo_dia:'1st &amp; 3rd<br>Wed', fixo_mes:'each month',
+
+ sug_h2:'Suggestions and improvements',
+ sug_lead:'This portal belongs to the village and lives off the people who use it. Tell us what is missing, what is wrong, or what would help. We read everything.',
+ sug_tipo:'1. What is it about?',
+ sug_t1:'An idea to improve the portal',
+ sug_t2:'An event that should be in the listing',
+ sug_t3:'Something that is wrong or does not work',
+ sug_t4:'Something else',
+ sug_texto:'2. Write it here', sug_texto_d:'No formalities. Write it as you would say it.',
+ sug_texto_p:'e.g. The Bemposta summer festival is missing — it is always the weekend after São João.',
+ sug_nome:'3. Your name', sug_nome_d:'Not required.', sug_nome_p:'e.g. John Smith',
+ sug_contacto:'4. Mobile or email', sug_contacto_d:'Only if you want a reply. Not required.',
+ sug_contacto_p:'e.g. 912 345 678',
+ btn_sugerir:'Send my suggestion',
+ sug_a_enviar:'Sending…',
+ sug_obrigado:'✔ Received. Thank you — whoever looks after the portal will read it.',
+ sug_falhou:'Could not send it just now. Try again shortly, or post in the village Facebook group.',
+ sug_curta:'Write a little more, so we can understand what you mean.',
+ sug_privacidade:'Name and contact are optional and are only used to reply to you. They are not published or used for anything else.',
+ sug_aviso:'<strong>This is not a substitute for a complaint to the Câmara.</strong> If it is something the council must fix — rubbish, potholes, water — use the <em>Letter</em> tab: that is what creates an official record.',
+
+ tel_h2:'Useful numbers',
+ tel_lead:'On a mobile, just tap the number to call.',
+
+ foot1:'<strong>A Eira</strong> — an <em>eira</em> is the threshing floor where a village gathers. This portal is made by people of the village, for the people of the village. It is not an official Câmara or Junta website.',
+ foot2:'Information gathered from the official <a href="https://www.cm-penamacor.pt" target="_blank" rel="noopener">Município de Penamacor</a> website and other public sources. Rules and deadlines change: if in doubt, ring <a href="tel:277394106">277 394 106</a> to confirm.',
+ foot3:'Last updated: September 2026.'
+}
+};
+
+var LANG='pt';
+function t(k){ return T[LANG][k]; }
+
+function letra(px,btn){
+  document.documentElement.style.setProperty('--base',px+'px');
+  var g=btn.parentNode;
+  Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+}
+function setTema(nome,btn){
+  document.documentElement.setAttribute('data-tema',nome);
+  var g=btn.parentNode;
+  Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var cores={sereno:'#1B5E8C',terra:'#B4441F',contraste:'#000000'};
+  var m=document.querySelector('meta[name=theme-color]');
+  if(m) m.setAttribute('content',cores[nome]);
+}
+function ajustarOpcoes(){
+  var d=document.getElementById('opcoes');
+  if(!d) return;
+  if(window.matchMedia('(min-width:640px)').matches) d.setAttribute('open','');
+  else d.removeAttribute('open');
+}
+window.addEventListener('resize', ajustarOpcoes);
+function abrir(id){
+  ['noticias','carta','glossario','agenda','telefones','sugestoes'].forEach(function(s){
+    document.getElementById(s).classList.toggle('hidden', s!==id);
+  });
+  document.querySelectorAll('[data-alvo]').forEach(function(b){
+    b.classList.toggle('on', b.getAttribute('data-alvo')===id);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function aplicarTextos(){
+  document.documentElement.lang=t('htmlLang');
+  document.title=t('tituloPagina')||t('titulo');
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[LANG][k]!==undefined) el.innerHTML=T[LANG][k];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(function(el){
+    var k=el.getAttribute('data-i18n-ph');
+    if(T[LANG][k]!==undefined) el.setAttribute('placeholder',T[LANG][k]);
+  });
+  document.getElementById('notaEN').classList.toggle('hidden', LANG!=='en');
+}
+function setLang(l){
+  LANG=l;
+  document.getElementById('btnPT').classList.toggle('on', l==='pt');
+  document.getElementById('btnEN').classList.toggle('on', l==='en');
+  aplicarTextos(); encherAssuntos(); desenharGlossario(); desenharNoticias(); desenharAgenda(); desenharTelefones();
+  document.getElementById('resultado').classList.add('hidden');
+}
+</script>
+
+<script>
+/* =========================================================
+   DADOS BILINGUES / BILINGUAL DATA
+   ========================================================= */
+
+var CATEGORIAS = [
+ {pt:'Lixo e ruas',        en:'Rubbish and streets'},
+ {pt:'Água e cemitério',   en:'Water and cemetery'},
+ {pt:'Obras e terrenos',   en:'Building work and land'},
+ {pt:'Apoios e saúde',     en:'Support and health'}
+];
+
+/* ---------------- ASSUNTOS DAS CARTAS ----------------
+   'linha' e 'pedido' ficam SEMPRE em português: a carta é
+   sempre escrita em português. 'resumo' é a explicação em
+   inglês do que a carta pede.
+------------------------------------------------------- */
+var ASSUNTOS = [
+ {id:'lixo',
+  pt:'Lixo — contentores cheios, sujidade ou recolha em falta',
+  en:'Rubbish — overflowing bins, mess or missed collections',
+  linha:'Recolha de resíduos e limpeza urbana',
+  pedido:'a recolha do lixo com a regularidade devida e a reposição das condições de higiene no local',
+  resumo:'asks the Câmara to collect the rubbish properly and restore hygienic conditions at the spot.'},
+ {id:'monos',
+  pt:'Móveis velhos ou electrodomésticos abandonados na rua',
+  en:'Old furniture or appliances dumped in the street',
+  linha:'Recolha de monos e resíduos volumosos',
+  pedido:'a recolha dos resíduos volumosos depositados no local',
+  resumo:'asks the Câmara to remove the bulky waste left at the spot.'},
+ {id:'ervas',
+  pt:'Ervas, mato ou lixo em ruas, caminhos e espaços públicos',
+  en:'Weeds, scrub or litter in streets, tracks and public spaces',
+  linha:'Limpeza de espaços públicos',
+  pedido:'a limpeza e corte da vegetação no local indicado',
+  resumo:'asks the Câmara to clear and cut back the vegetation at the place named.'},
+ {id:'estrada',
+  pt:'Buraco ou estrada, rua ou caminho em mau estado',
+  en:'Pothole, or a road, street or track in poor condition',
+  linha:'Reparação de via pública',
+  pedido:'a reparação do pavimento e a reposição das condições de segurança na circulação',
+  resumo:'asks the Câmara to repair the surface and make it safe to use again.'},
+ {id:'luz',
+  pt:'Candeeiro da rua fundido ou iluminação em falta',
+  en:'Street light out, or no lighting at all',
+  linha:'Iluminação pública avariada',
+  pedido:'a reparação da iluminação pública no local indicado',
+  resumo:'asks the Câmara to repair the street lighting at the place named.'},
+ {id:'agua',
+  pt:'Água — rotura, falta de água, água suja ou factura errada',
+  en:'Water — burst pipe, no supply, dirty water or a wrong bill',
+  linha:'Abastecimento de água',
+  pedido:'a resolução da situação descrita e a verificação da rede de abastecimento',
+  resumo:'asks the Câmara to sort out the problem and check the supply network.'},
+ {id:'esgoto',
+  pt:'Esgotos entupidos, cheiros ou saneamento',
+  en:'Blocked drains, smells or sewerage',
+  linha:'Saneamento e águas residuais',
+  pedido:'a desobstrução e reparação da rede de saneamento no local indicado',
+  resumo:'asks the Câmara to unblock and repair the sewer at the place named.'},
+ {id:'terreno',
+  pt:'Terreno por limpar com perigo de incêndio',
+  en:'Uncleared land posing a fire risk',
+  linha:'Falta de gestão de combustível em terreno particular',
+  pedido:'a notificação do proprietário para proceder à limpeza do terreno, nos termos da lei em vigor',
+  resumo:'asks the Câmara to serve notice on the owner to clear the land, as the law requires.'},
+ {id:'animais',
+  pt:'Cães ou gatos abandonados na aldeia',
+  en:'Stray dogs or cats in the village',
+  linha:'Animais errantes',
+  pedido:'a intervenção do Médico Veterinário Municipal e a recolha dos animais',
+  resumo:'asks for the Municipal Veterinary Officer to step in and collect the animals.'},
+ {id:'cemiterio',
+  pt:'Cemitério — sepulturas, limpeza ou taxas',
+  en:'Cemetery — graves, upkeep or fees',
+  linha:'Cemitério',
+  pedido:'o esclarecimento e resolução da situação exposta',
+  resumo:'asks the Câmara to clarify and resolve the matter set out.'},
+ {id:'agua_tarifa',
+  pt:'Pedir a tarifa social da água ou outro apoio social',
+  en:'Apply for the reduced water tariff or other social support',
+  linha:'Pedido de apoio social',
+  pedido:'a apreciação do presente pedido e a informação sobre os documentos necessários',
+  resumo:'asks the Câmara to consider the application and say which documents are needed.'},
+ {id:'obras',
+  pt:'Obras, licenças ou informação sobre urbanismo',
+  en:'Building work, permits or planning information',
+  linha:'Pedido de informação urbanística',
+  pedido:'a prestação da informação solicitada',
+  resumo:'asks the Câmara to supply the planning information requested.'},
+ {id:'outro',
+  pt:'Outro assunto (escrevo eu)',
+  en:'Something else (I will write it myself)',
+  linha:'Exposição de munícipe',
+  pedido:'a apreciação da situação exposta e a tomada das medidas que V. Exa. entender adequadas',
+  resumo:'asks the Câmara to consider the matter and take whatever action it judges appropriate.'}
+];
+
+/* ---------------- GLOSSÁRIO ---------------- */
+var GLOSSARIO = [
+/* ============ LIXO E RUAS ============ */
+{cat:0,
+ t_pt:'O lixo não é recolhido ou o contentor está sempre cheio',
+ t_en:'The rubbish is not collected, or the bin is always full',
+ k_pt:'lixo contentor caixote recolha sujidade cheiro ratos moscas',
+ k_en:'rubbish bin waste collection litter smell rats flies refuse',
+ c_pt:'<p>A recolha do lixo é da Câmara Municipal de Penamacor.</p>'+
+ '<ol><li><strong>Tire uma ou duas fotografias</strong> ao contentor e ao lixo no chão. É a prova mais forte que existe.</li>'+
+ '<li><strong>Telefone primeiro</strong> para a Câmara: <a href="tel:277394106">277 394 106</a>. Diga a rua e o que se passa. Muitas vezes resolve-se logo.</li>'+
+ '<li><strong>Se não resolverem em poucos dias, escreva.</strong> Use o botão «Escrever uma queixa ou pedido» aqui no portal — escolha o assunto do lixo.</li>'+
+ '<li><strong>Avise a Junta de Freguesia</strong> (<a href="tel:277385400">277 385 400</a>). A Junta pode insistir junto da Câmara.</li></ol>'+
+ '<p><strong>Guarde sempre uma cópia</strong> do que enviou e a data. Se tiver de insistir, é isso que faz a diferença.</p>',
+ c_en:'<p>Refuse collection is the responsibility of the Câmara Municipal, the town council.</p>'+
+ '<ol><li><strong>Take one or two photographs</strong> of the bin and of any waste on the ground. It is the strongest evidence there is.</li>'+
+ '<li><strong>Ring the Câmara first</strong>: <a href="tel:277394106">277 394 106</a>. Give the street and describe the problem. It is often sorted out there and then.</li>'+
+ '<li><strong>If nothing happens within a few days, put it in writing.</strong> Use «Write a complaint or request» on this site and pick the rubbish subject.</li>'+
+ '<li><strong>Tell the Junta de Freguesia too</strong> (<a href="tel:277385400">277 385 400</a>). They can press the Câmara on your behalf.</li></ol>'+
+ '<p><strong>Always keep a copy</strong> of what you sent and the date. If you have to chase it up, that is what makes the difference.</p>'},
+
+{cat:0,
+ t_pt:'Móveis velhos, colchões ou electrodomésticos para deitar fora',
+ t_en:'Old furniture, mattresses or appliances to get rid of',
+ k_pt:'monos monstros movel colchao frigorifico maquina sofa entulho volumoso',
+ k_en:'bulky waste furniture mattress fridge washing machine sofa rubble skip',
+ c_pt:'<p>Chamam-se <em>monos</em>. <strong>Não se põem ao pé do contentor</strong> — a Câmara faz uma recolha própria, e é gratuita.</p>'+
+ '<ol><li>Telefone à Câmara: <a href="tel:277394106">277 394 106</a>, ou escreva para <a href="mailto:secretaria.gap@cm-penamacor.pt">secretaria.gap@cm-penamacor.pt</a>.</li>'+
+ '<li>Diga o que tem para levar (por exemplo: «um colchão e duas cadeiras»), a morada e um telefone.</li>'+
+ '<li>Combinam consigo o dia. <strong>Só ponha as coisas na rua na véspera</strong> do dia combinado.</li></ol>'+
+ '<p>Deixar entulho ou móveis na rua sem combinar dá coima. Vale sempre a pena o telefonema.</p>',
+ c_en:'<p>In Portuguese these are called <em>monos</em>. <strong>Do not leave them beside the communal bin</strong> — the Câmara runs a separate collection, and it is free.</p>'+
+ '<ol><li>Ring the Câmara: <a href="tel:277394106">277 394 106</a>, or email <a href="mailto:secretaria.gap@cm-penamacor.pt">secretaria.gap@cm-penamacor.pt</a>.</li>'+
+ '<li>Say what needs taking away (for example «one mattress and two chairs»), the address and a telephone number.</li>'+
+ '<li>They will agree a day with you. <strong>Only put the items out the evening before</strong> the agreed day.</li></ol>'+
+ '<p>Leaving rubble or furniture in the street without arranging it first carries a fine. The phone call is always worth it.</p>'},
+
+{cat:0,
+ t_pt:'Ecopontos: o que se põe em cada um',
+ t_en:'Recycling banks: what goes in which one',
+ k_pt:'ecoponto reciclagem vidro papel plastico amarelo verde azul separar oleo pilhas',
+ k_en:'recycling bank glass paper plastic yellow green blue sorting oil batteries',
+ c_pt:'<ul><li><strong>Amarelo</strong> — embalagens: garrafas de plástico, pacotes de leite, latas, sacos de plástico.</li>'+
+ '<li><strong>Azul</strong> — papel e cartão: jornais, revistas, caixas de cartão (dobradas).</li>'+
+ '<li><strong>Verde</strong> — vidro: garrafas e frascos, <em>sem</em> tampas. Louça e vidro de janela <strong>não</strong> vão aqui.</li>'+
+ '<li><strong>Óleo alimentar usado</strong> — o óleo das fritadeiras não vai pelo cano abaixo (entope e polui). O Município tem recolha própria: pergunte na Câmara onde fica o oleão mais perto.</li></ul>'+
+ '<p>Pilhas velhas e lâmpadas entregam-se nas lojas que as vendem.</p>',
+ c_en:'<ul><li><strong>Yellow</strong> — packaging: plastic bottles, drinks cartons, tins, plastic bags.</li>'+
+ '<li><strong>Blue</strong> — paper and card: newspapers, magazines, cardboard boxes (flattened).</li>'+
+ '<li><strong>Green</strong> — glass: bottles and jars, <em>without</em> lids. Crockery and window glass do <strong>not</strong> go here.</li>'+
+ '<li><strong>Used cooking oil</strong> — never pour it down the sink; it blocks drains and pollutes. The Câmara collects it separately: ask where your nearest oil bank (<em>oleão</em>) is.</li></ul>'+
+ '<p>Old batteries and light bulbs go back to the shops that sell them.</p>'},
+
+{cat:0,
+ t_pt:'Ervas, mato ou lixo em ruas, caminhos e espaços públicos',
+ t_en:'Weeds, scrub or litter in streets, tracks and public spaces',
+ k_pt:'ervas mato silvas caminho rua largo jardim limpeza rocar',
+ k_en:'weeds scrub brambles track street square garden clearing mowing',
+ c_pt:'<p>Se é <strong>espaço público</strong> — rua, largo, caminho do concelho, jardim, cemitério — a limpeza é da Câmara ou da Junta.</p>'+
+ '<ol><li>Fotografe.</li>'+
+ '<li>Diga à Junta de Freguesia (<a href="tel:277385400">277 385 400</a>) — é o caminho mais rápido para assuntos pequenos da aldeia.</li>'+
+ '<li>Se for coisa grande ou se não for resolvido, escreva à Câmara pelo gerador de cartas deste portal.</li></ol>'+
+ '<p>Se o mato for de um <strong>terreno particular</strong>, veja o assunto «O terreno do vizinho está por limpar», em <em>Obras e terrenos</em>.</p>',
+ c_en:'<p>If it is <strong>public land</strong> — a street, a square, a council track, a garden, the cemetery — clearing it is down to the Câmara or the Junta de Freguesia.</p>'+
+ '<ol><li>Take a photograph.</li>'+
+ '<li>Tell the Junta de Freguesia (<a href="tel:277385400">277 385 400</a>) — the quickest route for small village matters.</li>'+
+ '<li>If it is a big job, or nothing is done, write to the Câmara using the letter writer on this site.</li></ol>'+
+ '<p>If the overgrowth is on <strong>private land</strong>, see «A neighbour’s land is uncleared» under <em>Building work and land</em>.</p>'},
+
+{cat:0,
+ t_pt:'Buraco na estrada, rua ou caminho em mau estado',
+ t_en:'Pothole, or a road, street or track in poor condition',
+ k_pt:'buraco estrada alcatrao piso calcada caminho asfalto perigo queda',
+ k_en:'pothole road surface tarmac pavement track asphalt danger fall trip',
+ c_pt:'<p>Primeiro é preciso saber de quem é a estrada:</p>'+
+ '<ul><li><strong>Ruas e caminhos dentro da aldeia e do concelho</strong> → Câmara Municipal de Penamacor.</li>'+
+ '<li><strong>Estradas nacionais</strong> (a EN 332 que passa na aldeia, por exemplo) → Infraestruturas de Portugal, mas <strong>participe à Câmara na mesma</strong>: a Câmara encaminha e fica registado.</li></ul>'+
+ '<ol><li>Fotografe o buraco com alguma coisa ao lado que dê ideia do tamanho (um pé, uma garrafa).</li>'+
+ '<li>Escreva à Câmara pelo gerador de cartas — escolha «Buraco ou estrada em mau estado».</li>'+
+ '<li><strong>Diga sempre que há perigo</strong> se houver: para quem anda a pé, para carros, para a escola. Isso faz subir a prioridade.</li></ol>'+
+ '<p>Se alguém já <strong>caiu ou teve um estrago no carro</strong>, guarde tudo (fotos, recibos, relatório do hospital): pode haver direito a indemnização.</p>',
+ c_en:'<p>First work out whose road it is:</p>'+
+ '<ul><li><strong>Streets and tracks inside the village and the municipality</strong> → the Câmara Municipal de Penamacor.</li>'+
+ '<li><strong>National roads</strong> (the EN 332 through the village, for instance) → Infraestruturas de Portugal, the national roads body. <strong>Report it to the Câmara anyway</strong>: they pass it on and it is logged.</li></ul>'+
+ '<ol><li>Photograph the hole with something beside it for scale (a foot, a bottle).</li>'+
+ '<li>Write to the Câmara using the letter writer — choose «Pothole, or a road in poor condition».</li>'+
+ '<li><strong>Always say if it is dangerous</strong> — to people on foot, to cars, to children going to school. That raises the priority.</li></ol>'+
+ '<p>If someone has already <strong>fallen or damaged a car</strong>, keep everything (photos, receipts, hospital report): there may be a right to compensation.</p>'},
+
+{cat:0,
+ t_pt:'Candeeiro da rua fundido ou iluminação em falta',
+ t_en:'Street light out, or no lighting at all',
+ k_pt:'candeeiro luz iluminacao lampada poste escuro noite',
+ k_en:'street light lamp lighting bulb pole dark night',
+ c_pt:'<p>A iluminação pública é da Câmara (a rede é da E-Redes, mas o pedido faz-se à Câmara).</p>'+
+ '<ol><li><strong>Aponte o número do poste.</strong> Está numa chapinha ou pintado no poste — é isso que permite arranjar depressa.</li>'+
+ '<li>Telefone à Câmara (<a href="tel:277394106">277 394 106</a>) ou à Junta e dê o número do poste e a rua.</li>'+
+ '<li>Se forem vários candeeiros ou já dure há semanas, escreva pelo gerador de cartas.</li></ol>',
+ c_en:'<p>Street lighting is the Câmara’s responsibility (the network belongs to E-Redes, but the request goes to the Câmara).</p>'+
+ '<ol><li><strong>Note the pole number.</strong> It is on a small plate or painted on the post — that is what gets it fixed quickly.</li>'+
+ '<li>Ring the Câmara (<a href="tel:277394106">277 394 106</a>) or the Junta de Freguesia and give the pole number and the street.</li>'+
+ '<li>If several lights are out, or it has gone on for weeks, write using the letter writer.</li></ol>'},
+
+{cat:0,
+ t_pt:'Cães ou gatos abandonados na aldeia',
+ t_en:'Stray dogs or cats in the village',
+ k_pt:'cao cadela gato animal errante abandonado canil veterinario mordeu',
+ k_en:'dog cat stray animal abandoned pound vet bite bitten',
+ c_pt:'<p>O Município tem <strong>Médico Veterinário Municipal</strong>: <a href="tel:922231473">922 231 473</a>.</p>'+
+ '<ol><li>Telefone e descreva o animal e o sítio onde costuma andar.</li>'+
+ '<li><strong>Não se aproxime</strong> de um animal assustado ou agressivo, nem tente apanhá-lo.</li>'+
+ '<li>Se alguém foi mordido: vá ao centro de saúde ou ao hospital <strong>no próprio dia</strong> e avise a GNR (<a href="tel:277394274">277 394 274</a>).</li></ol>'+
+ '<p>Se forem vários animais ou uma ninhada, escreva à Câmara pelo gerador de cartas — fica registo escrito.</p>',
+ c_en:'<p>The Câmara has a <strong>Médico Veterinário Municipal</strong> (municipal vet): <a href="tel:922231473">922 231 473</a>.</p>'+
+ '<ol><li>Ring and describe the animal and where it tends to be.</li>'+
+ '<li><strong>Do not approach</strong> a frightened or aggressive animal, and do not try to catch it.</li>'+
+ '<li>If someone has been bitten: go to the health centre or hospital <strong>the same day</strong> and tell the GNR police (<a href="tel:277394274">277 394 274</a>).</li></ol>'+
+ '<p>If there are several animals or a litter, write to the Câmara with the letter writer so there is a written record.</p>'},
+
+/* ============ ÁGUA E CEMITÉRIO ============ */
+{cat:1,
+ t_pt:'Rotura, falta de água ou água suja — o que fazer já',
+ t_en:'Burst pipe, no water or dirty water — what to do now',
+ k_pt:'agua rotura cano rebentou falta suja castanha piquete urgente',
+ k_en:'water burst pipe leak no supply dirty brown standby urgent emergency',
+ c_pt:'<div class="aviso urgente"><strong>Isto é urgente. Telefone, não escreva.</strong><br>Piquete das águas: <a href="tel:963183208">963 183 208</a> — funciona fora das horas de expediente.</div>'+
+ '<ol><li>Telefone ao piquete e diga a rua exacta e o que vê (água a correr, sem água, água escura).</li>'+
+ '<li>Se a água sair suja ou castanha, <strong>não beba nem cozinhe com ela</strong> até que digam que já pode.</li>'+
+ '<li>Se houver água a inundar terreno ou casa, tire fotografias — servem depois para um pedido de reparação.</li></ol>'+
+ '<p>Durante o horário da Câmara também pode ligar <a href="tel:277394106">277 394 106</a>.</p>',
+ c_en:'<div class="aviso urgente"><strong>This is urgent. Telephone — do not write.</strong><br>Water standby crew: <a href="tel:963183208">963 183 208</a> — operates outside office hours.</div>'+
+ '<ol><li>Ring the standby crew, give the exact street and say what you can see (water running, no supply, discoloured water).</li>'+
+ '<li>If the water runs dirty or brown, <strong>do not drink it or cook with it</strong> until you are told it is safe.</li>'+
+ '<li>If water is flooding land or a house, take photographs — you will need them for a repair claim later.</li></ol>'+
+ '<p>During office hours you can also ring <a href="tel:277394106">277 394 106</a>.</p>'},
+
+{cat:1,
+ t_pt:'Comunicar a leitura do contador da água',
+ t_en:'Sending in your water meter reading',
+ k_pt:'leitura contador agua factura conta estimada whatsapp',
+ k_en:'meter reading water bill estimate estimated whatsapp',
+ c_pt:'<p>Um funcionário do Município lê os contadores <strong>de dois em dois meses</strong>. Se não conseguir ler o seu (portão fechado, ninguém em casa), a factura vem <em>por estimativa</em> — pode vir a mais ou a menos.</p>'+
+ '<p>Pode dar a leitura você mesmo, de três maneiras:</p>'+
+ '<ul><li><strong>WhatsApp:</strong> <a href="tel:922231350">922 231 350</a> — tire uma fotografia ao contador com os números bem visíveis e envie, com o seu nome e morada. É a maneira mais simples.</li>'+
+ '<li><strong>Email:</strong> <a href="mailto:sas.info@cm-penamacor.pt">sas.info@cm-penamacor.pt</a></li>'+
+ '<li><strong>Ao balcão</strong> da Secretaria da Câmara, em Penamacor.</li></ul>'+
+ '<p><strong>Dica:</strong> dê a leitura sempre no mesmo período do mês. Assim a conta bate certo e não há surpresas.</p>',
+ c_en:'<p>A Câmara employee reads the meters <strong>every two months</strong>. If yours cannot be read (gate locked, nobody home), the bill is <em>estimated</em> — which can be too high or too low.</p>'+
+ '<p>You can send the reading in yourself, three ways:</p>'+
+ '<ul><li><strong>WhatsApp:</strong> <a href="tel:922231350">922 231 350</a> — photograph the meter with the digits clearly visible and send it with your name and address. This is the simplest way, and useful if you are away a lot.</li>'+
+ '<li><strong>Email:</strong> <a href="mailto:sas.info@cm-penamacor.pt">sas.info@cm-penamacor.pt</a></li>'+
+ '<li><strong>In person</strong> at the Câmara secretariat in Penamacor.</li></ul>'+
+ '<p><strong>Tip:</strong> send the reading at the same point each month. The account then stays accurate and there are no nasty surprises.</p>'},
+
+{cat:1,
+ t_pt:'Pagar a factura da água',
+ t_en:'Paying the water bill',
+ k_pt:'pagar factura conta agua ctt payshop multibanco tesouraria transferencia debito',
+ k_en:'pay bill water post office payshop atm treasury transfer direct debit',
+ c_pt:'<p>Pode pagar em qualquer um destes sítios:</p>'+
+ '<ul><li><strong>Tesouraria da Câmara</strong>, em Penamacor (dinheiro ou cartão).</li>'+
+ '<li><strong>Correios (CTT)</strong>.</li><li><strong>Payshop</strong> — em muitos cafés e mercearias.</li>'+
+ '<li><strong>Multibanco</strong>, com os dados que vêm na factura.</li>'+
+ '<li><strong>Débito directo</strong> — a conta é paga sozinha, todos os meses, na sua conta do banco. Pede-se na Câmara. É o que menos dá trabalho a quem tem dificuldade em deslocar-se.</li></ul>'+
+ '<p>Se a factura vier num valor estranho, <strong>não deixe passar</strong>: ligue <a href="tel:277394106">277 394 106</a> antes da data-limite e peça a verificação. Pode ser uma rotura escondida ou um erro de leitura.</p>',
+ c_en:'<p>You can pay at any of these:</p>'+
+ '<ul><li><strong>The Câmara treasury</strong> in Penamacor (cash or card).</li>'+
+ '<li><strong>The Post Office (CTT)</strong>.</li><li><strong>Payshop</strong> — available in many cafés and grocers.</li>'+
+ '<li><strong>Cash machine (Multibanco)</strong>, using the reference details printed on the bill.</li>'+
+ '<li><strong>Direct debit</strong> — the bill is paid automatically from your bank account. Arrange it at the Câmara. Much the easiest option if you are away or find travelling difficult.</li></ul>'+
+ '<p>If a bill looks wrong, <strong>do not let it go</strong>: ring <a href="tel:277394106">277 394 106</a> before the due date and ask for it to be checked. It may be a hidden leak or a misread meter.</p>'},
+
+{cat:1,
+ t_pt:'Pedir um contador de água novo',
+ t_en:'Applying for a new water meter',
+ k_pt:'contador novo ligacao agua casa contrato ramal escritura',
+ k_en:'new meter water connection house contract supply deeds',
+ c_pt:'<p>Faz-se na Secretaria da Câmara, em Penamacor. Leve consigo:</p>'+
+ '<ul><li>Cartão de cidadão (ou bilhete de identidade e número de contribuinte).</li>'+
+ '<li><strong>Documento da casa</strong> — escritura, caderneta predial ou licença de construção.</li>'+
+ '<li>Um comprovativo de morada (uma factura da luz, por exemplo).</li></ul>'+
+ '<p>Antes de ir, telefone <a href="tel:277394106">277 394 106</a> e confirme o que é preciso no seu caso — poupa-lhe uma viagem.</p>',
+ c_en:'<p>This is done at the Câmara secretariat in Penamacor. Take with you:</p>'+
+ '<ul><li>Your ID card or passport, plus your Portuguese tax number (<em>número de contribuinte</em> / NIF).</li>'+
+ '<li><strong>Proof of the property</strong> — the deeds, the land registry booklet (<em>caderneta predial</em>) or the building licence.</li>'+
+ '<li>Proof of address (an electricity bill, for instance).</li></ul>'+
+ '<p>Ring <a href="tel:277394106">277 394 106</a> before you go to confirm what is needed in your case — it saves a wasted journey.</p>'},
+
+{cat:1,
+ t_pt:'Tarifa social da água — desconto para quem tem poucos rendimentos',
+ t_en:'Reduced water tariff for households on a low income',
+ k_pt:'tarifa social agua desconto apoio reforma pensao barato',
+ k_en:'social tariff water discount support pension low income reduction',
+ c_pt:'<p>O Município tem uma <strong>tarifa social</strong>: um desconto na conta da água para famílias com menos posses.</p>'+
+ '<ol><li>Peça o boletim de candidatura na Câmara ou no site do Município.</li>'+
+ '<li>Preencha e entregue, com os documentos que pedirem.</li>'+
+ '<li>Dúvidas: <a href="tel:277394040">277 394 040</a> ou <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a>.</li></ol>'+
+ '<p>Não tem de ter vergonha de pedir: é um direito previsto no regulamento, não é um favor.</p>',
+ c_en:'<p>The Câmara operates a <strong>social tariff</strong>: a discount on the water bill for households of limited means.</p>'+
+ '<ol><li>Ask for the application form at the Câmara, or download it from the Câmara website.</li>'+
+ '<li>Fill it in and hand it in with whatever documents they ask for.</li>'+
+ '<li>Questions: <a href="tel:277394040">277 394 040</a> or <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a>.</li></ol>'+
+ '<p>There is nothing to be embarrassed about in applying: it is a right set out in the regulations, not a favour.</p>'},
+
+{cat:1,
+ t_pt:'Esgotos entupidos, cheiros ou saneamento',
+ t_en:'Blocked drains, smells or sewerage',
+ k_pt:'esgoto saneamento entupido cheiro mau fossa cano sarjeta',
+ k_en:'drain sewer blocked smell septic tank pipe gully',
+ c_pt:'<ol><li><strong>Se o entupimento é dentro da sua casa ou do seu quintal</strong>, é da sua conta — chame um canalizador.</li>'+
+ '<li><strong>Se é na rua</strong> (tampa de saneamento, cheiro à saída de uma sarjeta, esgoto a correr), é do Município: <a href="tel:277394106">277 394 106</a>, ou o piquete <a href="tel:963183208">963 183 208</a> fora de horas.</li>'+
+ '<li>Se se repetir vezes sem conta, escreva pelo gerador de cartas: um problema recorrente por escrito obriga a uma solução de fundo, não só a uma desentupidela.</li></ol>',
+ c_en:'<ol><li><strong>If the blockage is inside your house or your yard</strong>, it is your own responsibility — call a plumber.</li>'+
+ '<li><strong>If it is in the street</strong> (a manhole, a smell from a gully, sewage running), it is the Câmara’s: <a href="tel:277394106">277 394 106</a>, or the standby crew on <a href="tel:963183208">963 183 208</a> out of hours.</li>'+
+ '<li>If it keeps happening, write using the letter writer: a recurring problem set out in writing forces a proper fix rather than another quick unblocking.</li></ol>'},
+
+{cat:1,
+ t_pt:'Cemitério — sepulturas, campas, limpeza e taxas',
+ t_en:'Cemetery — graves, plots, upkeep and fees',
+ k_pt:'cemiterio campa sepultura jazigo coval taxa ossos transladacao funeral',
+ k_en:'cemetery grave plot tomb burial fee exhumation remains funeral',
+ c_pt:'<p>Os cemitérios do concelho são geridos pelo Município, com apoio da Junta de Freguesia.</p>'+
+ '<ul><li><strong>Pedir ou renovar uma sepultura, tratar de taxas, pedir a exumação (levantamento de ossadas):</strong> Secretaria da Câmara, <a href="tel:277394106">277 394 106</a>.</li>'+
+ '<li><strong>Limpeza, água, portões ou caminhos do cemitério em mau estado:</strong> comece pela Junta de Freguesia (<a href="tel:277385400">277 385 400</a>) e, se não for resolvido, escreva à Câmara.</li></ul>'+
+ '<p>Guarde sempre os recibos das taxas pagas e o nome da pessoa que o atendeu.</p>',
+ c_en:'<p>The municipality’s cemeteries are run by the Câmara, with help from the Junta de Freguesia.</p>'+
+ '<ul><li><strong>Applying for or renewing a grave, paying fees, arranging an exhumation:</strong> the Câmara secretariat, <a href="tel:277394106">277 394 106</a>.</li>'+
+ '<li><strong>Upkeep, water, gates or paths in poor condition:</strong> start with the Junta de Freguesia (<a href="tel:277385400">277 385 400</a>) and write to the Câmara if nothing is done.</li></ul>'+
+ '<p>Always keep receipts for fees paid, and note the name of the person who dealt with you.</p>'},
+
+/* ============ OBRAS E TERRENOS ============ */
+{cat:2,
+ t_pt:'Que obras posso fazer sem pedir licença à Câmara',
+ t_en:'Which work you can do without a permit',
+ k_pt:'obras licenca isento pintar telhado caiar reparar pequenas obras arranjar casa',
+ k_en:'building work permit licence exempt painting roof whitewash repairs small works',
+ c_pt:'<p>Regra geral, <strong>não precisa de licença</strong> para:</p>'+
+ '<ul><li><strong>Obras de conservação</strong> — pintar, caiar, arranjar o telhado, substituir telhas, arranjar canalização ou electricidade, sem mudar nada de fora.</li>'+
+ '<li><strong>Obras dentro de casa</strong> que não mexam com paredes-mestras nem com a fachada.</li>'+
+ '<li><strong>Arrecadações pequenas</strong> — até cerca de 2,2 metros de altura e 10 m², desde que não fiquem viradas para a rua.</li>'+
+ '<li><strong>Muros de vedação</strong> baixos, até cerca de 1,8 metros, que não confinem com a via pública.</li>'+
+ '<li><strong>Painéis solares</strong> dentro dos limites da lei.</li></ul>'+
+ '<div class="aviso"><strong>Atenção:</strong> se a casa estiver em zona de protecção de um monumento ou for um edifício classificado, <strong>precisa sempre de autorização</strong>, mesmo para obras pequenas. Em caso de dúvida, telefone antes: <a href="tel:277394106">277 394 106</a> ou <a href="mailto:serv.obras@cm-penamacor.pt">serv.obras@cm-penamacor.pt</a>. Uma pergunta antes custa cinco minutos; uma obra embargada custa muito mais.</div>',
+ c_en:'<p>As a general rule, <strong>no permit is needed</strong> for:</p>'+
+ '<ul><li><strong>Maintenance work</strong> — painting, whitewashing, repairing the roof, replacing tiles, plumbing or wiring, provided nothing changes outside.</li>'+
+ '<li><strong>Internal work</strong> that does not touch load-bearing walls or the façade.</li>'+
+ '<li><strong>Small outbuildings</strong> — up to about 2.2 m high and 10 m², so long as they do not front onto the street.</li>'+
+ '<li><strong>Boundary walls</strong> up to about 1.8 m that do not adjoin the public highway.</li>'+
+ '<li><strong>Solar panels</strong> within the limits set by law.</li></ul>'+
+ '<div class="aviso"><strong>Important:</strong> if the house sits in the protection zone of a monument, or is a listed building, <strong>you always need consent</strong>, even for small work. Much of the old village centre can fall into this category. If in any doubt, ring first: <a href="tel:277394106">277 394 106</a> or <a href="mailto:serv.obras@cm-penamacor.pt">serv.obras@cm-penamacor.pt</a>. Asking beforehand costs five minutes; a stop notice costs a great deal more.</div>'},
+
+{cat:2,
+ t_pt:'Que obras precisam de licença ou de comunicação prévia',
+ t_en:'Which work needs a permit or prior notification',
+ k_pt:'licenca obra construir ampliar janela porta piscina telhado projeto arquiteto',
+ k_en:'permit licence build extension window door swimming pool roof plans architect',
+ c_pt:'<p>Precisa de tratar do papel na Câmara <strong>antes</strong> de começar, quando a obra:</p>'+
+ '<ul><li>Mexe em paredes-mestras ou na estrutura da casa.</li>'+
+ '<li>Muda o aspecto de fora — a fachada, a cor, a forma do telhado.</li>'+
+ '<li>Abre janelas ou portas novas.</li><li>Aumenta a casa (mais área ou mais altura).</li>'+
+ '<li>Constrói uma piscina.</li>'+
+ '<li>Faz um muro virado para a rua ou mais alto do que a lei permite.</li></ul>'+
+ '<p><strong>Como se faz:</strong> os formulários estão no site do Município, em <em>Serviços Municipais → Obras e Urbanismo → Requerimentos</em>. Se não usa computador, vá à Câmara e peça o impresso ao balcão — são obrigados a ajudá-lo a preencher.</p>'+
+ '<p>Contacto: <a href="tel:277394106">277 394 106</a> · <a href="mailto:serv.obras@cm-penamacor.pt">serv.obras@cm-penamacor.pt</a></p>',
+ c_en:'<p>You must deal with the paperwork <strong>before</strong> starting when the work:</p>'+
+ '<ul><li>Touches load-bearing walls or the structure.</li>'+
+ '<li>Changes the outside appearance — façade, colour, roof shape.</li>'+
+ '<li>Creates new windows or doors.</li><li>Extends the house (more floor area or more height).</li>'+
+ '<li>Builds a swimming pool.</li>'+
+ '<li>Puts up a wall onto the street, or higher than the law allows.</li></ul>'+
+ '<p><strong>How:</strong> the forms are on the Câmara website under <em>Serviços Municipais → Obras e Urbanismo → Requerimentos</em>. If you do not use a computer, go to the Câmara offices and ask for the paper form at the counter — staff are required to help you fill it in.</p>'+
+ '<p>Contact: <a href="tel:277394106">277 394 106</a> · <a href="mailto:serv.obras@cm-penamacor.pt">serv.obras@cm-penamacor.pt</a></p>'},
+
+{cat:2,
+ t_pt:'Limpeza de terrenos — prazos e coimas',
+ t_en:'Clearing land — deadlines and fines',
+ k_pt:'limpar terreno mato faixa combustivel incendio coima prazo maio proprietario',
+ k_en:'clearing land scrub firebreak fuel management wildfire fine deadline may owner',
+ c_pt:'<p>Quem é dono, arrendatário ou usufrutuário de um terreno <strong>é obrigado por lei</strong> a cortar o mato e limpar a vegetação, todos os anos, antes do Verão.</p>'+
+ '<p><strong>Distâncias a limpar:</strong></p>'+
+ '<ul><li><strong>50 metros</strong> à volta de casas isoladas no campo.</li>'+
+ '<li><strong>100 metros</strong> à volta de povoações, parques industriais e parques de campismo.</li>'+
+ '<li><strong>10 metros</strong> à volta de construções agrícolas (palheiros, arrecadações).</li></ul>'+
+ '<p><strong>Prazo:</strong> em 2026 o prazo terminou a <strong>31 de Maio</strong> (com prolongamento até 30 de Junho em concelhos abrangidos por calamidade). <strong>O prazo muda de ano para ano</strong> — confirme sempre na Câmara ou na Junta no início da Primavera.</p>'+
+ '<p><strong>Coimas:</strong> de 150 € a 1 500 € para pessoas, podendo subir muito em casos graves. Quem fiscaliza: GNR, ICNF, a Câmara e os vigilantes da natureza.</p>'+
+ '<p>Se não conseguir limpar sozinho (idade, saúde, terreno grande), <strong>peça ajuda à Junta antes do prazo</strong> — é muito melhor do que ser notificado depois.</p>',
+ c_en:'<p>If you own, rent or hold the usufruct of land, <strong>the law requires you</strong> to cut back scrub and clear vegetation every year, before the summer. This applies to foreign owners exactly as it does to residents, whether or not you are in the country.</p>'+
+ '<p><strong>Distances to clear:</strong></p>'+
+ '<ul><li><strong>50 metres</strong> around isolated houses in the countryside.</li>'+
+ '<li><strong>100 metres</strong> around settlements, industrial estates and campsites.</li>'+
+ '<li><strong>10 metres</strong> around agricultural buildings (barns, stores).</li></ul>'+
+ '<p><strong>Deadline:</strong> in 2026 it fell on <strong>31 May</strong> (extended to 30 June in municipalities under a declared calamity). <strong>The date changes from year to year</strong> — always check with the Câmara or the Junta de Freguesia in early spring.</p>'+
+ '<p><strong>Fines:</strong> €150 to €1,500 for individuals, and much higher in serious cases. Enforcement is by the GNR police, the ICNF forestry institute, the Câmara and nature wardens.</p>'+
+ '<p>If you cannot do the work yourself — age, health, a large plot, or because you live abroad — <strong>ask the Junta de Freguesia for help well before the deadline</strong>. Far better than being served notice afterwards.</p>'},
+
+{cat:2,
+ t_pt:'O terreno do vizinho está por limpar e faz perigo',
+ t_en:'A neighbour’s land is uncleared and poses a risk',
+ k_pt:'vizinho terreno sujo mato abandonado perigo incendio dono desconhecido queixa',
+ k_en:'neighbour land overgrown abandoned danger fire unknown owner complaint',
+ c_pt:'<p>Não tem de resolver isto sozinho nem de discutir com ninguém. É a Câmara que notifica o proprietário.</p>'+
+ '<ol><li><strong>Fotografe</strong> o terreno, se possível com a sua casa ou a rua na fotografia, para se ver a distância.</li>'+
+ '<li>Escreva à Câmara pelo gerador de cartas deste portal — escolha «Terreno por limpar com perigo de incêndio».</li>'+
+ '<li>Diga a rua e, se souber, de quem é o terreno. <strong>Se não souber o dono, diga isso mesmo</strong> — a Câmara tem meios para descobrir.</li>'+
+ '<li>Se a Câmara notificar e o dono não limpar, a Câmara pode mandar limpar e cobrar-lhe a despesa.</li></ol>'+
+ '<p>Se estiverem muitos vizinhos preocupados, façam <strong>um pedido assinado por todos</strong> — no gerador de cartas há a opção «Somos várias pessoas».</p>',
+ c_en:'<p>You do not have to sort this out yourself or fall out with anyone. It is the Câmara that serves notice on the owner.</p>'+
+ '<ol><li><strong>Photograph</strong> the land, if possible with your house or the street in shot, so the distance is visible.</li>'+
+ '<li>Write to the Câmara using the letter writer — choose «Uncleared land posing a fire risk».</li>'+
+ '<li>Give the street and, if you know it, whose land it is. <strong>If you do not know the owner, say so</strong> — the Câmara has ways of finding out.</li>'+
+ '<li>If the Câmara serves notice and the owner still does nothing, it can have the land cleared and bill them for it.</li></ol>'+
+ '<p>If several neighbours are worried, submit <strong>one request signed by all of you</strong> — the letter writer has a «Several of us» option.</p>'},
+
+{cat:2,
+ t_pt:'Fazer uma queimada ou queimar mato cortado',
+ t_en:'Burning cut scrub, or burning off land',
+ k_pt:'queima queimada fogo mato lume autorizacao icnf fogueira restolho',
+ k_en:'burning fire scrub bonfire authorisation permission icnf stubble',
+ c_pt:'<p>São duas coisas diferentes, e ambas precisam de autorização:</p>'+
+ '<ul><li><strong>Queima</strong> — arder um montinho de ramos e mato cortado (até cerca de 4 m² de base e 1,3 m de altura).</li>'+
+ '<li><strong>Queimada</strong> — deitar fogo a uma área de terreno, para renovar pasto ou limpar.</li></ul>'+
+ '<p><strong>Como se pede:</strong> pela plataforma ou aplicação do ICNF, ou na Junta de Freguesia, que o pode ajudar a fazer o pedido. A resposta chega por SMS ou email.</p>'+
+ '<div class="aviso urgente"><strong>Nunca queime nada</strong> em dia de risco de incêndio elevado ou máximo, nem com vento. As coimas vão de 500 € a 5 000 € e, se o fogo se espalhar, há crime. Em caso de dúvida, ligue à linha <strong>Portugal Chama</strong>: <a href="tel:808200520">808 200 520</a> (todos os dias, das 8h às 21h).</div>'+
+ '<p><strong>Alternativa sem risco:</strong> em vez de queimar, peça à Junta informação sobre estilhaçamento ou recolha do material cortado.</p>',
+ c_en:'<p>Two different things, and both need permission:</p>'+
+ '<ul><li><strong>Queima</strong> — burning a heap of cut branches and scrub (up to roughly 4 m² at the base and 1.3 m high).</li>'+
+ '<li><strong>Queimada</strong> — setting fire to an area of land, to renew pasture or clear it.</li></ul>'+
+ '<p><strong>How to apply:</strong> through the ICNF forestry platform or app, or at the Junta de Freguesia, who can help you make the request. The answer comes by text message or email.</p>'+
+ '<div class="aviso urgente"><strong>Never burn anything</strong> on a day of high or maximum fire risk, or in wind. Fines run from €500 to €5,000, and if the fire spreads it becomes a criminal matter. If in doubt, ring the <strong>Portugal Chama</strong> line: <a href="tel:808200520">808 200 520</a> (daily, 8 am to 9 pm).</div>'+
+ '<p><strong>Safer alternative:</strong> instead of burning, ask the Junta de Freguesia about chipping or collection of the cut material.</p>'},
+
+{cat:2,
+ t_pt:'Ocupar a rua durante uma obra (andaimes, areia, contentor)',
+ t_en:'Using the street during building work (scaffolding, sand, skip)',
+ k_pt:'ocupacao via publica andaime obra areia contentor entulho estacionar rua',
+ k_en:'street occupation scaffolding building work sand skip rubble parking road',
+ c_pt:'<p>Se a obra ocupa passeio ou rua — andaimes, monte de areia, contentor de entulho, camião parado — precisa de <strong>licença de ocupação da via pública</strong>, pedida na Câmara antes de começar.</p>'+
+ '<ol><li>Peça o formulário na Câmara ou no site (<em>Obras e Urbanismo → Requerimentos</em>).</li>'+
+ '<li>Diga quantos dias vai ocupar e que espaço.</li>'+
+ '<li>Paga-se uma taxa, normalmente por metro e por dia.</li></ol>'+
+ '<p>Normalmente é o empreiteiro que trata disto — <strong>mas confirme com ele</strong>, porque a coima cai sobre o dono da obra.</p>',
+ c_en:'<p>If the work takes up pavement or road — scaffolding, a pile of sand, a skip, a lorry standing — you need a <strong>street occupation licence</strong>, applied for at the Câmara before work starts.</p>'+
+ '<ol><li>Ask for the form at the Câmara or on the website (<em>Obras e Urbanismo → Requerimentos</em>).</li>'+
+ '<li>State how many days and how much space.</li>'+
+ '<li>There is a fee, usually charged per metre per day.</li></ol>'+
+ '<p>The builder normally handles this — <strong>but check that he has</strong>, because the fine lands on the owner of the works.</p>'},
+
+/* ============ APOIOS E SAÚDE ============ */
+{cat:3,
+ t_pt:'Cartão Penamacor Social — descontos para maiores de 60 anos',
+ t_en:'Penamacor Social Card — discounts for the over-60s',
+ k_pt:'cartao social idoso 60 anos desconto piscina transporte gratis incapacidade',
+ k_en:'social card senior over 60 discount pool transport free incapacity disability',
+ c_pt:'<p>É <strong>gratuito</strong> e dá direito a descontos em serviços do Município.</p>'+
+ '<p><strong>Quem pode pedir:</strong> quem tiver <strong>60 anos ou mais</strong>, ou quem tenha atestado médico de incapacidade de 60% ou mais.</p>'+
+ '<p><strong>O que dá:</strong></p>'+
+ '<ul><li>Transporte entre freguesias <strong>de graça</strong>.</li>'+
+ '<li>25% a 50% de desconto nas piscinas, ginásio e estádio municipais.</li>'+
+ '<li>25% de desconto em termas, espectáculos culturais e publicações do Município.</li>'+
+ '<li>10% de desconto em fotocópias e impressões.</li></ul>'+
+ '<p><strong>Como pedir:</strong> preencha o formulário (pede-se na Câmara ou descarrega-se do site) e leve o cartão de cidadão e um comprovativo de morada à Unidade de Educação, Ação Social e Saúde, na Rua dos Bombeiros Voluntários, em Penamacor — de segunda a sexta, das 9h00 às 12h30 e das 14h00 às 16h00.</p>'+
+ '<p>Informações: <a href="tel:277394040">277 394 040</a> · <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a></p>',
+ c_en:'<p>It is <strong>free</strong> and gives discounts on Câmara services.</p>'+
+ '<p><strong>Who can apply:</strong> anyone <strong>aged 60 or over</strong>, or holding a certificate of medical incapacity of 60% or more.</p>'+
+ '<p><strong>What it gives:</strong></p>'+
+ '<ul><li><strong>Free</strong> transport between parishes.</li>'+
+ '<li>25–50% off the municipal pools, gym and stadium.</li>'+
+ '<li>25% off the thermal spa, cultural events and Câmara publications.</li>'+
+ '<li>10% off photocopying and printing.</li></ul>'+
+ '<p><strong>How to apply:</strong> fill in the form (available at the Câmara or from its website) and take it, with your ID and proof of address, to the Education, Social Action and Health Unit on Rua dos Bombeiros Voluntários in Penamacor — Monday to Friday, 9.00–12.30 and 14.00–16.00.</p>'+
+ '<p>Information: <a href="tel:277394040">277 394 040</a> · <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a></p>'},
+
+{cat:3,
+ t_pt:'Ajuda para pagar medicamentos (Programa abem)',
+ t_en:'Help with the cost of medicines (the abem programme)',
+ k_pt:'medicamentos farmacia abem comparticipacao remedios caro receita apoio',
+ k_en:'medicines pharmacy abem prescription chemist cost support subsidy',
+ c_pt:'<p>O Município tem protocolo com o <strong>Programa abem: Rede Solidária do Medicamento</strong>, que permite levantar na farmácia, <strong>sem pagar</strong>, os medicamentos receitados e comparticipados.</p>'+
+ '<ol><li>Fale com a Ação Social do Município: <a href="tel:277394040">277 394 040</a> ou <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a>.</li>'+
+ '<li>Explicam-lhe as condições e ajudam a preencher a candidatura.</li>'+
+ '<li>Se for aprovado, recebe um cartão que apresenta na farmácia.</li></ol>'+
+ '<p>Há também apoio do Município para <strong>outras despesas de saúde</strong> — pergunte no mesmo sítio.</p>',
+ c_en:'<p>The Câmara has an agreement with the <strong>abem: Rede Solidária do Medicamento</strong> scheme, which lets you collect prescribed, state-subsidised medicines at the pharmacy <strong>without paying</strong>.</p>'+
+ '<ol><li>Speak to the Câmara’s social action team: <a href="tel:277394040">277 394 040</a> or <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a>.</li>'+
+ '<li>They will explain the conditions and help you complete the application.</li>'+
+ '<li>If approved, you receive a card to show at the pharmacy.</li></ol>'+
+ '<p>The Câmara also helps with <strong>other health costs</strong> — ask at the same place.</p>'},
+
+{cat:3,
+ t_pt:'Apoio para arranjar a casa',
+ t_en:'Help with repairs to your home',
+ k_pt:'habitacao casa telhado obras apoio carenciado subsidio reparar arranjar',
+ k_en:'housing home roof repairs support grant low income damp',
+ c_pt:'<p>O Município tem um regulamento de apoio à habitação para famílias com dificuldades económicas — para obras de melhoria das condições da casa.</p>'+
+ '<ol><li>Peça o boletim de candidatura na Câmara.</li>'+
+ '<li>Contacto: <a href="tel:277394106">277 394 106</a> · <a href="mailto:secretaria.gap@cm-penamacor.pt">secretaria.gap@cm-penamacor.pt</a>.</li>'+
+ '<li>Junte fotografias do que está mau — telhado, humidade, casa de banho — e um orçamento, se conseguir.</li></ol>'+
+ '<p>Se não conseguir tratar disto sozinho, peça à Junta de Freguesia que o acompanhe. É para isso que lá está.</p>',
+ c_en:'<p>The Câmara has a housing support scheme for households in financial difficulty, covering work to improve living conditions.</p>'+
+ '<ol><li>Ask for the application form at the Câmara.</li>'+
+ '<li>Contact: <a href="tel:277394106">277 394 106</a> · <a href="mailto:secretaria.gap@cm-penamacor.pt">secretaria.gap@cm-penamacor.pt</a>.</li>'+
+ '<li>Include photographs of what is wrong — roof, damp, bathroom — and a builder’s estimate if you can get one.</li></ol>'+
+ '<p>If you cannot manage the paperwork alone, ask the Junta de Freguesia to help you through it. That is what they are there for.</p>'},
+
+{cat:3,
+ t_pt:'Centro de Saúde e marcação de consultas',
+ t_en:'The health centre and booking appointments',
+ k_pt:'centro saude medico consulta marcar receita enfermeiro sns analises avc',
+ k_en:'health centre doctor appointment prescription nurse sns tests stroke emergency',
+ c_pt:'<ul><li><strong>Centro de Saúde de Penamacor:</strong> <a href="tel:277390020">277 390 020</a> · telemóveis <a href="tel:935970044">935 970 044</a> e <a href="tel:933950075">933 950 075</a></li>'+
+ '<li><strong>SNS 24</strong> (dúvidas de saúde, 24 horas por dia): <a href="tel:808242424">808 24 24 24</a>. Antes de ir às urgências, ligue — poupa-lhe a viagem muitas vezes.</li>'+
+ '<li><strong>Emergência</strong> (acidente, dor no peito, falta de ar, sinais de AVC): <a href="tel:112">112</a>, sempre.</li></ul>'+
+ '<p><strong>Sinais de AVC — não espere:</strong> boca ao lado, um braço sem força, fala confusa. Ligue <a href="tel:112">112</a> e diga a hora a que começou.</p>',
+ c_en:'<ul><li><strong>Penamacor Health Centre:</strong> <a href="tel:277390020">277 390 020</a> · mobiles <a href="tel:935970044">935 970 044</a> and <a href="tel:933950075">933 950 075</a></li>'+
+ '<li><strong>SNS 24</strong> (health advice, 24 hours a day): <a href="tel:808242424">808 24 24 24</a>. English is not always available, but ring before setting off for A&amp;E — it often saves the journey.</li>'+
+ '<li><strong>Emergency</strong> (accident, chest pain, breathlessness, signs of stroke): <a href="tel:112">112</a>, always. Ask for English and they will try to connect an interpreter.</li></ul>'+
+ '<p><strong>Signs of a stroke — do not wait:</strong> face drooping on one side, weakness in one arm, slurred speech. Ring <a href="tel:112">112</a> and say what time it started.</p>'},
+
+{cat:3,
+ t_pt:'Onde pedir ajuda quando ninguém responde',
+ t_en:'Where to turn when nobody replies',
+ k_pt:'ajuda queixa reclamacao provedor idoso direitos linha apoio ninguem responde',
+ k_en:'help complaint ombudsman senior rights helpline nobody replies appeal',
+ c_pt:'<p>Se fez o pedido, esperou, insistiu e continua sem resposta:</p>'+
+ '<ul><li><strong>Linha do Cidadão Idoso</strong> (Provedor de Justiça) — gratuita, dias úteis das 9h30 às 17h30: <a href="tel:800203531">800 20 35 31</a>. Ajudam a perceber os seus direitos e a pôr a queixa no sítio certo.</li>'+
+ '<li><strong>Provedor de Justiça</strong> — <a href="https://www.provedor-jus.pt" target="_blank" rel="noopener">provedor-jus.pt</a>. É gratuito e trata de queixas contra serviços públicos, incluindo câmaras municipais.</li>'+
+ '<li><strong>Livro de Reclamações Eletrónico</strong> — <a href="https://www.livroreclamacoes.pt" target="_blank" rel="noopener">livroreclamacoes.pt</a>. Também pode pedir o livro em papel ao balcão de qualquer serviço público.</li>'+
+ '<li><strong>Assembleia Municipal</strong> — as reuniões são públicas e há um período aberto ao público. Qualquer morador pode ir e falar. Pergunte na Câmara quando é a próxima.</li></ul>'+
+ '<p>Leve sempre <strong>cópias de tudo o que enviou e as datas</strong>. É isso que dá força à queixa.</p>',
+ c_en:'<p>If you have made the request, waited, chased it and still heard nothing:</p>'+
+ '<ul><li><strong>Senior Citizen’s Line</strong> (Ombudsman) — free, weekdays 9.30 am to 5.30 pm: <a href="tel:800203531">800 20 35 31</a>. They explain your rights and point the complaint to the right place.</li>'+
+ '<li><strong>The Ombudsman (Provedor de Justiça)</strong> — <a href="https://www.provedor-jus.pt" target="_blank" rel="noopener">provedor-jus.pt</a>. Free, and handles complaints against public bodies, municipal councils included.</li>'+
+ '<li><strong>Electronic Complaints Book</strong> — <a href="https://www.livroreclamacoes.pt" target="_blank" rel="noopener">livroreclamacoes.pt</a>. You can also ask for the paper book at the counter of any public service.</li>'+
+ '<li><strong>The Municipal Assembly</strong> — meetings are public and include a period open to the floor. Any resident may attend and speak. Ask at the Câmara when the next one is.</li></ul>'+
+ '<p>Always take <strong>copies of everything you sent, with dates</strong>. That is what gives a complaint its weight.</p>'}
+];
+
+/* ---------------- FESTAS ----------------
+   REGRA: nomes de terras, santos e festas NÃO se traduzem.
+   'mapa' = o que se procura no Google Maps; 'mapaNome' = o que se lê no botão.
+------------------------------------------------------------ */
+var FESTAS = [
+ {m:1, d:'', fixo:true, nome:'Mercado ECO de Penamacor',
+  local:'Mercado Municipal, Penamacor', mapaNome:'Mercado Municipal', mapa:'Mercado Municipal, Penamacor',
+  o_pt:'1.ª e 3.ª quarta-feira de cada mês, das 9h00 às 12h30. Legumes, artesanato e produtos da terra.',
+  o_en:'1st and 3rd Wednesday of the month, 9.00 am to 12.30 pm. Vegetables, crafts and local produce.'},
+
+ {m:4, d:'', nome:'Festival da Chanfana',
+  local:'Meimão', mapaNome:'Meimão', mapa:'Meimão, Penamacor',
+  o_pt:'Habitualmente em Abril. Provas de sabores tradicionais, caminhada e concertos.',
+  o_en:'Usually in April. Tastings of traditional dishes, a country walk and concerts. Chanfana is goat slow-cooked in red wine.'},
+
+ {m:4, d:'25', nome:'Festa de São Marcos',
+  local:'Águas', mapaNome:'Águas', mapa:'Águas, Penamacor', o_pt:'', o_en:''},
+
+ {m:4, d:'', nome:'Romaria de Nossa Senhora do Incenso',
+  local:'a 2 km de Penamacor', local_en:'2 km from Penamacor', mapaNome:'Penamacor', mapa:'Penamacor',
+  o_pt:'Segunda-feira de Páscoa (a data muda todos os anos).',
+  o_en:'Easter Monday (the date moves each year).'},
+
+ {m:5, d:'', nome:'Romaria da Senhora do Bom Sucesso',
+  local:'a ~12 km de Penamacor, na direcção de Espanha', local_en:'about 12 km from Penamacor, towards Spain',
+  mapaNome:'Penamacor', mapa:'Penamacor',
+  o_pt:'2.º domingo depois da Páscoa.', o_en:'Second Sunday after Easter.'},
+
+ {m:5, d:'', nome:'Romaria de Nossa Senhora da Quebrada',
+  local:'Benquerença', mapaNome:'Benquerença', mapa:'Benquerença, Penamacor',
+  o_pt:'6.º domingo depois da Páscoa.', o_en:'Sixth Sunday after Easter.'},
+
+ {m:6, d:'', nome:'Romaria de Nossa Senhora da Póvoa',
+  local:'Vale da Senhora da Póvoa', mapaNome:'Vale da Senhora da Póvoa', mapa:'Vale da Senhora da Póvoa, Penamacor',
+  o_pt:'Segunda-feira de Pentecostes (50 dias depois da Páscoa). Festa de sábado a segunda — uma das maiores romarias da Beira Baixa.',
+  o_en:'Whit Monday (50 days after Easter). Runs Saturday to Monday — one of the largest pilgrimages in the Beira Baixa.'},
+
+ {m:6, d:'13', nome:'Santo António', local:'Penamacor', mapaNome:'Penamacor', mapa:'Penamacor', o_pt:'', o_en:''},
+ {m:6, d:'24', nome:'São João', local:'Penamacor', mapaNome:'Penamacor', mapa:'Penamacor', o_pt:'', o_en:''},
+ {m:6, d:'28', nome:'São Pedro', local:'Penamacor', mapaNome:'Penamacor', mapa:'Penamacor', o_pt:'', o_en:''},
+
+ {m:8, d:'5', nome:'Nossa Senhora das Neves',
+  local:'Benquerença', mapaNome:'Benquerença', mapa:'Benquerença, Penamacor', o_pt:'', o_en:''},
+ {m:8, d:'', nome:'Santo António', local:'Meimão', mapaNome:'Meimão', mapa:'Meimão, Penamacor',
+  o_pt:'2.º domingo de Agosto.', o_en:'Second Sunday in August.'},
+ {m:8, d:'', nome:'São Domingos', local:'Meimoa', mapaNome:'Meimoa', mapa:'Meimoa, Penamacor',
+  o_pt:'2.º domingo de Agosto.', o_en:'Second Sunday in August.'},
+ {m:8, d:'', nome:'Santiago', local:'Vale da Póvoa', mapaNome:'Vale da Póvoa', mapa:'Vale da Póvoa, Penamacor',
+  o_pt:'2.º domingo de Agosto.', o_en:'Second Sunday in August.'},
+ {m:8, d:'15', nome:'Nossa Senhora da Silva', local:'Bemposta', mapaNome:'Bemposta', mapa:'Bemposta, Penamacor', o_pt:'', o_en:''},
+ {m:8, d:'15', nome:'Nossa Senhora da Saúde', local:'Anascer', mapaNome:'Anascer', mapa:'Anascer, Penamacor', o_pt:'', o_en:''},
+ {m:8, d:'', nome:'Nossa Senhora do Bom Sucesso', local:'Aranhas', mapaNome:'Aranhas', mapa:'Aranhas, Penamacor',
+  o_pt:'3.º domingo de Agosto.', o_en:'Third Sunday in August.'},
+ {m:8, d:'24', nome:'São Bartolomeu', local:'Aldeia do Bispo', mapaNome:'Aldeia do Bispo', mapa:'Aldeia do Bispo, Penamacor', o_pt:'', o_en:''},
+
+ {m:9, d:'', nome:'Santa Sofia', local:'Salvador', mapaNome:'Salvador', mapa:'Salvador, Penamacor',
+  o_pt:'1.º domingo de Setembro.', o_en:'First Sunday in September.'},
+ {m:9, d:'8', nossa:true, nome:'Nossa Senhora da Graça',
+  local:'Aldeia de João Pires', mapaNome:'Aldeia de João Pires', mapa:'Aldeia de João Pires, Penamacor',
+  o_pt:'A festa da nossa terra.', o_en:'Our own village feast day.'},
+ {m:9, d:'29', nossa:true, nome:'São Miguel',
+  local:'Aldeia de João Pires', mapaNome:'Aldeia de João Pires', mapa:'Aldeia de João Pires, Penamacor',
+  o_pt:'A segunda festa da nossa terra.', o_en:'The village’s second feast day.'}
+];
+
+/* ---------------- TELEFONES ----------------
+   Nomes próprios de instituições mantêm-se em português nas
+   duas línguas; a explicação em inglês vai na linha de baixo.
+------------------------------------------------------------ */
+var TELEFONES = [
+ {g_pt:'Emergências', g_en:'Emergencies'},
+ {num:'112', urg:true, q_pt:'Emergência — bombeiros, ambulância, GNR', q_en:'Emergency — fire, ambulance, GNR',
+  s_pt:'Funciona sempre, de qualquer telemóvel', s_en:'Always works, from any mobile. Ask for English.'},
+ {num:'963 183 208', urg:true, q_pt:'Piquete das Águas', q_en:'Piquete das Águas',
+  s_pt:'Rotura ou falta de água, fora de horas', s_en:'Water standby crew — burst pipe or no supply, out of hours'},
+ {num:'277 394 122', urg:true, q_pt:'Bombeiros Voluntários de Penamacor', q_en:'Bombeiros Voluntários de Penamacor',
+  s_pt:'', s_en:'The volunteer fire brigade', mapa:'Bombeiros Voluntários de Penamacor', mapaNome:'Penamacor'},
+ {num:'277 394 274', urg:true, q_pt:'GNR de Penamacor', q_en:'GNR de Penamacor',
+  s_pt:'', s_en:'National police force for rural areas', mapa:'GNR Penamacor', mapaNome:'Penamacor'},
+ {num:'808 200 520', urg:true, q_pt:'Portugal Chama', q_en:'Portugal Chama',
+  s_pt:'Dúvidas sobre fogo · todos os dias, 8h–21h', s_en:'Wildfire advice line · daily, 8 am – 9 pm'},
+
+ {g_pt:'Câmara Municipal de Penamacor', g_en:'Câmara Municipal de Penamacor (the town council)'},
+ {num:'277 394 106', q_pt:'Central da Câmara', q_en:'Câmara switchboard',
+  s_pt:'Largo do Município, 6090-543 Penamacor · 2.ª a 6.ª, 9h00–12h30 e 14h00–17h30',
+  s_en:'Largo do Município, 6090-543 Penamacor · Mon–Fri, 9.00–12.30 and 14.00–17.30',
+  mapa:'Largo do Município, 6090-543 Penamacor', mapaNome:'Largo do Município'},
+ {num:'963 180 059', q_pt:'Telemóvel da Câmara', q_en:'Câmara mobile', s_pt:'', s_en:''},
+ {num:'277 394 040', q_pt:'Ação Social e Saúde', q_en:'Ação Social e Saúde',
+  s_pt:'Cartões sociais, apoios, medicamentos · Rua dos Bombeiros Voluntários, Penamacor',
+  s_en:'Social action and health — social cards, support schemes, medicines · Rua dos Bombeiros Voluntários, Penamacor',
+  mapa:'Rua dos Bombeiros Voluntários, Penamacor', mapaNome:'Penamacor'},
+ {num:'922 231 350', q_pt:'Águas — leituras por WhatsApp', q_en:'Water meter readings by WhatsApp',
+  s_pt:'Envie foto do contador com nome e morada', s_en:'Send a photo of the meter with your name and address'},
+ {num:'922 231 473', q_pt:'Médico Veterinário Municipal', q_en:'Médico Veterinário Municipal',
+  s_pt:'Animais errantes', s_en:'The municipal vet — stray animals'},
+ {num:'277 394 931', q_pt:'Biblioteca Municipal', q_en:'Biblioteca Municipal', s_pt:'', s_en:'Municipal library'},
+ {num:'963 183 195', q_pt:'CPCJ — protecção de crianças e jovens', q_en:'CPCJ',
+  s_pt:'Contacto permanente', s_en:'Child and youth protection · staffed at all times'},
+ {num:'', q_pt:'Emails da Câmara', q_en:'Câmara email addresses',
+  s_pt:'presidente@cm-penamacor.pt · secretaria.gap@cm-penamacor.pt · serv.obras@cm-penamacor.pt · gab.social@cm-penamacor.pt · sas.info@cm-penamacor.pt',
+  s_en:'presidente@cm-penamacor.pt (mayor) · secretaria.gap@cm-penamacor.pt (general) · serv.obras@cm-penamacor.pt (planning) · gab.social@cm-penamacor.pt (social) · sas.info@cm-penamacor.pt (water)'},
+
+ {g_pt:'A nossa Junta de Freguesia', g_en:'Our Junta de Freguesia (the parish council)'},
+ {num:'277 385 400',
+  q_pt:'União de Freguesias de Aldeia do Bispo, Águas e Aldeia de João Pires',
+  q_en:'União de Freguesias de Aldeia do Bispo, Águas e Aldeia de João Pires',
+  s_pt:'Atendimento em Aldeia de João Pires às quartas-feiras, a partir das 19h30 (EN 332) · uniaofreguesias050713@gmail.com',
+  s_en:'Open in Aldeia de João Pires on Wednesdays from 7.30 pm (on the EN 332) · uniaofreguesias050713@gmail.com',
+  mapa:'Aldeia de João Pires, Penamacor', mapaNome:'Aldeia de João Pires'},
+
+ {g_pt:'Saúde', g_en:'Health'},
+ {num:'277 390 020', q_pt:'Centro de Saúde de Penamacor', q_en:'Centro de Saúde de Penamacor',
+  s_pt:'cspenamacor@ulscb.min-saude.pt', s_en:'The local health centre · cspenamacor@ulscb.min-saude.pt',
+  mapa:'Centro de Saúde de Penamacor', mapaNome:'Penamacor'},
+ {num:'935 970 044', q_pt:'Centro de Saúde — telemóvel', q_en:'Centro de Saúde — mobile', s_pt:'', s_en:''},
+ {num:'808 24 24 24', q_pt:'SNS 24', q_en:'SNS 24',
+  s_pt:'Dúvidas de saúde, 24 horas por dia', s_en:'National health advice line, 24 hours a day'},
+
+ {g_pt:'Outros serviços', g_en:'Other services'},
+ {num:'800 20 35 31', q_pt:'Linha do Cidadão Idoso', q_en:'Linha do Cidadão Idoso',
+  s_pt:'Gratuita · dias úteis, 9h30–17h30 · Provedor de Justiça',
+  s_en:'The Ombudsman’s free senior citizens’ line · weekdays 9.30 am – 5.30 pm'},
+ {num:'277 390 040', q_pt:'Repartição de Finanças', q_en:'Repartição de Finanças',
+  s_pt:'', s_en:'The tax office', mapa:'Repartição de Finanças de Penamacor', mapaNome:'Penamacor'},
+ {num:'300 515 100', q_pt:'Segurança Social', q_en:'Segurança Social', s_pt:'', s_en:'Social security'},
+ {num:'277 394 260', q_pt:'Conservatória do Registo Civil e Predial', q_en:'Conservatória do Registo Civil e Predial',
+  s_pt:'', s_en:'Civil and land registry office'},
+ {num:'277 390 030', q_pt:'Correios (CTT) de Penamacor', q_en:'Correios (CTT) de Penamacor',
+  s_pt:'', s_en:'Post office', mapa:'CTT Penamacor', mapaNome:'Penamacor'},
+ {num:'277 090 000', q_pt:'Tribunal Judicial', q_en:'Tribunal Judicial', s_pt:'', s_en:'District court'},
+ {num:'277 390 090', q_pt:'Agrupamento de Escolas Ribeiro Sanches', q_en:'Agrupamento de Escolas Ribeiro Sanches',
+  s_pt:'', s_en:'The local schools group'},
+ {num:'277 394 467', q_pt:'Reserva Natural da Serra da Malcata', q_en:'Reserva Natural da Serra da Malcata',
+  s_pt:'', s_en:'Nature reserve', mapa:'Reserva Natural da Serra da Malcata', mapaNome:'Serra da Malcata'}
+];
+
+/* =========================================================
+   DESENHAR / RENDER
+   ========================================================= */
+var catActiva='todas';
+
+function urlMapa(q){
+  return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+}
+function botaoMapa(q,nome){
+  return '<a class="mapa" href="'+urlMapa(q)+'" target="_blank" rel="noopener" title="'+t('ver_mapa')+'">📍 '+nome+'</a>';
+}
+
+function encherAssuntos(){
+  var sel=document.getElementById('assunto');
+  var actual=sel.value;
+  sel.innerHTML='';
+  ASSUNTOS.forEach(function(a){
+    var o=document.createElement('option');
+    o.value=a.id; o.textContent=(LANG==='pt'?a.pt:a.en);
+    sel.appendChild(o);
+  });
+  if(actual) sel.value=actual;
+}
+
+function desenharGlossario(){
+  var lista=document.getElementById('listaGlossario');
+  var filtros=document.getElementById('filtros');
+  lista.innerHTML=''; filtros.innerHTML='';
+
+  var bTodas=document.createElement('button');
+  bTodas.className='filtro'+(catActiva==='todas'?' on':'');
+  bTodas.textContent=t('filtro_todas');
+  bTodas.onclick=function(){escolherCat('todas',bTodas);};
+  filtros.appendChild(bTodas);
+
+  CATEGORIAS.forEach(function(c,i){
+    var b=document.createElement('button');
+    b.className='filtro'+(String(catActiva)===String(i)?' on':'');
+    b.textContent=(LANG==='pt'?c.pt:c.en);
+    b.onclick=function(){escolherCat(i,b);};
+    filtros.appendChild(b);
+  });
+
+  function escolherCat(c,btn){
+    catActiva=c;
+    Array.prototype.forEach.call(filtros.children,function(x){x.classList.remove('on');});
+    btn.classList.add('on');
+    filtrar();
+  }
+
+  GLOSSARIO.forEach(function(g){
+    var titulo=(LANG==='pt'?g.t_pt:g.t_en);
+    var corpo =(LANG==='pt'?g.c_pt:g.c_en);
+    var catNome=(LANG==='pt'?CATEGORIAS[g.cat].pt:CATEGORIAS[g.cat].en);
+    var d=document.createElement('details');
+    d.className='item'; d.dataset.cat=g.cat;
+    d.dataset.txt=(g.t_pt+' '+g.t_en+' '+g.k_pt+' '+g.k_en+' '+catNome).toLowerCase();
+    d.innerHTML='<summary>'+titulo+'</summary><div class="corpo"><span class="tag">'+catNome+'</span>'+corpo+'</div>';
+    lista.appendChild(d);
+  });
+  filtrar();
+}
+
+function semAcentos(s){
+  return s.normalize ? s.normalize('NFD').replace(/[\u0300-\u036f]/g,'') : s;
+}
+
+function filtrar(){
+  var lista=document.getElementById('listaGlossario');
+  var q=semAcentos((document.getElementById('busca').value||'').toLowerCase().trim());
+  var visiveis=0;
+  Array.prototype.forEach.call(lista.children,function(d){
+    var txt=semAcentos(d.dataset.txt);
+    var okCat=(catActiva==='todas'||String(d.dataset.cat)===String(catActiva));
+    var okQ=(!q||txt.indexOf(q)>-1);
+    var ver=okCat&&okQ;
+    d.style.display=ver?'':'none';
+    if(!ver) d.open=false;
+    if(ver) visiveis++;
+  });
+  document.getElementById('semResultado').classList.toggle('hidden', visiveis>0);
+}
+
+/* =========================================================
+   NOTÍCIAS E AVISOS
+   Em cima os avisos da terra — corte de água, farmácia de
+   serviço, missa mudada de hora. São o que faz abrir isto
+   todos os dias.
+   Em baixo as notícias da Câmara: título, resumo e ligação.
+   O texto fica onde foi publicado; nunca o copiamos para aqui.
+   ========================================================= */
+
+var NOTICIAS = null;      /* {avisos:[], noticias:[]} */
+var ESTADO_NOTICIAS = 'inicio';
+
+function buscarNoticias(){
+  if(!urlAPI('/noticias')) return Promise.resolve(null);
+  var ctrl=(typeof AbortController!=='undefined')?new AbortController():null;
+  var relogio=setTimeout(function(){ if(ctrl) ctrl.abort(); }, 12000);
+  return fetch(urlAPI('/noticias'), {signal:ctrl?ctrl.signal:undefined})
+    .then(function(r){ if(!r.ok) throw new Error('http'); return r.json(); })
+    .then(function(j){
+      clearTimeout(relogio);
+      return {avisos:(j&&j.avisos)||[], noticias:(j&&j.noticias)||[]};
+    })
+    .catch(function(){ clearTimeout(relogio); return null; });
+}
+
+/* "há 2 horas", "ontem", "há 3 dias" — mais fácil de ler do que uma data */
+function haQuantoTempo(iso){
+  if(!iso) return '';
+  var d=new Date(iso.length<=10 ? iso+'T12:00:00' : iso);
+  if(isNaN(d)) return '';
+  var min=Math.round((Date.now()-d.getTime())/60000);
+  if(min<2)    return t('agora');
+  if(min<60)   return t('ha_min').replace('{n}',min);
+  var h=Math.round(min/60);
+  if(h<24)     return t('ha_horas').replace('{n}',h);
+  var dias=Math.round(h/24);
+  if(dias===1) return t('ontem');
+  if(dias<7)   return t('ha_dias').replace('{n}',dias);
+  var MESES=t('meses');
+  return d.getDate()+t('festas_de')+MESES[d.getMonth()];
+}
+
+function eRecente(iso, horas){
+  if(!iso) return false;
+  var d=new Date(iso.length<=10 ? iso+'T12:00:00' : iso);
+  if(isNaN(d)) return false;
+  return (Date.now()-d.getTime()) < horas*3600000;
+}
+
+var ICONES_AVISO={urgente:'🚨', servico:'🛒', comunidade:'🎈', luto:'🕯️'};
+
+function desenharNoticias(){
+  var caixa=document.getElementById('listaNoticias');
+  if(!caixa) return;
+  caixa.innerHTML='';
+
+  if(ESTADO_NOTICIAS==='inicio' && urlAPI('/noticias')){
+    ESTADO_NOTICIAS='a-carregar';
+    buscarNoticias().then(function(n){
+      NOTICIAS=n;
+      ESTADO_NOTICIAS=(n===null)?'falhou':'pronto';
+      desenharNoticias();
+    });
+  }
+
+  if(ESTADO_NOTICIAS==='a-carregar'){
+    var p=document.createElement('p'); p.className='estado';
+    p.innerHTML='<span class="girar">⏳</span> '+t('not_a_carregar');
+    caixa.appendChild(p);
+  }
+  if(ESTADO_NOTICIAS==='falhou' || (!urlAPI('/noticias') && ESTADO_NOTICIAS==='inicio')){
+    var f=document.createElement('p'); f.className='estado mau';
+    f.innerHTML=t('not_falhou'); caixa.appendChild(f);
+  }
+
+  var avisos=(NOTICIAS&&NOTICIAS.avisos)||[];
+  var noticias=(NOTICIAS&&NOTICIAS.noticias)||[];
+
+  /* ---- avisos da terra ---- */
+  var h1=document.createElement('h3'); h1.className='mesbloco';
+  h1.textContent=t('not_avisos_titulo');
+  caixa.appendChild(h1);
+
+  if(!avisos.length){
+    var vazio=document.createElement('p');
+    vazio.className='semresultado'; vazio.innerHTML=t('not_sem_avisos');
+    caixa.appendChild(vazio);
+  } else {
+    avisos.forEach(function(a){
+      var el=document.createElement('div');
+      el.className='aviso-terra cat-'+(a.categoria||'servico');
+      el.innerHTML=
+        '<p class="cabeca-aviso">'+
+          '<span class="icone">'+(ICONES_AVISO[a.categoria]||'🛒')+'</span>'+
+          '<span class="quando">'+escaparHTML(haQuantoTempo(a.quando))+'</span>'+
+          (eRecente(a.quando,48)?'<span class="novo">'+t('novo')+'</span>':'')+
+        '</p>'+
+        '<h4>'+escaparHTML(a.titulo)+'</h4>'+
+        (a.texto?'<p class="texto-aviso">'+escaparHTML(a.texto).replace(/\n/g,'<br>')+'</p>':'');
+      caixa.appendChild(el);
+    });
+  }
+
+  /* ---- notícias da Câmara ---- */
+  var h2=document.createElement('h3'); h2.className='mesbloco';
+  h2.textContent=t('not_camara_titulo');
+  caixa.appendChild(h2);
+
+  if(!noticias.length){
+    var v2=document.createElement('p');
+    v2.className='semresultado'; v2.innerHTML=t('not_sem_camara');
+    caixa.appendChild(v2);
+  } else {
+    noticias.forEach(function(n){
+      var el=document.createElement('a');
+      el.className='noticia';
+      el.href=n.link; el.target='_blank'; el.rel='noopener';
+      el.innerHTML=
+        (n.imagem?'<img class="miniatura" src="'+escaparHTML(n.imagem)+'" alt="" loading="lazy">':'')+
+        '<div class="texto-noticia">'+
+          '<p class="cabeca-noticia"><span class="quando">'+escaparHTML(haQuantoTempo(n.data))+'</span>'+
+          (eRecente(n.data,48)?'<span class="novo">'+t('novo')+'</span>':'')+'</p>'+
+          '<h4>'+escaparHTML(n.titulo)+'</h4>'+
+          (n.resumo?'<p class="resumo">'+escaparHTML(n.resumo)+'</p>':'')+
+          '<span class="ver-mais">'+t('not_ler')+'</span>'+
+        '</div>';
+      caixa.appendChild(el);
+    });
+  }
+}
+
+/* =========================================================
+   AGENDA CULTURAL
+   Três fontes, juntas numa lista só:
+     1. as romarias fixas deste ficheiro — nunca falham, funcionam
+        sem rede e repetem-se todos os anos;
+     2. o Google Calendar público do concelho;
+     3. a agenda cultural do site da Câmara.
+   As duas últimas chegam pelo Worker (CONFIG.API + '/agenda').
+   Sem rede ou sem Worker, ficam as primeiras — a agenda nunca
+   aparece vazia.
+   ========================================================= */
+
+var EVENTOS_REMOTOS = null;   /* o que veio do Worker nesta sessão */
+var ESTADO_AGENDA = 'inicio'; /* inicio | a-carregar | pronto | falhou */
+var EVENTO_ABERTO = null;
+
+function urlAPI(caminho){
+  if(!CONFIG.API) return '';
+  return CONFIG.API.replace(/\/+$/,'') + caminho;
+}
+
+/* ---- normalizar as romarias fixas ---- */
+function eventosFixos(){
+  var hoje=new Date(), mesHoje=hoje.getMonth()+1, anoHoje=hoje.getFullYear();
+  return FESTAS.map(function(f,i){
+    var ano=(!f.fixo && f.m<mesHoje)?anoHoje+1:anoHoje;
+    return {
+      chave:'fixo:'+i,
+      titulo:f.nome,
+      local:(LANG==='en'&&f.local_en)?f.local_en:f.local,
+      mapa:f.mapa, mapaNome:f.mapaNome,
+      descricao:(LANG==='pt'?f.o_pt:f.o_en)||'',
+      ano:ano, mes:f.m, dia:f.d||'', hora:null,
+      dataISO: f.d ? (ano+'-'+String(f.m).padStart(2,'0')+'-'+String(f.d).padStart(2,'0')) : null,
+      fixo:!!f.fixo, nossa:!!f.nossa, fonte:'fixo', link:'', imagem:''
+    };
+  });
+}
+
+/* ---- normalizar o que vem do Worker ---- */
+function eventoRemoto(e){
+  var d = (e.data||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return {
+    chave: e.id || ('rem:'+(e.titulo||'').slice(0,40)),
+    titulo: e.titulo||'',
+    local: e.local||'',
+    mapa: e.mapa || e.local || 'Penamacor',
+    mapaNome: (e.local||'Penamacor').split(',')[0].slice(0,32),
+    descricao: e.descricao||'',
+    ano: d?parseInt(d[1],10):null,
+    mes: d?parseInt(d[2],10):null,
+    dia: d?String(parseInt(d[3],10)):'',
+    hora: e.hora||null,
+    dataISO: d?e.data:null,
+    dataFimISO: e.dataFim||null,
+    fixo:false, nossa:false,
+    fonte: e.fonte||'agenda',
+    link: e.link||'', imagem: e.imagem||''
+  };
+}
+
+function buscarAgenda(){
+  if(!urlAPI('/agenda')) return Promise.resolve(null);
+  var ctrl=(typeof AbortController!=='undefined')?new AbortController():null;
+  var relogio=setTimeout(function(){ if(ctrl) ctrl.abort(); }, 12000);
+  return fetch(urlAPI('/agenda'), {signal:ctrl?ctrl.signal:undefined})
+    .then(function(r){ if(!r.ok) throw new Error('http'); return r.json(); })
+    .then(function(j){
+      clearTimeout(relogio);
+      return (j&&j.eventos&&j.eventos.length)?j.eventos.map(eventoRemoto):[];
+    })
+    .catch(function(){ clearTimeout(relogio); return null; });
+}
+
+function todosOsEventos(){
+  var lista=eventosFixos();
+  if(EVENTOS_REMOTOS && EVENTOS_REMOTOS.length) lista=lista.concat(EVENTOS_REMOTOS);
+  return lista;
+}
+
+function desenharAgenda(){
+  var caixa=document.getElementById('listaAgenda');
+  if(!caixa) return;
+  fecharEvento(true);
+  caixa.innerHTML='';
+
+  /* primeira vez: pede ao Worker e volta a desenhar quando chegar */
+  if(ESTADO_AGENDA==='inicio' && urlAPI('/agenda')){
+    ESTADO_AGENDA='a-carregar';
+    buscarAgenda().then(function(evs){
+      EVENTOS_REMOTOS=evs;
+      ESTADO_AGENDA=(evs===null)?'falhou':'pronto';
+      desenharAgenda();
+    });
+  }
+
+  var MESES=t('meses'), MESCURTO=t('mescurto');
+  var mesHoje=new Date().getMonth()+1, anoHoje=new Date().getFullYear();
+  var lista=todosOsEventos();
+
+  if(ESTADO_AGENDA==='a-carregar'){
+    var carregando=document.createElement('p');
+    carregando.className='estado';
+    carregando.innerHTML='<span class="girar">⏳</span> '+t('agenda_a_carregar');
+    caixa.appendChild(carregando);
+  }
+  if(ESTADO_AGENDA==='falhou'){
+    var falhou=document.createElement('p');
+    falhou.className='estado mau'; falhou.innerHTML=t('agenda_falhou');
+    caixa.appendChild(falhou);
+  }
+
+  /* sempre no topo: os que se repetem todos os meses */
+  lista.filter(function(e){return e.fixo;}).forEach(function(e){ caixa.appendChild(cartaoEvento(e,MESCURTO)); });
+
+  /* meses, a partir do actual, dando a volta ao ano */
+  var ordem=[]; for(var k=0;k<12;k++){ ordem.push(((mesHoje-1+k)%12)+1); }
+  var jaMostrados={};
+  ordem.forEach(function(m){
+    var doMes=lista.filter(function(e){ return !e.fixo && e.mes===m; })
+                   .sort(function(a,b){
+                     return String(a.dataISO||'9999').localeCompare(String(b.dataISO||'9999'));
+                   });
+    if(!doMes.length) return;
+    var ano=(m<mesHoje)?anoHoje+1:anoHoje;
+    var h=document.createElement('h3'); h.className='mesbloco';
+    h.textContent=MESES[m-1]+t('festas_de')+ano+(m===mesHoje?t('festas_estemes'):'');
+    caixa.appendChild(h);
+    doMes.forEach(function(e){
+      if(jaMostrados[e.chave]) return;
+      jaMostrados[e.chave]=1;
+      caixa.appendChild(cartaoEvento(e,MESCURTO));
+    });
+  });
+
+  /* eventos sem data que se consiga ler */
+  var semData=lista.filter(function(e){ return !e.fixo && !e.mes; });
+  if(semData.length){
+    var h2=document.createElement('h3'); h2.className='mesbloco';
+    h2.textContent=t('agenda_sem_data');
+    caixa.appendChild(h2);
+    semData.forEach(function(e){ caixa.appendChild(cartaoEvento(e,MESCURTO)); });
+  }
+}
+
+function etiquetaFonte(e){
+  if(e.fonte==='camara') return '<span class="tag fonte-cm">'+t('fonte_camara')+'</span>';
+  if(e.fonte==='agenda') return '<span class="tag fonte-ag">'+t('fonte_agenda')+'</span>';
+  return '<span class="tag">'+t('fonte_fixo')+'</span>';
+}
+
+function cartaoEvento(e,MESCURTO){
+  var el=document.createElement('button');
+  el.type='button';
+  el.className='festa'+(e.nossa?' destaque':'');
+  el.onclick=function(){ abrirEvento(e.chave); };
+  var diaHtml=e.fixo
+    ? '<span class="dia pequeno">'+t('fixo_dia')+'</span>'
+    : '<span class="dia">'+(e.dia||'—')+'</span>';
+  var mesLbl=e.fixo?t('fixo_mes'):(e.mes?MESCURTO[e.mes-1]:'—');
+  el.innerHTML=
+    '<div class="cabeca">'+
+      '<div class="data">'+diaHtml+'<span class="mes">'+mesLbl+'</span></div>'+
+      '<div class="corpo-festa"><h4>'+escaparHTML(e.titulo)+(e.nossa?' 🏡':'')+'</h4>'+
+      (e.local?'<p><strong>'+escaparHTML(e.local)+'</strong></p>':'')+
+      (e.hora?'<p>'+t('as_horas')+' '+e.hora+'</p>':'')+
+      etiquetaFonte(e)+
+      '<span class="ver-mais">'+t('ver_detalhe')+'</span>'+
+      '</div>'+
+    '</div>';
+  return el;
+}
+
+function escaparHTML(s){
+  return String(s==null?'':s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ---------- detalhe de um evento ---------- */
+function abrirEvento(chave){
+  var e=todosOsEventos().filter(function(x){return x.chave===chave;})[0];
+  if(!e) return;
+  EVENTO_ABERTO=e;
+  var d=document.getElementById('detalheEvento');
+  var MESES=t('meses');
+
+  var quando;
+  if(e.fixo) quando=t('fixo_quando');
+  else if(e.dataISO){
+    quando=t('fmt_data').replace('{d}',e.dia).replace('{M}',MESES[e.mes-1]).replace('{a}',e.ano);
+    if(e.hora) quando+=' · '+e.hora;
+  } else quando=(e.descricao?'':t('agenda_sem_data'));
+
+  var partes=[];
+  partes.push('<button class="btn btn-2 voltar" onclick="fecharEvento()">'+t('voltar')+'</button>');
+  partes.push('<div class="box detalhe">');
+  partes.push(etiquetaFonte(e));
+  partes.push('<h3>'+escaparHTML(e.titulo)+'</h3>');
+  if(quando) partes.push('<p class="quando"><strong>📅 '+escaparHTML(quando)+'</strong></p>');
+  if(e.local) partes.push('<p class="onde">📍 '+escaparHTML(e.local)+'</p>');
+  if(e.imagem) partes.push('<img class="foto" src="'+escaparHTML(e.imagem)+'" alt="" loading="lazy">');
+  if(e.descricao) partes.push('<p class="desc">'+escaparHTML(e.descricao).replace(/\n/g,'<br>')+'</p>');
+  else partes.push('<p class="desc quieto">'+t('sem_descricao')+'</p>');
+
+  partes.push('<div class="botoes">');
+  if(e.mapa) partes.push('<a class="btn btn-2" target="_blank" rel="noopener" href="'+
+      urlMapa(e.mapa)+'">📍 '+t('btn_mapa')+'</a>');
+  if(e.dataISO){
+    partes.push('<button class="btn btn-principal" onclick="baixarICS()">📅 '+t('btn_agenda')+'</button>');
+    partes.push('<a class="btn btn-2" target="_blank" rel="noopener" href="'+
+      linkGoogleAgenda(e)+'">'+t('btn_google')+'</a>');
+  }
+  partes.push('<button class="btn btn-2" onclick="partilhar()">🔗 '+t('btn_partilhar')+'</button>');
+  if(e.link) partes.push('<a class="btn btn-2" target="_blank" rel="noopener" href="'+
+      escaparHTML(e.link)+'">'+t('btn_fonte')+'</a>');
+  partes.push('</div>');
+  if(e.fonte==='camara') partes.push('<p class="privacidade">'+t('aviso_camara')+'</p>');
+  partes.push('</div>');
+
+  d.innerHTML=partes.join('');
+  d.classList.remove('hidden');
+  document.getElementById('listaAgenda').classList.add('hidden');
+  document.getElementById('cabecaAgenda').classList.add('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function fecharEvento(calado){
+  var d=document.getElementById('detalheEvento');
+  if(!d) return;
+  d.innerHTML=''; d.classList.add('hidden');
+  var l=document.getElementById('listaAgenda');
+  var c=document.getElementById('cabecaAgenda');
+  if(l) l.classList.remove('hidden');
+  if(c) c.classList.remove('hidden');
+  EVENTO_ABERTO=null;
+  if(!calado) window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- adicionar à agenda do telemóvel ---------- */
+function paraICS(dataISO,hora){
+  var d=dataISO.replace(/-/g,'');
+  return hora ? d+'T'+hora.replace(':','')+'00' : d;
+}
+function diaSeguinte(dataISO){
+  var p=dataISO.split('-');
+  var dt=new Date(Date.UTC(+p[0],+p[1]-1,+p[2]));
+  dt.setUTCDate(dt.getUTCDate()+1);
+  return dt.toISOString().slice(0,10);
+}
+
+function textoICS(e){
+  var agora=new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+  var l=[];
+  l.push('BEGIN:VCALENDAR');
+  l.push('VERSION:2.0');
+  l.push('PRODID:-//Portal da Aldeia de Joao Pires//PT');
+  l.push('CALSCALE:GREGORIAN');
+  l.push('BEGIN:VEVENT');
+  l.push('UID:'+e.chave.replace(/[^A-Za-z0-9:-]/g,'')+'@aldeiajoaopires');
+  l.push('DTSTAMP:'+agora);
+  if(e.hora){
+    /* hora "flutuante": sem fuso horário. É o que faz sentido para uma
+       festa da terra — às 21h00 é às 21h00, esteja o telemóvel onde estiver.
+       Evita ter de incluir um bloco VTIMEZONE, que alguns telemóveis rejeitam. */
+    l.push('DTSTART:'+paraICS(e.dataISO,e.hora));
+    var fim=('0'+((parseInt(e.hora.slice(0,2),10)+2)%24)).slice(-2)+e.hora.slice(2);
+    l.push('DTEND:'+paraICS(e.dataISO,fim));
+  } else {
+    l.push('DTSTART;VALUE=DATE:'+paraICS(e.dataISO));
+    l.push('DTEND;VALUE=DATE:'+paraICS(diaSeguinte(e.dataFimISO||e.dataISO)));
+  }
+  l.push('SUMMARY:'+escaparICS(e.titulo));
+  if(e.local) l.push('LOCATION:'+escaparICS(e.local));
+  var desc=e.descricao||'';
+  if(e.link) desc+=(desc?'\n\n':'')+e.link;
+  if(desc) l.push('DESCRIPTION:'+escaparICS(desc));
+  l.push('END:VEVENT');
+  l.push('END:VCALENDAR');
+  return l.join('\r\n');
+}
+function escaparICS(s){
+  return String(s||'').replace(/\\/g,'\\\\').replace(/;/g,'\\;')
+    .replace(/,/g,'\\,').replace(/\r?\n/g,'\\n');
+}
+
+function baixarICS(){
+  if(!EVENTO_ABERTO) return;
+  var e=EVENTO_ABERTO;
+  var bruto=String(e.titulo||'evento');
+  if(bruto.normalize) bruto=bruto.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  var nome=bruto.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40)||'evento';
+  var blob=new Blob([textoICS(e)],{type:'text/calendar;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url; a.download=nome+'.ics';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(url);},4000);
+}
+
+function linkGoogleAgenda(e){
+  var d1,d2;
+  if(e.hora){
+    d1=paraICS(e.dataISO,e.hora);
+    var fim=('0'+((parseInt(e.hora.slice(0,2),10)+2)%24)).slice(-2)+e.hora.slice(2);
+    d2=paraICS(e.dataISO,fim);
+  } else {
+    d1=paraICS(e.dataISO);
+    d2=paraICS(diaSeguinte(e.dataFimISO||e.dataISO));
+  }
+  var q='https://calendar.google.com/calendar/render?action=TEMPLATE'+
+    '&text='+encodeURIComponent(e.titulo)+
+    '&dates='+d1+'/'+d2+
+    '&ctz=Europe/Lisbon'+
+    '&details='+encodeURIComponent((e.descricao||'')+(e.link?'\n\n'+e.link:''))+
+    '&location='+encodeURIComponent(e.local||e.mapa||'Penamacor');
+  return q;
+}
+
+function partilhar(){
+  if(!EVENTO_ABERTO) return;
+  var e=EVENTO_ABERTO;
+  var texto=e.titulo+(e.dataISO?' — '+e.dia+'/'+e.mes+'/'+e.ano:'')+
+            (e.local?'\n'+e.local:'')+(e.link?'\n'+e.link:'');
+  if(navigator.share){
+    navigator.share({title:e.titulo, text:texto}).catch(function(){});
+  } else if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(texto).then(function(){ alert(t('partilha_copiada')); },function(){});
+  }
+}
+
+/* =========================================================
+   SUGESTÕES
+   ========================================================= */
+function enviarSugestao(){
+  var tipo=document.getElementById('sugTipo').value;
+  var texto=document.getElementById('sugTexto').value.trim();
+  var nome=document.getElementById('sugNome').value.trim();
+  var contacto=document.getElementById('sugContacto').value.trim();
+  var est=document.getElementById('sugEstado');
+  var btn=document.getElementById('btnSugerir');
+
+  if(texto.length<10){
+    est.innerHTML=t('sug_curta'); est.className='estado mau'; return;
+  }
+
+  /* sem Worker: abre o email já preenchido */
+  if(!urlAPI('/sugestao')){
+    var assunto='Sugestão para o Portal da Aldeia — '+tipo;
+    var corpo=texto+(nome?'\n\n— '+nome:'')+(contacto?'\n'+contacto:'');
+    window.location.href='mailto:?subject='+encodeURIComponent(assunto)+'&body='+encodeURIComponent(corpo);
+    return;
+  }
+
+  btn.disabled=true; btn.innerHTML=t('sug_a_enviar');
+  est.innerHTML=t('sug_a_enviar'); est.className='estado';
+
+  fetch(urlAPI('/sugestao'),{
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({tipo:tipo,texto:texto.slice(0,2000),nome:nome.slice(0,120),contacto:contacto.slice(0,160)})
+  })
+  .then(function(r){ if(!r.ok) throw new Error('http'); return r.json(); })
+  .then(function(){
+    est.innerHTML=t('sug_obrigado'); est.className='estado';
+    document.getElementById('sugTexto').value='';
+    document.getElementById('sugNome').value='';
+    document.getElementById('sugContacto').value='';
+  })
+  .catch(function(){
+    est.innerHTML=t('sug_falhou'); est.className='estado mau';
+  })
+  .then(function(){ btn.disabled=false; btn.innerHTML=t('btn_sugerir'); });
+}
+
+/* =========================================================
+   INSTALAR NO TELEMÓVEL (PWA)
+   ========================================================= */
+var CONVITE_INSTALAR=null;
+window.addEventListener('beforeinstallprompt', function(ev){
+  ev.preventDefault(); CONVITE_INSTALAR=ev;
+  var b=document.getElementById('btnInstalar');
+  if(b) b.classList.remove('hidden');
+});
+function instalarApp(){
+  if(!CONVITE_INSTALAR){ window.location.href='instalar.html'; return; }
+  CONVITE_INSTALAR.prompt();
+  CONVITE_INSTALAR.userChoice.then(function(){
+    CONVITE_INSTALAR=null;
+    var b=document.getElementById('btnInstalar'); if(b) b.classList.add('hidden');
+  });
+}
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
+
+function desenharTelefones(){
+  var lt=document.getElementById('listaTelefones');
+  lt.innerHTML='';
+  TELEFONES.forEach(function(x){
+    if(x.g_pt){
+      var h=document.createElement('h3'); h.className='mesbloco';
+      h.textContent=(LANG==='pt'?x.g_pt:x.g_en);
+      lt.appendChild(h); return;
+    }
+    var el=document.createElement('div');
+    el.className='tel'+(x.urg?' emergencia':'');
+    var quem=(LANG==='pt'?x.q_pt:x.q_en);
+    var sub =(LANG==='pt'?x.s_pt:x.s_en);
+    var limpo=(x.num||'').replace(/\s/g,'');
+    el.innerHTML='<span class="quem">'+quem+(sub?'<small>'+sub+'</small>':'')+'</span>'+
+      '<span>'+(x.num?'<a class="num" href="tel:'+limpo+'">'+x.num+'</a>':'')+
+      (x.mapa?botaoMapa(x.mapa,x.mapaNome):'')+'</span>';
+    lt.appendChild(el);
+  });
+}
+
+/* =========================================================
+   GERAR A CARTA
+   A carta é SEMPRE em português — é a língua da Câmara.
+   O corpo pode vir de duas fontes:
+     1) do assistente de escrita (CONFIG.API), ou
+     2) do modelo escrito à mão, se a API falhar ou não estiver
+        configurada. O utilizador nunca fica sem carta.
+   Dados pessoais (nome, morada, telefone, email) NUNCA são
+   enviados para lado nenhum — são juntos aqui, no telemóvel.
+   ========================================================= */
+function v(id){return document.getElementById(id).value.trim();}
+
+function recolher(){
+  var sel=document.getElementById('assunto');
+  return {
+    a: ASSUNTOS.filter(function(x){return x.id===sel.value;})[0],
+    nome:   v('nome')   || (LANG==='pt'?'[o seu nome]':'[your name]'),
+    morada: v('morada') || (LANG==='pt'?'[a sua morada]':'[your address]'),
+    tel:    v('telefone'),
+    mail:   v('email'),
+    local:  v('local')  || (LANG==='pt'?'[o local]':'[the place]'),
+    desde:  v('desde'),
+    desc:   v('descricao') || (LANG==='pt'?'[descreva aqui o que se passa]':'[describe what is happening]'),
+    junta:  document.getElementById('junta').checked,
+    fotos:  document.getElementById('fotos').checked,
+    grupo:  document.getElementById('grupo').checked
+  };
+}
+
+/* ---- corpo escrito pelo modelo (sem internet) ---- */
+function corpoModelo(d){
+  var c='';
+  c+='1. '+d.desc; if(!/[.!?]$/.test(d.desc)) c+='.'; c+='\n\n';
+  c+='2. A situação verifica-se em '+d.local; if(d.desde) c+=', '+d.desde; c+='.\n\n';
+  c+='3. Trata-se de uma matéria da competência do Município, com impacto directo nas condições de vida e na segurança da população desta localidade.\n\n';
+  if(d.fotos) c+='4. Junta-se fotografia(s) do local, que documentam o exposto.\n\n';
+  c+='Nestes termos, solicita-se a V. Exa. '+d.a.pedido+', bem como a indicação do prazo previsto para a intervenção.';
+  return c;
+}
+
+/* ---- juntar cabeçalho, corpo e assinatura ---- */
+function montarCarta(d,corpo){
+  var hoje=new Date();
+  var mesesPT=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  var x='';
+  x+='Exmo. Senhor\nPresidente da Câmara Municipal de Penamacor\nLargo do Município\n6090-543 Penamacor\n\n';
+  if(d.junta) x+='Com conhecimento à União de Freguesias de Aldeia do Bispo, Águas e Aldeia de João Pires\n\n';
+  x+='Aldeia de João Pires, '+hoje.getDate()+' de '+mesesPT[hoje.getMonth()]+' de '+hoje.getFullYear()+'\n\n';
+  x+='Assunto: '+d.a.linha+' — Aldeia de João Pires\n\n';
+  x+='Exmo. Senhor Presidente,\n\n';
+  x+=(d.grupo
+      ? d.nome+', residente em '+d.morada+', em nome próprio e dos restantes moradores abaixo assinados,'
+      : d.nome+', residente em '+d.morada+',')
+     +' vem por este meio expor a V. Exa. o seguinte:\n\n';
+  x+=corpo.replace(/\s+$/,'')+'\n\n';
+  x+='Mais se solicita que seja dada resposta escrita a este pedido, para a morada ou contacto abaixo indicados.\n\n';
+  x+='Com os melhores cumprimentos,\n\n'+d.nome+'\n'+d.morada+'\n';
+  if(d.tel)  x+='Telefone: '+d.tel+'\n';
+  if(d.mail) x+='Email: '+d.mail+'\n';
+  if(d.grupo){
+    x+='\n\n— — — — — — — — — — — — — — — — — — — —\nOutros moradores subscritores (nome e assinatura):\n\n';
+    for(var i=1;i<=5;i++) x+=i+'. ______________________________________________\n\n';
+  }
+  return x;
+}
+
+/* ---- pedir o texto ao assistente ---- */
+function pedirTexto(d){
+  if(!CONFIG.API) return Promise.resolve(null);
+
+  var ctrl = (typeof AbortController!=='undefined') ? new AbortController() : null;
+  var relogio = setTimeout(function(){ if(ctrl) ctrl.abort(); }, CONFIG.TEMPO_LIMITE||25000);
+
+  var carga = {
+    assunto:  d.a.id,
+    rubrica:  d.a.linha,    /* linha de "Assunto:" da carta */
+    pedido:   d.a.pedido,   /* o que se pede, em linguagem formal */
+    descricao:d.desc.slice(0,1500),
+    local:    d.local.slice(0,200),
+    desde:    d.desde.slice(0,120),
+    fotos:    d.fotos,
+    grupo:    d.grupo
+  };
+
+  return fetch(urlAPI('/carta'), {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(carga),
+    signal: ctrl?ctrl.signal:undefined
+  })
+  .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+  .then(function(j){
+    clearTimeout(relogio);
+    var c = j && j.corpo ? String(j.corpo).trim() : '';
+    /* segurança: se vier vazio ou absurdamente curto, usa-se o modelo */
+    return c.length > 60 ? c : null;
+  })
+  .catch(function(){ clearTimeout(relogio); return null; });
+}
+
+/* ---- o botão ---- */
+var aGerar=false;
+function gerar(){
+  if(aGerar) return;
+  var d=recolher();
+  var btn=document.getElementById('btnGerar');
+  var est=document.getElementById('estado');
+
+  function mostrar(corpo, veioDaAPI, falhou){
+    document.getElementById('textoCarta').textContent = montarCarta(d, corpo);
+    document.getElementById('notaIA').innerHTML = veioDaAPI ? t('nota_ia') : t('nota_modelo');
+    document.getElementById('resultado').classList.remove('hidden');
+    document.getElementById('msgCopiado').classList.add('hidden');
+
+    var r=document.getElementById('resumoEN');
+    if(LANG==='en'){
+      r.innerHTML='<strong>What the letter says, in plain English:</strong> it is addressed to the Presidente da Câmara Municipal de Penamacor — the mayor'+
+        (d.junta?', copied to the Junta de Freguesia':'')+
+        '. It gives your name and address, sets out the problem at <em>'+d.local+'</em>'+(d.desde?' ('+d.desde+')':'')+
+        ', notes that the matter falls to the Município'+(d.fotos?', says photographs are enclosed':'')+
+        ', and '+d.a.resumo+' It also asks for a written reply and for an indication of when the work will be done'+
+        (d.grupo?', with space for other residents to sign':'')+'.';
+      r.classList.remove('hidden');
+    } else r.classList.add('hidden');
+
+    var para='presidente@cm-penamacor.pt,secretaria.gap@cm-penamacor.pt';
+    var cc=d.junta?'?cc=uniaofreguesias050713@gmail.com&':'?';
+    document.getElementById('btnEmail').href='mailto:'+para+cc+
+      'subject='+encodeURIComponent(d.a.linha+' — Aldeia de João Pires')+
+      '&body='+encodeURIComponent(document.getElementById('textoCarta').textContent);
+
+    if(falhou){ est.innerHTML=t('estado_falhou'); est.className='estado mau'; }
+    else { est.className='estado hidden'; }
+
+    btn.innerHTML=t('btn_gerar'); btn.disabled=false; aGerar=false;
+    document.getElementById('resultado').scrollIntoView({behavior:'smooth'});
+  }
+
+  /* sem API configurada: modelo, sem espera nem aviso */
+  if(!CONFIG.API){ mostrar(corpoModelo(d), false, false); return; }
+
+  aGerar=true;
+  btn.disabled=true;
+  btn.innerHTML=t('btn_gerar_ocupado');
+  est.innerHTML=t('estado_espera'); est.className='estado';
+
+  pedirTexto(d).then(function(corpo){
+    if(corpo) mostrar(corpo, true, false);
+    else      mostrar(corpoModelo(d), false, true);
+  });
+}
+
+function copiar(){
+  var txt=document.getElementById('textoCarta').textContent;
+  var ok=function(){
+    var m=document.getElementById('msgCopiado'); m.classList.remove('hidden');
+    setTimeout(function(){m.classList.add('hidden');},6000);
+  };
+  function fallback(){
+    var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
+    ta.select(); try{document.execCommand('copy'); ok();}catch(e){}
+    document.body.removeChild(ta);
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(ok,fallback);
+  } else fallback();
+}
+
+function limpar(){
+  ['nome','morada','telefone','email','local','desde','descricao'].forEach(function(i){
+    document.getElementById(i).value='';
+  });
+  document.getElementById('fotos').checked=false;
+  document.getElementById('grupo').checked=false;
+  document.getElementById('junta').checked=true;
+  document.getElementById('resultado').classList.add('hidden');
+}
+
+/* arranque */
+(function(){
+  var nav=(navigator.language||'pt').toLowerCase();
+  setLang(nav.indexOf('pt')===0 ? 'pt' : 'en');
+  ajustarOpcoes();
+})();
+
+</script>
+</body>
+</html>

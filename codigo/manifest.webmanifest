@@ -1,0 +1,39 @@
+{
+  "name": "A Eira — Aldeia de João Pires",
+  "short_name": "A Eira",
+  "description": "Avisos da Aldeia de João Pires, agenda do concelho de Penamacor e ajuda para tratar de assuntos com a Câmara.",
+  "lang": "pt-PT",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F2F6FA",
+  "theme_color": "#1B5E8C",
+  "categories": ["government", "utilities", "lifestyle"],
+  "icons": [
+    { "src": "icone-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icone-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Escrever uma queixa",
+      "short_name": "Queixa",
+      "url": "./index.html#carta",
+      "icons": [{ "src": "icone-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Agenda cultural",
+      "short_name": "Agenda",
+      "url": "./index.html#agenda",
+      "icons": [{ "src": "icone-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Telefones úteis",
+      "short_name": "Telefones",
+      "url": "./index.html#telefones",
+      "icons": [{ "src": "icone-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

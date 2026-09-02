@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-PT" data-tema="sereno">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B5E8C">
+<title>Pôr A Eira no telemóvel</title>
+<meta name="description" content="Como instalar A Eira, o portal da Aldeia de João Pires, no telemóvel, passo a passo.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icone-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="icone-192.png">
+<style>
+:root{
+  --bg:#F2F6FA; --card:#FFFFFF; --ink:#16232E; --ink-soft:#4B5D6B;
+  --marca:#1B5E8C; --marca-esc:#12435F; --marca-txt:#FFFFFF;
+  --apoio:#2E7D5B; --link:#12557E; --linha:#D3E0EA;
+  --alerta-bg:#FFF4DA; --alerta-borda:#E3BE6A; --alerta-txt:#7A5600;
+  --perigo-bg:#FDE7E4; --perigo-borda:#E0968A; --perigo-txt:#9B2E1C;
+  --chip:#E8EFF5;
+}
+*{box-sizing:border-box}
+html{font-size:19px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Verdana","Segoe UI",Tahoma,Arial,sans-serif;font-size:1rem;line-height:1.6}
+.wrap{width:100%;max-width:44rem;margin:0 auto;padding:0 .9rem}
+header{background:var(--marca);color:var(--marca-txt);padding:1.1rem 0}
+header .linha{display:flex;align-items:center;gap:.8rem}
+header img{width:3.2rem;height:3.2rem;border-radius:.8rem;flex:0 0 auto}
+header h1{margin:0;font-size:1.3rem;line-height:1.25}
+header p{margin:.25rem 0 0;font-size:.9rem;opacity:.95}
+a.voltar{display:inline-block;margin-top:.9rem;color:var(--marca-txt);font-size:.9rem;font-weight:700}
+h2{font-size:1.25rem;margin:2rem 0 .3rem;border-bottom:4px solid var(--marca);
+  display:inline-block;padding-bottom:.2rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.4rem 0 .4rem}
+.lead{color:var(--ink-soft);margin:.7rem 0 1.2rem}
+.box{background:var(--card);border:2px solid var(--linha);border-radius:.9rem;padding:1rem;margin:1rem 0}
+.box.destaque{border-color:var(--apoio);border-width:3px}
+ol{padding-left:1.4rem;margin:.6rem 0}
+ol li{margin-bottom:.7rem}
+.passo{display:block;font-weight:700}
+.aviso{background:var(--alerta-bg);border:2px solid var(--alerta-borda);border-radius:.9rem;
+  padding:.9rem 1rem;margin:1rem 0;font-size:.95rem}
+.aviso strong{color:var(--alerta-txt)}
+.perigo{background:var(--perigo-bg);border-color:var(--perigo-borda)}
+.perigo strong{color:var(--perigo-txt)}
+.btn{font-family:inherit;font-size:1.05rem;font-weight:700;padding:.9rem 1.1rem;border-radius:.7rem;
+  border:2px solid transparent;cursor:pointer;text-decoration:none;display:block;text-align:center;
+  width:100%;min-height:3.2rem;margin:.5rem 0}
+.btn-principal{background:var(--marca);color:var(--marca-txt);border-color:var(--marca)}
+.btn-2{background:var(--card);color:var(--ink);border-color:var(--linha)}
+.hidden{display:none}
+.selo{display:inline-block;background:var(--chip);color:var(--marca-esc);font-size:.8rem;
+  font-weight:700;border-radius:1rem;padding:.15rem .8rem;margin-bottom:.5rem}
+.telefone{font-size:.9rem;color:var(--ink-soft);margin:.2rem 0 0}
+footer{background:#16232E;color:#D6E3EC;margin-top:2.5rem;padding:1.5rem 0;font-size:.9rem}
+footer a{color:#A9C9E0}
+@media (min-width:40rem){
+  html{font-size:20px}
+  header h1{font-size:1.6rem}
+  .btn{width:auto;display:inline-block;margin-right:.6rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="linha">
+      <img src="icone-192.png" alt="">
+      <div>
+        <h1>Pôr A Eira no telemóvel</h1>
+        <p>O portal da Aldeia de João Pires como aplicação, com ícone no seu ecrã.</p>
+      </div>
+    </div>
+    <a class="voltar" href="index.html">← Voltar a A Eira</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="lead">Não é preciso ir a nenhuma loja nem instalar nada de estranho.
+  O próprio telemóvel faz isto em três toques. Depois de instalado, o portal abre
+  como qualquer outra aplicação — e a maior parte funciona <strong>mesmo sem
+  internet</strong>, o que dá jeito quando a rede falha na aldeia.</p>
+
+  <div class="box destaque">
+    <span class="selo">A maneira mais simples</span>
+    <h2 style="margin-top:.2rem">Instalar em três toques</h2>
+    <p>Se o seu telemóvel deixar, o botão em baixo trata de tudo:</p>
+    <button class="btn btn-principal hidden" id="btnInstalar" onclick="instalar()">📲 Instalar agora</button>
+    <p class="telefone" id="semBotao">Se não aparecer aqui nenhum botão, siga as instruções da sua marca de telemóvel, aqui em baixo. É igualmente simples.</p>
+  </div>
+
+  <h2>Se tem Android</h2>
+  <p class="lead">Samsung, Xiaomi, Huawei, Motorola, Oppo — quase todos os telemóveis
+  que não são iPhone.</p>
+  <div class="box">
+    <ol>
+      <li><span class="passo">Abra o portal no Chrome.</span>
+          É o browser com a bola vermelha, amarela, verde e azul.</li>
+      <li><span class="passo">Toque nos três pontinhos ⋮</span>
+          no canto superior direito do ecrã.</li>
+      <li><span class="passo">Escolha «Adicionar ao ecrã principal»</span>
+          ou «Instalar aplicação». Conforme o telemóvel, pode chamar-se uma coisa ou outra.</li>
+      <li><span class="passo">Toque em «Adicionar» ou «Instalar».</span>
+          Pronto — o ícone da capelinha fica no seu ecrã, junto às outras aplicações.</li>
+    </ol>
+  </div>
+
+  <h2>Se tem iPhone</h2>
+  <div class="box">
+    <ol>
+      <li><span class="passo">Abra o portal no Safari.</span>
+          Tem de ser o Safari — a bússola azul. No Chrome do iPhone isto não aparece.</li>
+      <li><span class="passo">Toque no quadradinho com a seta para cima</span>
+          ⬆️, ao fundo do ecrã, ao centro.</li>
+      <li><span class="passo">Deslize a lista para baixo</span>
+          até encontrar «Adicionar ao ecrã principal».</li>
+      <li><span class="passo">Toque em «Adicionar»</span>, no canto superior direito.</li>
+    </ol>
+  </div>
+
+  <div class="aviso">
+    <strong>Como saber se correu bem?</strong> Feche tudo e procure no ecrã do telemóvel
+    o ícone azul com uma capelinha branca, chamado <em>A Eira</em>.
+    Se estiver lá, está feito. Não ocupa praticamente espaço nenhum.
+  </div>
+
+  <div class="aviso">
+    <strong>Precisa de ajuda?</strong> Peça a um filho, a um neto ou a um vizinho —
+    leva-lhes meio minuto. Ou apareça na Junta de Freguesia à quarta-feira, a partir
+    das 19h30, que alguém ajuda.
+  </div>
+
+  <!-- ==========================================================
+       SECÇÃO DA APK — ESCONDIDA ATÉ A APK EXISTIR
+       ..........................................................
+       O botão apontava para app/a-eira.apk, ficheiro que ainda
+       não foi gerado (T-12 do roadmap). Sem ele, quem carregasse
+       apanhava uma página de erro.
+
+       PARA VOLTAR A LIGAR, depois de gerar a APK no PWABuilder e
+       de a pôr no site em app/a-eira.apk: apague a linha que abre
+       o comentário logo a seguir a esta caixa, e a linha que o
+       fecha, mais abaixo, imediatamente antes do título
+       «Perguntas que nos fazem».
+       ========================================================== -->
+  <!--
+  <h2>E a APK?</h2>
+  <p class="lead">Há quem prefira o ficheiro de instalação do Android, a chamada APK.
+  Aqui fica — mas leia primeiro o aviso, porque é honesto dizê-lo.</p>
+
+  <div class="aviso perigo">
+    <strong>Porque é que aconselhamos antes o método de cima.</strong>
+    Para instalar uma APK, o Android obriga a autorizar «aplicações de fontes
+    desconhecidas» e mostra avisos de segurança pelo caminho. Essa autorização
+    fica ligada — e é exactamente por aí que entram muitas das burlas que andam
+    a apanhar gente. Habituar-se a carregar em «instalar na mesma» é um hábito
+    perigoso de ganhar. O método de cima dá o mesmo ícone e o mesmo resultado,
+    sem abrir essa porta.
+  </div>
+
+  <div class="box">
+    <h3>Se ainda assim quiser a APK</h3>
+    <a class="btn btn-2" id="ligacaoAPK" href="app/a-eira.apk" download>⬇️ Descarregar a APK</a>
+    <ol>
+      <li><span class="passo">Toque no botão de descarregar.</span>
+          O telemóvel avisa que este tipo de ficheiro pode ser perigoso — toque em
+          «Transferir mesmo assim».</li>
+      <li><span class="passo">Abra o ficheiro descarregado.</span>
+          Fica nas Transferências, ou toque no aviso que aparece em cima.</li>
+      <li><span class="passo">O Android vai pedir autorização.</span>
+          Toque em «Definições» e ligue «Permitir desta origem» para o Chrome.</li>
+      <li><span class="passo">Volte atrás e toque em «Instalar».</span></li>
+      <li><span class="passo">Depois de instalado, volte às Definições
+          e desligue outra vez essa autorização.</span>
+          Este passo é importante e é o que quase toda a gente se esquece de fazer.</li>
+    </ol>
+    <p class="telefone">O Google Play Protect pode mostrar um aviso a dizer que a
+    aplicação não foi verificada. É normal em aplicações fora da loja e não quer
+    dizer que haja algum problema com esta — mas é também exactamente o que um
+    programa malicioso diria. Instale apenas ficheiros que venha buscar a este
+    endereço, e nunca um que lhe chegue por mensagem ou por email.</p>
+  </div>
+  -->
+
+  <h2>Perguntas que nos fazem</h2>
+  <div class="box">
+    <h3>Isto gasta dados do telemóvel?</h3>
+    <p>Muito pouco. Depois de instalado, quase tudo fica guardado no telemóvel.
+    Só vai à internet para ir buscar a agenda e para escrever as cartas.</p>
+    <h3>Ocupa muito espaço?</h3>
+    <p>Menos do que uma fotografia.</p>
+    <h3>Preciso de fazer conta ou dar a minha senha?</h3>
+    <p>Não. Não há contas, não há registos, não há palavras-passe.
+    Se alguma vez alguma coisa lhe pedir isso em nome deste portal, é burla.</p>
+    <h3>Como desinstalo?</h3>
+    <p>Como qualquer outra aplicação: carregue no ícone sem largar e escolha
+    «Desinstalar» ou «Remover».</p>
+    <h3>Funciona sem internet?</h3>
+    <p>O guia «Como se faz», os telefones e as romarias de todos os anos, sim.
+    A agenda mostra a última que tiver ido buscar. Escrever cartas com o
+    assistente precisa de rede.</p>
+  </div>
+
+  <a class="btn btn-principal" href="index.html">← Voltar ao portal</a>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>A Eira</strong> — o portal da Aldeia de João Pires, feito por gente
+    da terra, para a gente da terra.</p>
+    <p><a href="index.html">Voltar ao portal</a></p>
+  </div>
+</footer>
+
+<script>
+var convite=null;
+window.addEventListener('beforeinstallprompt', function(ev){
+  ev.preventDefault(); convite=ev;
+  document.getElementById('btnInstalar').classList.remove('hidden');
+  document.getElementById('semBotao').classList.add('hidden');
+});
+function instalar(){
+  if(!convite) return;
+  convite.prompt();
+  convite.userChoice.then(function(){
+    convite=null;
+    document.getElementById('btnInstalar').classList.add('hidden');
+  });
+}
+/* se já está instalado, não vale a pena insistir */
+window.addEventListener('appinstalled', function(){
+  document.getElementById('btnInstalar').classList.add('hidden');
+  document.getElementById('semBotao').textContent='Já está instalado neste telemóvel. Procure o ícone da capelinha no seu ecrã.';
+  document.getElementById('semBotao').classList.remove('hidden');
+});
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+}
+</script>
+</body>
+</html>
