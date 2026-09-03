@@ -6,6 +6,55 @@
 
 Formato: data · o que mudou · porquê · IDs afectados.
 
+## 2026-09-03 — v0.18 · Os contactos da Câmara, reconferidos
+
+Sem decisão nova. Fecha o `[L]` do D-021 e corrige o que se encontrou pelo
+caminho, lendo a página oficial de Contactos e Horários do Município,
+actualizada por eles a 29/7/2026.
+
+**O `serv.obras@` estava certo.** Obras e Urbanismo tem quatro endereços:
+secretaria `serv.obras@` (entrada), obras particulares `arquitecto@`, obras
+públicas `obras.publicas@` (empreitadas municipais) e fiscalização
+`fiscalizacao@`. `D-021`, `08-CONTEUDOS`.
+
+**A água estava errada no dossiê.** A página oficial lista
+**`sas@cm-penamacor.pt`**; o dossiê tinha `sas.info@`, e foi esse que entrou no
+portal na v0.17. Corrigido. A divergência fica registada para verificação —
+podem existir os dois. `M-01.1`, `08-CONTEUDOS`.
+
+**Obras e Urbanismo não é no edifício da Câmara** e fecha às **16h00**, hora e
+meia antes dos outros serviços. Fica no antigo Quartel, Largo Tenente Coronel
+Júlio Rodrigues da Silva. Quem lá vá às 17h encontra a porta fechada — e o
+portal não dizia isto em lado nenhum. `M-01.2`.
+
+**A ficha do guia sobre obras cresceu**, nas duas línguas: perguntar e requerer
+são coisas diferentes (a Câmara tem 29 impressos, incluindo «Direito à
+Informação» e «Pedido de Informação Prévia»); onde é e a que horas; e o aviso de
+que **pedir a legalização de obra já feita é declarar por escrito que houve obra
+sem licença** — caminho certo, mas convém telefonar antes. `M-01.2`, `D-002`.
+
+**O executivo tem cinco membros, não três.** Faltavam o vereador Filipe André
+Ramos Leitão Batista e a vereadora Noémia Campos Crucho. `08-CONTEUDOS`.
+
+**Contactos novos no dossiê:** Protecção Civil, assessoria jurídica, arquivo,
+tesouraria, execuções fiscais, Espaço do Cidadão, Assembleia Municipal, e a
+**Plataforma de Denúncias** do Município, que o portal não sabia que existia.
+
+**O Worker deixa de escrever jargão.** «Enquadramento instrutório»,
+«esclarecimento cabal», «devidamente regularizada» e afins ficam proibidos por
+instrução: formal é para ser entendido, não para encher. E a IA passa a ter
+regra contra inflacionar a gravidade — dois dias de contentor cheio não
+«compromete gravemente a salubridade pública». Exagerar tira credibilidade a
+quem assina. `M-02.1`, `R-05`.
+
+**Também nesta versão**, escrito e não registado na v0.17: a nota de
+privacidade dizia «deste telemóvel» numa página que também se abre no
+computador, e passou a «deste aparelho»; e os títulos dos grupos da lista de
+assuntos passaram a maiúsculas entre travessões, porque a lista aberta é
+desenhada pelo sistema e nem todos aceitam estilo.
+
+`sw.js` → **v10**. O `worker.js` mudou: commit antes de colar no painel (R-16).
+
 ## 2026-09-03 — v0.17 · A carta vai a quem a trata
 
 **`D-021`**. Notado a testar o D-019: um pedido de informação urbanística ia

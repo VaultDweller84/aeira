@@ -5,7 +5,8 @@
 # 08 — Conteúdos investigados
 
 Todos os factos abaixo foram verificados em **Setembro de 2026** nas fontes
-indicadas no fim. **Têm validade temporal:** rever pelo menos uma vez por ano,
+indicadas no fim. A secção da Câmara foi reconferida a **3/9/2026** contra a
+página oficial de Contactos e Horários, actualizada pelo Município a 29/7/2026. **Têm validade temporal:** rever pelo menos uma vez por ano,
 e o prazo da limpeza de terrenos todos os Março.
 
 ## Câmara Municipal de Penamacor `[F]`
@@ -18,10 +19,25 @@ e o prazo da limpeza de terrenos todos os Março.
 | Presidente | José Miguel Ribeiro de Oliveira (PS) · presidente@cm-penamacor.pt |
 | Vice-presidente | Pedro Miguel Correia Vaz Silveiro (PS) — obras, urbanismo |
 | Vereadora | Guida Maria Matos Esteves Leal (PS) — educação, social, ambiente |
+| Vereador | Filipe André Ramos Leitão Batista · vereador.fb@cm-penamacor.pt |
+| Vereadora | Noémia Campos Crucho · vereadora.noemia@cm-penamacor.pt |
 | Geral | secretaria.gap@cm-penamacor.pt |
-| Obras | serv.obras@cm-penamacor.pt |
+| **Obras e Urbanismo** | Largo Tenente Coronel Júlio Rodrigues da Silva (ex-Quartel), 6090-545 · **2.ª a 6.ª, 9h00–12h30 e 14h00–16h00** (fecha antes do resto) |
+| — secretaria (entrada) | serv.obras@cm-penamacor.pt |
+| — obras particulares | arquitecto@cm-penamacor.pt |
+| — obras públicas (empreitadas) | obras.publicas@cm-penamacor.pt |
+| — fiscalização | fiscalizacao@cm-penamacor.pt |
+| Requerimentos de obras | 29 impressos em `cm-penamacor.pt/servicos-municipais/obras-e-urbanismo/requerimentos`, incluindo «Direito à Informação» e «Pedido de Informação Prévia». Dúvidas: secretaria.gap@ · 277 394 106 |
+| Espaço do Cidadão / secretaria | secretaria@cm-penamacor.pt · 9h00–12h30 e 14h00–16h00 |
+| Tesouraria · Execuções fiscais | tesouraria@ · sef@cm-penamacor.pt |
+| Protecção Civil | protecao.civil@cm-penamacor.pt · 926 353 266 |
+| Assessoria jurídica | jurista@cm-penamacor.pt |
+| Arquivo Municipal | arquivo@cm-penamacor.pt · 277 394 106 |
+| Comunicação | gab.info@cm-penamacor.pt |
+| Assembleia Municipal | secretariado@am-penamacor.pt |
+| Plataforma de Denúncias | `cm-penamacor.wiretrust.pt` |
 | Ação social | 277 394 040 · gab.social@cm-penamacor.pt · Rua dos Bombeiros Voluntários |
-| Águas | sas.info@cm-penamacor.pt · WhatsApp 922 231 350 |
+| Águas | **sas@cm-penamacor.pt** (página oficial de contactos, 29/7/2026) · WhatsApp 922 231 350. ⚠ O `sas.info@` consta de registo anterior deste dossiê e não aparece na página de contactos — a verificar qual está activo |
 | **Piquete das águas** | **963 183 208** — fora de horas |
 | Veterinário municipal | 922 231 473 |
 | Biblioteca | 277 394 931 · CPCJ 963 183 195 |

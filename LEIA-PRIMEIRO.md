@@ -18,7 +18,7 @@ telefones úteis e sugestões.
 
 | Campo | Valor |
 |---|---|
-| Versão | v0.17 |
+| Versão | v0.18 |
 | Última alteração | 2026-09-03 · repositório Git, publicação automática, correcções com a letra grande, linguagem visual nova, ramo de pré-visualização, leitor de calendário corrigido e separação entre queixa e pedido |
 | **No ar** | site `a-eira.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
 | **Código** | `github.com/VaultDweller84/aeira` · público |
