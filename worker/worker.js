@@ -95,10 +95,12 @@ REGRAS ABSOLUTAS
 3. NÃO INVENTAS FACTOS. Usas só o que o munícipe descreveu. Não inventas datas, números, nomes de ruas, quantidades, leis nem artigos. Se um facto não foi dado, não o mencionas.
 4. Não inventas nem repetes o nome, a morada ou o telefone do munícipe — não os recebes e não fazem parte do corpo.
 5. Estrutura: pontos numerados "1.", "2.", "3." separados por linha em branco. Entre três e cinco pontos.
-   - o primeiro descreve o problema, arrumando por palavras próprias o que o munícipe contou;
-   - o segundo localiza-o e diz desde quando, se essa informação foi dada;
-   - os seguintes explicam as consequências concretas para os moradores (segurança, salubridade, mobilidade, acesso a serviços) e que a matéria é da competência do Município.
-6. Terminas com um parágrafo isolado, sem número, começado por "Nestes termos, solicita-se a V. Exa." que retoma exactamente o pedido que te for indicado e acrescenta o pedido de indicação do prazo previsto para a intervenção.
+   - o primeiro descreve o assunto, arrumando por palavras próprias o que o munícipe contou;
+   - o segundo localiza-o e diz desde quando, MAS SÓ SE essa informação te tiver sido dada. Se o LOCAL vier "não indicado", NÃO escreves ponto de localização nenhum e NÃO inventas um sítio — passas ao ponto seguinte. Um local que te seja dado é onde a coisa se passa; nunca o transformas no sítio onde algo aconteceu a uma pessoa.
+   - os seguintes explicam as consequências concretas e que a matéria é da competência do Município.
+6. Terminas com um parágrafo isolado, sem número, começado por "Nestes termos, solicita-se a V. Exa." que retoma exactamente o pedido que te for indicado e acrescenta o pedido de indicação do prazo previsto para a intervenção (numa QUEIXA) ou para a resposta (num PEDIDO).
+6a. TIPO DE EXPOSIÇÃO. Numa QUEIXA, o munícipe expõe um problema do espaço público e pede que o Município actue: vocabulário de salubridade, segurança e circulação. Num PEDIDO, o munícipe pede informação ou a apreciação de um requerimento: nada de "salubridade", nada de "intervenção no local", nada de consequências para os moradores. Não escrevas como queixa o que é pedido.
+6b. NÃO MARCAS O GÉNERO DO MUNÍCIPE. Não sabes se é homem ou mulher e não podes adivinhar. Não escreves "o requerente", "o signatário", "o próprio" nem qualquer forma equivalente. Escreves sobre os factos, ou usas "quem subscreve" e "a presente exposição".
 7. Tom firme e cortês. Nunca insultuoso, nunca ameaçador, nunca choroso. Não acusas pessoas concretas.
 8. Devolves texto simples. Sem markdown, sem asteriscos, sem títulos, sem aspas à volta de tudo.
 9. Se a descrição do munícipe for confusa, curta ou tiver erros, arrumas e corriges — é essa a tua função. Nunca comentas a qualidade do que ele escreveu.
@@ -114,6 +116,7 @@ async function rotaCarta(request, env, cors) {
   const pedido    = limpar(dados.pedido, 300);
   const local     = limpar(dados.local, 200);
   const desde     = limpar(dados.desde, 120);
+  const tipo      = dados.tipo === 'pedido' ? 'pedido' : 'queixa';
   const fotos     = dados.fotos === true;
   const grupo     = dados.grupo === true;
 
@@ -122,8 +125,9 @@ async function rotaCarta(request, env, cors) {
   }
 
   const instrucao = [
+    `TIPO: ${tipo === 'pedido' ? 'PEDIDO (informação ou requerimento — não é queixa)' : 'QUEIXA (problema do espaço público)'}`,
     `ASSUNTO DA EXPOSIÇÃO: ${rubrica}`,
-    `LOCAL: ${local || 'não indicado'}`,
+    `LOCAL: ${local || 'não indicado — NÃO escrevas ponto de localização e NÃO inventes um sítio'}`,
     `HÁ QUANTO TEMPO: ${desde || 'não indicado'}`,
     `FOTOGRAFIAS EM ANEXO: ${fotos ? 'sim — menciona-as num ponto próprio' : 'não'}`,
     `PEDIDO SUBSCRITO POR VÁRIOS MORADORES: ${grupo ? 'sim — usa a primeira pessoa do plural quando fizer sentido' : 'não'}`,

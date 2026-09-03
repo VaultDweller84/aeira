@@ -6,6 +6,102 @@
 
 Formato: data · o que mudou · porquê · IDs afectados.
 
+## 2026-09-03 — v0.16 · As regras passam a ter quem as verifique
+
+Sem alterações ao produto. **`D-020`**.
+
+**Porquê.** A v0.14 foi para o `worker.js` do repositório e a documentação
+ficou na v0.13 — descoberto por acaso, três sessões depois de a regra ter sido
+escrita. Ser o primeiro ficheiro a ser lido garante que a regra é conhecida,
+não que seja cumprida. O `LEIA-PRIMEIRO.md` não tinha gate nenhum.
+
+**Dois ficheiros novos:** `.github/verificar-coerencia.sh` e
+`.github/workflows/coerencia.yml`. A cada envio para o GitHub, verifica-se que
+uma alteração a `codigo/` traz `VERSAO` nova no `sw.js`, e que uma alteração ao
+produto traz `CHANGELOG.md`. Alterações só a `.md` passam em silêncio. Mexer no
+`worker/` gera lembrete de colar no painel, sem falhar. `R-08`, `R-16`.
+
+**Testado em dez casos** antes de ir: portal sem `VERSAO`, `sw.js` tocado com a
+`VERSAO` igual, commit correcto, só documentação, Worker sem `CHANGELOG`, os
+casos por ramo, e a junção do `desenho` ao `main`.
+
+**Dois furos encontrados a testar, ambos corrigidos antes de publicar:** a regra
+do `CHANGELOG` daria vermelho em todos os commits do ramo `desenho` e em todas
+as junções para o `main` — ou seja, no caminho normal de publicação inteiro. Nos
+dois casos passa a lembrete. Fica registado no ADR-020 que isso abre um buraco:
+uma alteração ao portal pode chegar ao ar sem `CHANGELOG` se ninguém o escrever.
+A alternativa era uma verificação que dá vermelho sempre, e essa deixa-se de ler.
+
+**A regra do `CHANGELOG` não falha no ramo `desenho`.** O ADR-018 manda o
+`codigo/` para lá e os `.md` para o `main`: um commit de desenho nunca traz o
+`CHANGELOG`, e falhar aí ensinaria a ignorar a cruz vermelha. A regra da
+`VERSAO` falha nos dois ramos — uma pré-visualização com a `VERSAO` velha mostra
+a versão errada no telemóvel.
+
+**Corre-se à mão**, sem GitHub: `bash .github/verificar-coerencia.sh HEAD~1 HEAD`.
+
+**Vermelho no GitHub não quer dizer portal partido** — quer dizer que faltou uma
+regra. Está escrito no topo dos dois ficheiros, para quem lá chegar daqui a seis
+meses.
+
+**Rejeitado:** comparar o `worker.js` do repositório com o que corre mesmo no
+Cloudflare. Mataria o R-16, mas exige uma chave de API guardada no GitHub —
+mais uma peça e mais um segredo, contra C-02 e C-03.
+
+**O R-08 desce de 6 para 4.** O R-16 mantém-se: ninguém verifica o que está
+colado no painel.
+
+## 2026-09-03 — v0.15 · Queixa e pedido não são a mesma coisa
+
+Encontrado a fazer a T-06 — passar um caso real pelo gerador. Um pedido de
+apoio social produziu uma carta com um facto inventado, com cópia à Junta que
+ninguém escolheu, e com a munícipe tratada no masculino. **`D-019`**.
+
+**O facto inventado.** O campo «onde é o problema?» foi preenchido com a morada
+de casa, por não haver outra coisa que lá coubesse, e a carta saiu a dizer que a
+perda de emprego «ocorreu na residência do requerente». Não foi desobediência da
+IA: a instrução mandava localizar a situação. `R-05`, `M-02.1`.
+
+**A cópia à Junta vinha marcada de fábrica.** Uma carta que declara desemprego e
+falta de meios seguia com conhecimento à União de Freguesias sem que ninguém o
+tivesse escolhido. Numa terra onde toda a gente se conhece, isso é divulgar a
+situação de alguém aos vizinhos. Passa a seguir o assunto e nunca vem marcada.
+`M-01.1`.
+
+**Não era defeito da IA.** O modelo escrito à mão — o caminho de degradação do
+ADR-007 — escrevia sempre «2. A situação verifica-se em {local}», e com o campo
+vazio escrevia `[o local]` à letra. Passa a calcular a numeração dos pontos: sem
+local não há parágrafo de local. `M-01.1`, `D-007`.
+
+**Cada assunto passa a declarar o que é.** `tipo` (`queixa`, `pedido`, `apoio`) e
+`junta`. As perguntas 6 e 7 acompanham o tipo e a que não se aplica desaparece.
+Num pedido de informação urbanística, a 6 passa a «A que casa ou terreno diz
+respeito?» e a 7 sai. `M-01.1`, `E-05`.
+
+**O apoio social sai do gerador.** Quem escolhe esse assunto recebe o caminho
+certo — Ação Social do Município, 277 394 040, `gab.social@cm-penamacor.pt`,
+morada e horário — e o conselho de telefonar antes. A informação já estava no
+portal, na ficha do guia; era o gerador que a contradizia. Fica a porta aberta
+para escrever, se já lá tiver ido e não tiver tido resposta. `M-01.1`, `F-01`.
+
+**O género deixa de ser presumido.** As instruções do Worker proíbem «o
+requerente», «o signatário» e equivalentes. Corrige-se sem enviar nada de novo:
+não se diz à IA qual é o género, diz-se que não o marque. Atingia metade do
+público em todas as cartas. `M-02.1`.
+
+**A promessa de privacidade foi corrigida** para dizer a verdade: envia-se a
+descrição e, se estiver preenchido, o local. Invariante nova, I-09.
+
+**Documentação reposta.** A entrada da v0.14 nunca chegou ao repositório: o
+`worker.js` foi actualizado mas o `CHANGELOG.md`, o `LEIA-PRIMEIRO.md` e o
+`06-RISKS.md` ficaram na v0.13. Vão agora, com esta.
+
+**Risco novo:** R-18 — assunto acrescentado sem `tipo` nem `junta` devolve o
+defeito em silêncio.
+
+`sw.js` → **v6**. O `worker.js` mudou: vai a commit antes de ser colado no
+painel (R-16).
+
 ## 2026-09-02 — v0.14 · O calendário passa a dizer a hora certa
 
 Duas avarias no leitor do Google Calendar, encontradas a preparar a T-03 —
