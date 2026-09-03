@@ -178,6 +178,14 @@ input[type=text],input[type=email],input[type=tel],select,textarea{
 input:focus,select:focus,textarea:focus{outline:3px solid var(--marca);outline-offset:1px;border-color:var(--marca)}
 textarea{min-height:7rem;resize:vertical}
 select{cursor:pointer}
+/* A lista aberta é desenhada pelo sistema e nem todos os telemóveis
+   aceitam estilo. Onde aceitam, o título do grupo destaca-se do que
+   se pode escolher; onde não aceitam, os travessões do próprio texto
+   fazem o trabalho. D-021 */
+select optgroup{font-weight:700;font-style:normal;color:var(--ink-soft);
+  background:var(--chip)}
+select option{font-weight:400;color:var(--ink);background:var(--card);
+  padding-left:.6rem}
 .check{display:flex;gap:.7rem;align-items:flex-start;margin-top:.9rem;font-size:.98rem}
 .check input{width:2rem;height:2rem;margin-top:.1rem;flex:0 0 auto;accent-color:var(--marca)}
 
@@ -691,8 +699,8 @@ pt:{
  q6_pedido:'6. A que casa ou terreno diz respeito?', q6d_pedido:'A morada do sítio de que está a falar.', q6p_pedido:'Ex.: Rua do Outeiro, n.º 3',
  enc_apoio:'<strong>Este pedido não se faz por carta ao Presidente.</strong><br>Os apoios sociais do Município — tarifa social da água, Cartão Penamacor Social, apoio à habitação, despesas de saúde — tratam-se na Unidade de Educação, Ação Social e Saúde, e quase todos têm um impresso próprio que se preenche lá.<br><br>📞 <a href="tel:277394040">277 394 040</a><br>✉️ <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a><br>📍 Rua dos Bombeiros Voluntários, Penamacor<br>🕘 2.ª a 6.ª, das 9h00 às 12h30 e das 14h00 às 16h00<br><br>Leve o cartão de cidadão. <strong>Telefone antes</strong> a perguntar que papéis são precisos — poupa uma viagem.<br><br>Se já lá foi e não teve resposta, aí sim vale a pena escrever: escolha em cima «Outro assunto (escrevo eu)» e conte o que se passou.',
  enc_botao:'Ver no guia «Como se faz»',
- grupo_queixas:'Problemas para expor à Câmara',
- grupo_pedidos:'Pedidos, informações e apoios',
+ grupo_queixas:'— PROBLEMAS PARA EXPOR À CÂMARA —',
+ grupo_pedidos:'— PEDIDOS, INFORMAÇÕES E APOIOS —',
  nota_obras:'<strong>Isto serve para <em>perguntar</em>, não para licenciar.</strong> Para pedir informação — se precisa de licença, o que pode fazer no seu terreno, que papéis são necessários — esta carta serve muito bem. Mas <strong>licenciar uma obra ou entregar uma comunicação prévia faz-se em impresso próprio da Câmara</strong>, com plantas e termos de responsabilidade, e esta carta não substitui isso. Em caso de dúvida, telefone antes: <a href="tel:277394106">277 394 106</a>.',
  falta_local:'<strong>Falta dizer onde é.</strong> Sem o sítio, a Câmara não sabe onde ir ver — e o pedido costuma ficar parado. Escreva a rua e um sinal que qualquer pessoa reconheça. Se mesmo assim não souber, carregue outra vez no botão e a carta é escrita à mesma.',
  q8:'8. Conte o que se passa, por palavras suas', q8d:'Não se preocupe com a maneira de escrever. Escreva como fala.',
@@ -706,7 +714,7 @@ pt:{
  btn_gerar_ocupado:'<span class="girar">⏳</span> A escrever a sua carta…',
  estado_espera:'A escrever a sua carta. Demora alguns segundos — não feche a página.',
  estado_falhou:'Não foi possível ligar ao assistente de escrita. A carta foi feita pelo modelo normal — está correcta e pode enviá-la à mesma.',
- nota_privacidade:'O seu nome, morada, telefone e email <strong>não saem deste telemóvel</strong>. Para escrever a carta só é enviado o que escreveu na descrição e, se o tiver preenchido, o local.',
+ nota_privacidade:'O seu nome, morada, telefone e email <strong>não saem deste aparelho</strong> — nem para a Câmara, nem para lado nenhum, até ser o próprio a enviar a carta. Para a escrever só é enviado o que escreveu na descrição e, se o tiver preenchido, o local.',
  nota_ia:'Este texto foi redigido por um assistente automático a partir do que escreveu. <strong>Leia antes de enviar</strong> e mude o que quiser — pode escrever directamente na caixa.',
  nota_modelo:'Texto feito a partir de um modelo. Leia antes de enviar e mude o que quiser — pode escrever directamente na caixa.',
  res_h3:'A sua carta está pronta',
@@ -818,8 +826,8 @@ en:{
  q6_pedido:'6. Which house or plot does this concern?', q6d_pedido:'The address of the place you are asking about.', q6p_pedido:'e.g. Rua do Outeiro 3',
  enc_apoio:'<strong>This is not done by letter to the Presidente.</strong><br>The Câmara\'s social support — reduced water tariff, Cartão Penamacor Social, housing help, health costs — is handled by the Unidade de Educação, Ação Social e Saúde, and nearly all of it has its own form, filled in there.<br><br>📞 <a href="tel:277394040">277 394 040</a><br>✉️ <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a><br>📍 Rua dos Bombeiros Voluntários, Penamacor<br>🕘 Monday to Friday, 9.00–12.30 and 14.00–16.00<br><br>Take your ID with you. <strong>Ring first</strong> to ask which papers are needed — it saves a journey.<br><br>If you have already been and had no answer, then a letter is worth writing: pick «Something else (I will write it myself)» above and say what happened.',
  enc_botao:'See it in the «How to» guide',
- grupo_queixas:'Problems to report to the Câmara',
- grupo_pedidos:'Requests, information and support',
+ grupo_queixas:'— PROBLEMS TO REPORT TO THE CÂMARA —',
+ grupo_pedidos:'— REQUESTS, INFORMATION AND SUPPORT —',
  nota_obras:'<strong>This is for <em>asking</em>, not for applying.</strong> To request information — whether you need consent, what you may do on your land, which papers are required — this letter works well. But <strong>applying for building consent, or filing a comunicação prévia, is done on the Câmara\'s own form</strong>, with drawings and signed technical declarations, and this letter does not replace that. If in doubt, ring first: <a href="tel:277394106">277 394 106</a>.',
  falta_local:'<strong>The place is missing.</strong> Without it the Câmara does not know where to go and look, and the request usually stalls. Give the street and a landmark anyone would recognise. If you really do not know, press the button again and the letter will be written anyway.',
  q8:'8. Tell us what is happening, in your own words', q8d:'Do not worry about the wording. Write it as you would say it.',
@@ -833,7 +841,7 @@ en:{
  btn_gerar_ocupado:'<span class="girar">⏳</span> Writing your letter…',
  estado_espera:'Writing your letter. It takes a few seconds — please do not close the page.',
  estado_falhou:'Could not reach the writing assistant. The letter was built from the standard template instead — it is perfectly good and you can send it as it is.',
- nota_privacidade:'Your name, address, telephone and email <strong>never leave this phone</strong>. Only what you wrote in the description — and the location, if you filled it in — is sent, so the letter can be written.',
+ nota_privacidade:'Your name, address, telephone and email <strong>never leave this device</strong> — not to the Câmara, not anywhere, until you send the letter yourself. Only what you wrote in the description — and the location, if you filled it in — is sent, so the letter can be written.',
  nota_ia:'This text was drafted by an automatic assistant from what you wrote. <strong>Read it before sending</strong> and change anything you like — you can type straight into the box.',
  nota_modelo:'Text built from a standard template. Read it before sending and change anything you like — you can type straight into the box.',
  res_h3:'Your letter is ready',
@@ -2362,7 +2370,7 @@ function desenharTelefones(){
      2) do modelo escrito à mão, se a API falhar ou não estiver
         configurada. O utilizador nunca fica sem carta.
    Dados pessoais (nome, morada, telefone, email) NUNCA são
-   enviados para lado nenhum — são juntos aqui, no telemóvel.
+   enviados para lado nenhum — são juntos aqui, no aparelho de quem escreve.
    ========================================================= */
 function v(id){return document.getElementById(id).value.trim();}
 
