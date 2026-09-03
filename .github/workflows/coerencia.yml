@@ -1,0 +1,28 @@
+# ============================================================
+#  A Eira — verificação de coerência (ADR-020)
+#  ------------------------------------------------------------
+#  Corre a cada envio para o GitHub. Não impede a publicação:
+#  o Cloudflare Pages publica na mesma. Serve para a divergência
+#  entre código e documentação deixar de ser silenciosa.
+#
+#  Vermelho aqui não é «o portal está partido». É «faltou uma
+#  das três regras do LEIA-PRIMEIRO.md». Ler a mensagem.
+# ============================================================
+name: Coerência
+
+on:
+  push:
+    branches: [main, desenho]
+  workflow_dispatch:
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ir buscar o histórico
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verificar as três regras
+        run: bash .github/verificar-coerencia.sh "${{ github.event.before }}" "${{ github.sha }}" "${{ github.ref_name }}"

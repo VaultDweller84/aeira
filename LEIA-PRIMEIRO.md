@@ -18,12 +18,12 @@ telefones úteis e sugestões.
 
 | Campo | Valor |
 |---|---|
-| Versão | v0.14 |
-| Última alteração | 2026-09-02 · repositório Git, publicação automática, correcções com a letra grande, linguagem visual nova ramo de pré-visualização e leitor de calendário corrigido |
+| Versão | v0.16 |
+| Última alteração | 2026-09-03 · repositório Git, publicação automática, correcções com a letra grande, linguagem visual nova, ramo de pré-visualização, leitor de calendário corrigido e separação entre queixa e pedido |
 | **No ar** | site `a-eira.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
 | **Código** | `github.com/VaultDweller84/aeira` · público |
 | Verificado em produção | notícias, agenda e portal servidos do repositório |
-| Em falta | domínio `aeira.pt` (T-17), Google Calendar (T-03), teste em telemóvel (T-06) |
+| Em falta | domínio `aeira.pt` (T-17), Google Calendar (T-03), fecho da T-06 — falta enviar por email, copiar, imprimir e instalar |
 | Fase | 6/7 Publicação |
 | Bloqueio | nenhum |
 | Risco principal | R-01 mantenedor único, score 20 |
@@ -67,6 +67,11 @@ Três regras que viajam com cada alteração:
 
 Formato das mensagens de commit: no `README.md`.
 
+**As três regras são verificadas sozinhas** a cada envio, pelo
+`.github/verificar-coerencia.sh` (ADR-020). Cruz vermelha no GitHub não quer
+dizer portal partido — quer dizer que faltou uma delas. Para correr à mão:
+`bash .github/verificar-coerencia.sh HEAD~1 HEAD`.
+
 ## Onde está cada coisa
 
 | Preciso de… | Vou a… |
@@ -107,6 +112,8 @@ Formato das mensagens de commit: no `README.md`.
 | 016 | Domínio `aeira.pt`; `aldeia.pt` rejeitado por preço e por âmbito |
 | 017 | **Linguagem visual:** letra do sistema, ícones desenhados, linha fina e sombra |
 | 018 | **Desenho passa pelo ramo `desenho` antes do `main`;** artefacto rejeitado |
+| 019 | **Queixa e pedido são coisas diferentes;** apoio social sai do gerador; cópia à Junta nunca marcada de fábrica |
+| 020 | **Verificação automática das três regras de commit** no GitHub |
 
 ## Vocabulário
 

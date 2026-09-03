@@ -7,7 +7,11 @@
 ## F-01 Munícipe escreve uma queixa `[F]` testado
 
 ```
-Separador Queixa → escolhe assunto (13) → 8 campos em linguagem corrente
+Separador Queixa → escolhe assunto (13)
+  ├─ assunto de apoio social: não há carta — mostra-se a Ação Social do
+  │   Município (telefone, email, morada, horário) e a ficha do guia. D-019
+  └─ restantes: o formulário adapta-se ao tipo (perguntas 6 e 7, cópia à
+      Junta) → 8 campos em linguagem corrente
   → «Escrever a minha carta»
       ├─ com Worker: espera ≤25 s → corpo redigido pela IA
       └─ sem Worker / falha / timeout: corpo pelo modelo + aviso tranquilizador

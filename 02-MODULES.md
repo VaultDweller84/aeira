@@ -19,9 +19,14 @@ Ficheiro único, sem dependências externas, ~146 KB. Estático.
 | M-01.7 | i18n, temas, tamanho de letra, navegação | feito | — |
 
 ### M-01.1 Gerador de cartas
-13 assuntos pré-definidos. 8 campos. Monta a exposição formal localmente;
-o corpo pode vir da IA ou do modelo. Saídas: copiar, mailto (com cópia à
-Junta), imprimir. Opção de subscrição por vários moradores.
+13 assuntos pré-definidos, cada um com `tipo` (`queixa` \| `pedido` \| `apoio`)
+e `junta` (se a cópia à Freguesia faz sentido) — D-019. Os de tipo `apoio` não
+geram carta: encaminham para o guia. As perguntas 6 e 7 acompanham o tipo, e a
+que não se aplica desaparece. 8 campos. Monta a exposição formal localmente;
+o corpo pode vir da IA ou do modelo; o modelo calcula a numeração dos pontos,
+para que sem local não haja parágrafo de local. Saídas: copiar, mailto (com
+cópia à Junta, **nunca marcada de fábrica**), imprimir. Opção de subscrição por
+vários moradores.
 
 ### M-01.2 Guia
 Procura insensível a acentos e bilingue simultânea (procurar «agua» ou
@@ -61,7 +66,9 @@ Cloudflare Worker, ~34 KB, sem dependências.
 
 Notas:
 - M-02.1 **não aceita prompts**. Recebe campos fixos e escreve ele as
-  instruções para o modelo (D-04).
+  instruções para o modelo (D-04). Desde D-019 recebe também o `tipo` da
+  exposição, e as instruções proíbem inventar local e marcar o género do
+  munícipe.
 - M-02.3 lê os avisos **sempre frescos**: um corte de água não espera 3 h.
 - M-02.5 escapa todo o HTML de entrada. Verificado. `[F]`
 

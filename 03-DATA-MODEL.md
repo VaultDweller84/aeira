@@ -65,8 +65,12 @@ depois de tratados. Sem apagamento automático — `[L]`, ver R-07.
 
 ## E-05 PedidoCarta — efémero, nunca persistido
 
-Enviado ao Worker: `assunto`, `rubrica`, `pedido`, `descricao` ≤1500,
-`local` ≤200, `desde` ≤120, `fotos`, `grupo`.
+Enviado ao Worker: `assunto`, `tipo` (`queixa`\|`pedido`), `rubrica`, `pedido`,
+`descricao` ≤1500, `local` ≤200, `desde` ≤120, `fotos`, `grupo`.
+
+**Invariante I-09:** `local` vazio é enviado vazio e **nunca substituído por um
+texto de recheio**. O Worker é instruído a não escrever ponto de localização
+quando não há local. `[F]` (D-019)
 
 **Invariante I-08 (crítica):** `nome`, `morada`, `telefone` e `email` **não
 constam deste objecto**. Verificado por teste. `[F]` (D-05)
