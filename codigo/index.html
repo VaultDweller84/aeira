@@ -491,6 +491,7 @@ footer a{color:var(--rodape-txt)}
       <button class="btn btn-principal" id="btnGerar" onclick="gerar()" data-i18n="btn_gerar"></button>
       <button class="btn btn-2" onclick="limpar()" data-i18n="btn_limpar"></button>
     </div>
+    <p class="aviso hidden" id="avisoLocal" style="margin:.4rem 0"></p>
     <p class="estado hidden" id="estado"></p>
     <p class="privacidade" data-i18n="nota_privacidade"></p>
     </div>
@@ -689,6 +690,7 @@ pt:{
  q6_pedido:'6. A que casa ou terreno diz respeito?', q6d_pedido:'A morada do sítio de que está a falar.', q6p_pedido:'Ex.: Rua do Outeiro, n.º 3',
  enc_apoio:'<strong>Este pedido não se faz por carta ao Presidente.</strong><br>Os apoios sociais do Município — tarifa social da água, Cartão Penamacor Social, apoio à habitação, despesas de saúde — tratam-se na Unidade de Educação, Ação Social e Saúde, e quase todos têm um impresso próprio que se preenche lá.<br><br>📞 <a href="tel:277394040">277 394 040</a><br>✉️ <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a><br>📍 Rua dos Bombeiros Voluntários, Penamacor<br>🕘 2.ª a 6.ª, das 9h00 às 12h30 e das 14h00 às 16h00<br><br>Leve o cartão de cidadão. <strong>Telefone antes</strong> a perguntar que papéis são precisos — poupa uma viagem.<br><br>Se já lá foi e não teve resposta, aí sim vale a pena escrever: escolha em cima «Outro assunto (escrevo eu)» e conte o que se passou.',
  enc_botao:'Ver no guia «Como se faz»',
+ falta_local:'<strong>Falta dizer onde é.</strong> Sem o sítio, a Câmara não sabe onde ir ver — e o pedido costuma ficar parado. Escreva a rua e um sinal que qualquer pessoa reconheça. Se mesmo assim não souber, carregue outra vez no botão e a carta é escrita à mesma.',
  q8:'8. Conte o que se passa, por palavras suas', q8d:'Não se preocupe com a maneira de escrever. Escreva como fala.',
  q8p:'Ex.: O contentor do lixo está sempre a transbordar e o lixo fica no chão. Já apareceram ratos e o cheiro é muito mau.',
 
@@ -812,6 +814,7 @@ en:{
  q6_pedido:'6. Which house or plot does this concern?', q6d_pedido:'The address of the place you are asking about.', q6p_pedido:'e.g. Rua do Outeiro 3',
  enc_apoio:'<strong>This is not done by letter to the Presidente.</strong><br>The Câmara\'s social support — reduced water tariff, Cartão Penamacor Social, housing help, health costs — is handled by the Unidade de Educação, Ação Social e Saúde, and nearly all of it has its own form, filled in there.<br><br>📞 <a href="tel:277394040">277 394 040</a><br>✉️ <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a><br>📍 Rua dos Bombeiros Voluntários, Penamacor<br>🕘 Monday to Friday, 9.00–12.30 and 14.00–16.00<br><br>Take your ID with you. <strong>Ring first</strong> to ask which papers are needed — it saves a journey.<br><br>If you have already been and had no answer, then a letter is worth writing: pick «Something else (I will write it myself)» above and say what happened.',
  enc_botao:'See it in the «How to» guide',
+ falta_local:'<strong>The place is missing.</strong> Without it the Câmara does not know where to go and look, and the request usually stalls. Give the street and a landmark anyone would recognise. If you really do not know, press the button again and the letter will be written anyway.',
  q8:'8. Tell us what is happening, in your own words', q8d:'Do not worry about the wording. Write it as you would say it.',
  q8p:'e.g. The rubbish bin is always overflowing and waste ends up on the ground. There are rats now and the smell is very bad.',
 
@@ -1695,6 +1698,26 @@ function mudouAssunto(){
     if(a.tipo==='queixa') d.classList.remove('hidden');
     else { d.classList.add('hidden'); if(document.getElementById('desde')) document.getElementById('desde').value=''; }
   }
+
+  renumerar();
+  esconderAvisoLocal();
+}
+
+/* Os números das perguntas contam-se ao ecrã, não estão escritos.
+   Com a pergunta 7 escondida, saltar de «6.» para «8.» faria uma
+   pessoa procurar a que falta. D-019 */
+function renumerar(){
+  var campos=['assunto','nome','morada','telefone','email','local','desde','descricao'];
+  var n=0;
+  campos.forEach(function(id){
+    var caixa=document.getElementById(id);
+    if(!caixa) return;
+    if(id==='local' && document.getElementById('campoLocal').classList.contains('hidden')) return;
+    if(id==='desde' && document.getElementById('campoDesde').classList.contains('hidden')) return;
+    n++;
+    var lbl=document.querySelector('label[for="'+id+'"] span[data-i18n]');
+    if(lbl) lbl.innerHTML = lbl.innerHTML.replace(/^\s*\d+\.\s*/, n+'. ');
+  });
 }
 
 function desenharGlossario(){
@@ -2431,9 +2454,29 @@ function pedirTexto(d){
 
 /* ---- o botão ---- */
 var aGerar=false;
+/* Uma queixa sem sítio não serve para nada: a Câmara não sabe onde ir.
+   Não se bloqueia — avisa-se uma vez e, se a pessoa insistir, escreve-se.
+   Bloquear seria dizer «não» a quem já está a custar-lhe pedir. D-019 */
+var avisadoLocal=false;
+function esconderAvisoLocal(){
+  var el=document.getElementById('avisoLocal');
+  if(el){ el.classList.add('hidden'); }
+  avisadoLocal=false;
+}
+
 function gerar(){
   if(aGerar) return;
   var d=recolher();
+
+  if(d.a.tipo==='queixa' && !d.local && !avisadoLocal){
+    var av=document.getElementById('avisoLocal');
+    av.innerHTML=t('falta_local');
+    av.classList.remove('hidden');
+    avisadoLocal=true;
+    var campo=document.getElementById('local');
+    if(campo){ campo.focus(); campo.scrollIntoView({block:'center'}); }
+    return;
+  }
   var btn=document.getElementById('btnGerar');
   var est=document.getElementById('estado');
 
@@ -2447,7 +2490,7 @@ function gerar(){
     if(LANG==='en'){
       r.innerHTML='<strong>What the letter says, in plain English:</strong> it is addressed to the Presidente da Câmara Municipal de Penamacor — the mayor'+
         (d.junta?', copied to the Junta de Freguesia':'')+
-        '. It gives your name and address, sets out the problem at <em>'+d.local+'</em>'+(d.desde?' ('+d.desde+')':'')+
+        '. It gives your name and address, sets out the matter'+(d.local?' at <em>'+d.local+'</em>':'')+(d.desde?' ('+d.desde+')':'')+
         ', notes that the matter falls to the Município'+(d.fotos?', says photographs are enclosed':'')+
         ', and '+d.a.resumo+' It also asks for a written reply and for an indication of when the work will be done'+
         (d.grupo?', with space for other residents to sign':'')+'.';
