@@ -17,12 +17,24 @@ Esforço em horas-pessoa.
 | T-03 | Criar o Google Calendar público e ligar `CALENDARIO_ICS` | 150 | 2 | 0,9 | 0,5 | **540** | por fazer |
 | T-04 | Criar o KV, ligar `SUGESTOES`, definir `CHAVE_ADMIN` | 200 | 2 | 1,0 | 0,5 | **800** | ✔ 1/9 |
 | T-05 | Chave do fornecedor de IA (Gemini ou Groq) | 100 | 2 | 0,9 | 0,5 | **360** | ✔ 1/9 |
-| T-06 | Testar com uma queixa real do grupo de Facebook | 200 | 3 | 0,8 | 1 | **480** | por fazer |
+| T-06 | Testar com uma queixa real do grupo de Facebook | 200 | 3 | 0,8 | 1 | **480** | ✔ 3/9 |
 | T-17 | **Comprar o `aeira.pt` e ligá-lo ao Pages** (ADR-016) | 200 | 3 | 0,9 | 1 | **540** | por fazer |
 
 **Critério de aceitação da Fase 1:** um telemóvel de terceiro abre o portal
 pelo domínio, instala-o no ecrã principal, gera uma carta com o assistente,
 vê um aviso publicado nos 10 minutos anteriores, e tudo isto sem instruções.
+
+**A T-06 deu mais do que se lhe pedia.** Passar um caso real pelo gerador — um
+pedido de apoio social — descobriu um facto inventado na carta, a cópia à Junta
+marcada de fábrica, vocabulário de queixa num pedido e o género presumido no
+masculino. Deu origem ao ADR-019 e, por arrastamento, ao ADR-020. Fica a lição:
+**um caso real vale mais do que uma bateria de testes técnicos**, porque só ele
+põe no formulário aquilo que ninguém previu que lá fosse posto.
+
+Falta ainda da T-06: enviar uma carta por email até ao fim e confirmar a
+chegada, e testar o copiar e o imprimir. Verificado a 3/9: portal instalado no
+telemóvel, carta gerada de ponta a ponta, e a versão nova apanhada depois de
+fechar e reabrir a aplicação.
 
 **T-17 antes da T-09.** O que se diz a uma população que aponta endereços em
 papel não se desdiz. E ao ligar o domínio há que acrescentar `https://aeira.pt`
@@ -61,6 +73,13 @@ desaparecer do painel. Rever de seis em seis meses.
 
 - O `INSTALAR.md` ainda descreve a publicação por upload manual, que deixou de
   existir com o ADR-015. Precisa de revisão numa próxima sessão.
+- **T-19 (por priorizar):** a numeração das perguntas e o aviso de local em
+  falta ficaram escritos e por publicar no fim da sessão de 3/9. Ver o
+  CHANGELOG da v0.16.
+- **`[L]` por verificar:** se a Câmara de Penamacor exige formulário próprio ou
+  plataforma para requerimentos urbanísticos formais. Não afecta o assunto
+  «obras» do portal, que é pedido de informação — mas a ficha do guia devia
+  dizer que a carta não substitui o requerimento de licenciamento.
 
 ## Ordem de execução recomendada
 

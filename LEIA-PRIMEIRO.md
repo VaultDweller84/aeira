@@ -22,8 +22,8 @@ telefones úteis e sugestões.
 | Última alteração | 2026-09-03 · repositório Git, publicação automática, correcções com a letra grande, linguagem visual nova, ramo de pré-visualização, leitor de calendário corrigido e separação entre queixa e pedido |
 | **No ar** | site `a-eira.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
 | **Código** | `github.com/VaultDweller84/aeira` · público |
-| Verificado em produção | notícias, agenda e portal servidos do repositório |
-| Em falta | domínio `aeira.pt` (T-17), Google Calendar (T-03), fecho da T-06 — falta enviar por email, copiar, imprimir e instalar |
+| Verificado em produção | 3/9: v0.16 no ar, portal instalado em telemóvel, carta gerada de ponta a ponta, Worker a devolver 12 notícias |
+| Em falta | domínio `aeira.pt` (T-17), Google Calendar (T-03), T-19 (numeração e aviso de local, escritos e por publicar) |
 | Fase | 6/7 Publicação |
 | Bloqueio | nenhum |
 | Risco principal | R-01 mantenedor único, score 20 |

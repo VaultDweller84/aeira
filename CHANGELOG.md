@@ -99,6 +99,15 @@ descrição e, se estiver preenchido, o local. Invariante nova, I-09.
 **Risco novo:** R-18 — assunto acrescentado sem `tipo` nem `junta` devolve o
 defeito em silêncio.
 
+**Verificado em produção a 3/9**, do lado de fora: o Worker devolve 12 notícias
+do Município; o portal serve a v0.16 em `a-eira.pages.dev`; a aplicação
+instalada no telemóvel apanhou a versão nova depois de fechada e reaberta.
+**T-06 fechada** na parte que importava — foi ela que descobriu tudo isto.
+
+**Escrito e por publicar (T-19):** a numeração das perguntas saltava de «6.»
+para «8.» com a pergunta 7 escondida, e uma queixa sem local passava sem aviso.
+Corrigido no ficheiro, `sw.js` v7, ainda não subido.
+
 `sw.js` → **v6**. O `worker.js` mudou: vai a commit antes de ser colado no
 painel (R-16).
 
