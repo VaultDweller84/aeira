@@ -6,6 +6,43 @@
 
 Formato: data · o que mudou · porquê · IDs afectados.
 
+## 2026-09-03 — v0.17 · A carta vai a quem a trata
+
+**`D-021`**. Notado a testar o D-019: um pedido de informação urbanística ia
+para `presidente@` e `secretaria.gap@`, quando a Câmara tem `serv.obras@` para
+urbanismo e `sas.info@` para a água — endereços que o guia do portal já usa.
+
+**A carta continua dirigida ao Presidente**, e isso foi verificado, não
+assumido: no RJUE a comunicação prévia é dirigida ao Presidente da Câmara e é a
+ele que compete dirigir a instrução, com delegação nos serviços. Dirigir ao
+serviço e pôr o Presidente em cópia inverteria a hierarquia. `M-01.1`.
+
+**O que muda é o destino.** A carta ganha «Ao cuidado da Divisão de Obras,
+Planeamento e Urbanismo» por baixo da morada, e o email passa a incluir o
+serviço competente **além** do Presidente e da secretaria. Nenhum sai: a
+secretaria faz a entrada e é o que faz o prazo correr, o Presidente é a quem a
+carta é dirigida, o serviço é quem trata. `M-01.1`, `E-05`.
+
+**O portal deixa claro que não substitui requerimentos.** O assunto das obras
+mostra uma nota antes dos campos: serve para perguntar, não para licenciar.
+Licenciar obra faz-se em impresso próprio, com plantas e termos de
+responsabilidade. `M-01.2`, `M-01.1`.
+
+**A lista dos assuntos passa a ter dois grupos** — problemas e pedidos. Treze
+linhas seguidas obrigam a ler tudo. `M-01.1`, `D-019`.
+
+**A dica do nome ficou mais firme:** pede o nome do cartão de cidadão e
+desaconselha a alcunha. Numa exposição formal isso conta, e apareceu num teste
+real. `M-01.1`.
+
+**Por reconfirmar `[L]`:** apareceu em documentação de concursos do Município o
+endereço `obras.publicas@cm-penamacor.pt`, ligado à Divisão de Obras,
+Planeamento e Urbanismo. Provavelmente é para empreitadas municipais e o
+`serv.obras@` para o munícipe — mas provável não chega. Ficou o que está
+verificado no site oficial. Confirmar por telefone.
+
+`sw.js` → **v8**.
+
 ## 2026-09-03 — v0.16 · As regras passam a ter quem as verifique
 
 Sem alterações ao produto. **`D-020`**.
