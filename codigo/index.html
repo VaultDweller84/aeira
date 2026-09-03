@@ -455,6 +455,7 @@ footer a{color:var(--rodape-txt)}
     <div id="encaminha" class="aviso hidden"></div>
 
     <div id="camposCarta">
+    <p class="aviso hidden" id="notaAssunto" style="margin:.4rem 0"></p>
     <label for="nome"><span data-i18n="q2"></span><span class="dica" data-i18n="q2d"></span></label>
     <input type="text" id="nome" data-i18n-ph="q2p" autocomplete="name">
 
@@ -681,7 +682,7 @@ pt:{
  carta_nota_en:'',
 
  q1:'1. Do que se trata?', q1d:'Escolha o assunto mais parecido com o seu caso.',
- q2:'2. O seu nome completo', q2d:'Como está no cartão de cidadão.', q2p:'Ex.: Maria dos Santos Pires',
+ q2:'2. O seu nome completo', q2d:'Escreva o nome como está no cartão de cidadão, não a alcunha — numa carta oficial isso conta.', q2p:'Ex.: Maria dos Santos Pires',
  q3:'3. A sua morada', q3p:'Ex.: Rua da Fonte, n.º 12, 6090-159 Aldeia de João Pires',
  q4:'4. O seu telemóvel ou telefone', q4d:'Para a Câmara poder falar consigo.', q4p:'Ex.: 912 345 678',
  q5:'5. O seu email', q5d:'Se não tiver, deixe em branco.', q5p:'Ex.: maria@gmail.com',
@@ -690,6 +691,9 @@ pt:{
  q6_pedido:'6. A que casa ou terreno diz respeito?', q6d_pedido:'A morada do sítio de que está a falar.', q6p_pedido:'Ex.: Rua do Outeiro, n.º 3',
  enc_apoio:'<strong>Este pedido não se faz por carta ao Presidente.</strong><br>Os apoios sociais do Município — tarifa social da água, Cartão Penamacor Social, apoio à habitação, despesas de saúde — tratam-se na Unidade de Educação, Ação Social e Saúde, e quase todos têm um impresso próprio que se preenche lá.<br><br>📞 <a href="tel:277394040">277 394 040</a><br>✉️ <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a><br>📍 Rua dos Bombeiros Voluntários, Penamacor<br>🕘 2.ª a 6.ª, das 9h00 às 12h30 e das 14h00 às 16h00<br><br>Leve o cartão de cidadão. <strong>Telefone antes</strong> a perguntar que papéis são precisos — poupa uma viagem.<br><br>Se já lá foi e não teve resposta, aí sim vale a pena escrever: escolha em cima «Outro assunto (escrevo eu)» e conte o que se passou.',
  enc_botao:'Ver no guia «Como se faz»',
+ grupo_queixas:'Problemas para expor à Câmara',
+ grupo_pedidos:'Pedidos, informações e apoios',
+ nota_obras:'<strong>Isto serve para <em>perguntar</em>, não para licenciar.</strong> Para pedir informação — se precisa de licença, o que pode fazer no seu terreno, que papéis são necessários — esta carta serve muito bem. Mas <strong>licenciar uma obra ou entregar uma comunicação prévia faz-se em impresso próprio da Câmara</strong>, com plantas e termos de responsabilidade, e esta carta não substitui isso. Em caso de dúvida, telefone antes: <a href="tel:277394106">277 394 106</a>.',
  falta_local:'<strong>Falta dizer onde é.</strong> Sem o sítio, a Câmara não sabe onde ir ver — e o pedido costuma ficar parado. Escreva a rua e um sinal que qualquer pessoa reconheça. Se mesmo assim não souber, carregue outra vez no botão e a carta é escrita à mesma.',
  q8:'8. Conte o que se passa, por palavras suas', q8d:'Não se preocupe com a maneira de escrever. Escreva como fala.',
  q8p:'Ex.: O contentor do lixo está sempre a transbordar e o lixo fica no chão. Já apareceram ratos e o cheiro é muito mau.',
@@ -805,7 +809,7 @@ en:{
  carta_nota_en:'<strong>Please note:</strong> the letter itself is written in Portuguese, because that is the language the Câmara Municipal works in — an English letter is far less likely to get a result. You will get a plain-English summary of what it says before you send it. Fill in the form in English or Portuguese, whichever you prefer; only what you write yourself in box 8 appears in your own words, so if you can manage that bit in Portuguese, do.',
 
  q1:'1. What is it about?', q1d:'Pick the subject closest to your case.',
- q2:'2. Your full name', q2d:'As it appears on your ID or passport.', q2p:'e.g. John Smith',
+ q2:'2. Your full name', q2d:'Write your name exactly as on your ID or passport, not a nickname — on an official letter it matters.', q2p:'e.g. John Smith',
  q3:'3. Your address', q3p:'e.g. Rua da Fonte 12, 6090-159 Aldeia de João Pires',
  q4:'4. Your mobile or telephone', q4d:'So the Câmara can reach you.', q4p:'e.g. 912 345 678',
  q5:'5. Your email', q5d:'Leave blank if you have none.', q5p:'e.g. john@gmail.com',
@@ -814,6 +818,9 @@ en:{
  q6_pedido:'6. Which house or plot does this concern?', q6d_pedido:'The address of the place you are asking about.', q6p_pedido:'e.g. Rua do Outeiro 3',
  enc_apoio:'<strong>This is not done by letter to the Presidente.</strong><br>The Câmara\'s social support — reduced water tariff, Cartão Penamacor Social, housing help, health costs — is handled by the Unidade de Educação, Ação Social e Saúde, and nearly all of it has its own form, filled in there.<br><br>📞 <a href="tel:277394040">277 394 040</a><br>✉️ <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a><br>📍 Rua dos Bombeiros Voluntários, Penamacor<br>🕘 Monday to Friday, 9.00–12.30 and 14.00–16.00<br><br>Take your ID with you. <strong>Ring first</strong> to ask which papers are needed — it saves a journey.<br><br>If you have already been and had no answer, then a letter is worth writing: pick «Something else (I will write it myself)» above and say what happened.',
  enc_botao:'See it in the «How to» guide',
+ grupo_queixas:'Problems to report to the Câmara',
+ grupo_pedidos:'Requests, information and support',
+ nota_obras:'<strong>This is for <em>asking</em>, not for applying.</strong> To request information — whether you need consent, what you may do on your land, which papers are required — this letter works well. But <strong>applying for building consent, or filing a comunicação prévia, is done on the Câmara\'s own form</strong>, with drawings and signed technical declarations, and this letter does not replace that. If in doubt, ring first: <a href="tel:277394106">277 394 106</a>.',
  falta_local:'<strong>The place is missing.</strong> Without it the Câmara does not know where to go and look, and the request usually stalls. Give the street and a landmark anyone would recognise. If you really do not know, press the button again and the letter will be written anyway.',
  q8:'8. Tell us what is happening, in your own words', q8d:'Do not worry about the wording. Write it as you would say it.',
  q8p:'e.g. The rubbish bin is always overflowing and waste ends up on the ground. There are rats now and the smell is very bad.',
@@ -998,7 +1005,7 @@ var ASSUNTOS = [
   linha:'Iluminação pública avariada',
   pedido:'a reparação da iluminação pública no local indicado',
   resumo:'asks the Câmara to repair the street lighting at the place named.'},
- {id:'agua', tipo:'queixa', junta:false,
+ {id:'agua', tipo:'queixa', junta:false, servico:'sas.info@cm-penamacor.pt', aoCuidado:'Serviço de Águas e Saneamento',
   pt:'Água — rotura, falta de água, água suja ou factura errada',
   en:'Water — burst pipe, no supply, dirty water or a wrong bill',
   linha:'Abastecimento de água',
@@ -1034,7 +1041,7 @@ var ASSUNTOS = [
   linha:'Pedido de apoio social',
   pedido:'a apreciação do presente pedido e a informação sobre os documentos necessários',
   resumo:'asks the Câmara to consider the application and say which documents are needed.'},
- {id:'obras', tipo:'pedido', junta:false,
+ {id:'obras', tipo:'pedido', junta:false, servico:'serv.obras@cm-penamacor.pt', aoCuidado:'Divisão de Obras, Planeamento e Urbanismo', nota:'nota_obras',
   pt:'Obras, licenças ou informação sobre urbanismo',
   en:'Building work, permits or planning information',
   linha:'Pedido de informação urbanística',
@@ -1638,10 +1645,23 @@ function encherAssuntos(){
   var sel=document.getElementById('assunto');
   var actual=sel.value;
   sel.innerHTML='';
-  ASSUNTOS.forEach(function(a){
-    var o=document.createElement('option');
-    o.value=a.id; o.textContent=(LANG==='pt'?a.pt:a.en);
-    sel.appendChild(o);
+  /* Dois grupos: o que é queixa e o que é pedido. Treze linhas seguidas
+     obrigam a ler tudo; dois grupos dizem à pessoa onde procurar. D-019 */
+  var grupos=[
+    {chave:'grupo_queixas', teste:function(a){return a.tipo!=='pedido' && a.tipo!=='apoio';}},
+    {chave:'grupo_pedidos', teste:function(a){return a.tipo==='pedido' || a.tipo==='apoio';}}
+  ];
+  grupos.forEach(function(g){
+    var lista=ASSUNTOS.filter(g.teste);
+    if(!lista.length) return;
+    var og=document.createElement('optgroup');
+    og.label=t(g.chave);
+    lista.forEach(function(a){
+      var o=document.createElement('option');
+      o.value=a.id; o.textContent=(LANG==='pt'?a.pt:a.en);
+      og.appendChild(o);
+    });
+    sel.appendChild(og);
   });
   if(actual) sel.value=actual;
   mudouAssunto();
@@ -1676,6 +1696,13 @@ function mudouAssunto(){
   }
   enc.classList.add('hidden');
   campos.classList.remove('hidden');
+
+  /* nota do assunto: diz o que a carta não faz, antes de a pessoa escrever */
+  var nt=document.getElementById('notaAssunto');
+  if(nt){
+    if(a.nota){ nt.innerHTML=t(a.nota); nt.classList.remove('hidden'); }
+    else nt.classList.add('hidden');
+  }
 
   /* a cópia à Junta segue o assunto, nunca vem marcada de fábrica */
   var ck=document.getElementById('junta');
@@ -2396,7 +2423,12 @@ function montarCarta(d,corpo){
   var hoje=new Date();
   var mesesPT=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
   var x='';
-  x+='Exmo. Senhor\nPresidente da Câmara Municipal de Penamacor\nLargo do Município\n6090-543 Penamacor\n\n';
+  x+='Exmo. Senhor\nPresidente da Câmara Municipal de Penamacor\nLargo do Município\n6090-543 Penamacor\n';
+  /* A exposição é sempre dirigida ao Presidente — é o órgão competente e é
+     quem dirige a instrução do procedimento. A linha «Ao cuidado de» não muda
+     isso: encaminha para quem trata, sem inverter a hierarquia. D-021 */
+  if(d.a.aoCuidado) x+='Ao cuidado da '+d.a.aoCuidado+'\n';
+  x+='\n';
   if(d.junta) x+='Com conhecimento à União de Freguesias de Aldeia do Bispo, Águas e Aldeia de João Pires\n\n';
   x+='Aldeia de João Pires, '+hoje.getDate()+' de '+mesesPT[hoje.getMonth()]+' de '+hoje.getFullYear()+'\n\n';
   x+='Assunto: '+d.a.linha+' — Aldeia de João Pires\n\n';
@@ -2497,8 +2529,14 @@ function gerar(){
       r.classList.remove('hidden');
     } else r.classList.add('hidden');
 
+    /* A secretaria faz a entrada e é o que faz o prazo correr; o Presidente é
+       a quem a carta é dirigida; o serviço é quem trata. Acrescenta-se, não se
+       substitui. D-021 */
     var para='presidente@cm-penamacor.pt,secretaria.gap@cm-penamacor.pt';
-    var cc=d.junta?'?cc=uniaofreguesias050713@gmail.com&':'?';
+    if(d.a.servico) para+=','+d.a.servico;
+    var copias=[];
+    if(d.junta) copias.push('uniaofreguesias050713@gmail.com');
+    var cc=copias.length?'?cc='+copias.join(',')+'&':'?';
     document.getElementById('btnEmail').href='mailto:'+para+cc+
       'subject='+encodeURIComponent(d.a.linha+' — Aldeia de João Pires')+
       '&body='+encodeURIComponent(document.getElementById('textoCarta').textContent);
