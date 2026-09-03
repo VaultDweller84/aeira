@@ -18,7 +18,7 @@ telefones úteis e sugestões.
 
 | Campo | Valor |
 |---|---|
-| Versão | v0.16 |
+| Versão | v0.17 |
 | Última alteração | 2026-09-03 · repositório Git, publicação automática, correcções com a letra grande, linguagem visual nova, ramo de pré-visualização, leitor de calendário corrigido e separação entre queixa e pedido |
 | **No ar** | site `a-eira.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
 | **Código** | `github.com/VaultDweller84/aeira` · público |
@@ -114,6 +114,7 @@ dizer portal partido — quer dizer que faltou uma delas. Para correr à mão:
 | 018 | **Desenho passa pelo ramo `desenho` antes do `main`;** artefacto rejeitado |
 | 019 | **Queixa e pedido são coisas diferentes;** apoio social sai do gerador; cópia à Junta nunca marcada de fábrica |
 | 020 | **Verificação automática das três regras de commit** no GitHub |
+| 021 | Carta continua dirigida ao Presidente; **email passa a incluir o serviço competente** |
 
 ## Vocabulário
 
