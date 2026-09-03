@@ -18,8 +18,8 @@ telefones úteis e sugestões.
 
 | Campo | Valor |
 |---|---|
-| Versão | v0.13 |
-| Última alteração | 2026-09-02 · repositório Git, publicação automática, correcções com a letra grande, linguagem visual nova e ramo de pré-visualização |
+| Versão | v0.14 |
+| Última alteração | 2026-09-02 · repositório Git, publicação automática, correcções com a letra grande, linguagem visual nova ramo de pré-visualização e leitor de calendário corrigido |
 | **No ar** | site `a-eira.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
 | **Código** | `github.com/VaultDweller84/aeira` · público |
 | Verificado em produção | notícias, agenda e portal servidos do repositório |

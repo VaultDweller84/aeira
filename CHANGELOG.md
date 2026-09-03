@@ -6,6 +6,41 @@
 
 Formato: data · o que mudou · porquê · IDs afectados.
 
+## 2026-09-02 — v0.14 · O calendário passa a dizer a hora certa
+
+Duas avarias no leitor do Google Calendar, encontradas a preparar a T-03 —
+antes de o calendário estar ligado, portanto sem ninguém apanhado por elas.
+
+**As horas ignoravam o fuso.** O `dataICS` lia os algarismos do `DTSTART` tal e
+qual. O Google escreve as horas em hora universal (`...Z`) ou com etiqueta de
+fuso (`TZID=`), e nenhuma das duas era tratada: no Verão saía **uma hora a
+menos**, e num evento depois da meia-noite saía **o dia anterior**. Um arraial
+às 00:30 de dia 9 aparecia no dia 8 às 23:30. Passa a converter para hora de
+Portugal, com recurso ao fuso escrito no ficheiro. Se o fuso for desconhecido,
+fica a hora escrita em vez de partir a agenda — ADR-007. `M-02.2`, `R-03`.
+
+**Eventos que se repetem apareciam uma vez só.** Não havia tratamento de
+`RRULE`: um ensaio às quartas entrava na primeira data e desaparecia depois de
+passar, sem ninguém perceber porquê — no Google Calendar de quem o criou estava
+lá certinho. Passa a desdobrar diários, semanais (com dias da semana), mensais
+e anuais, com `INTERVAL`, `COUNT`, `UNTIL` e `EXDATE`. Até 60 repetições por
+evento e um ano para a frente. Regras raras (`BYMONTHDAY`, `BYSETPOS`) ficam
+deliberadamente de fora: mais vale dar trabalho a quem organiza do que inventar
+datas. `M-02.2`, `E-01`, `R-03`.
+
+**Testado antes de publicar:** 21 casos, incluindo o Verão e o Inverno, a
+passagem da meia-noite, fusos estrangeiros, dia inteiro, quinzenal, «quartas e
+sextas», mensal a 31 (que salta Fevereiro em vez de escorregar para Março), e
+um ficheiro `.ics` completo de ponta a ponta.
+
+**Sem alterações ao portal:** só `worker/worker.js`. A `VERSAO` do `sw.js` não
+muda.
+
+**Por decidir, e adiado de propósito:** de quem é a conta Google que fica dona
+do calendário. Na conta pessoal do Hugo, o calendário da terra fica pendurado
+nela — é o R-01 nos dados em vez do código. Fica para depois de se ver o
+trabalho que a coisa dá, e antes da T-09.
+
 ## 2026-09-02 — v0.13 · Ver antes de a aldeia ver
 
 Sem alterações ao produto. Muda a forma de publicar desenho. **`D-018`**.

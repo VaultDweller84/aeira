@@ -147,6 +147,17 @@ pelo telemóvel, na aplicação Google Calendar que já conhecem, sem lhe pedir 
 sem tocar em código. É a diferença entre um portal que depende de si e um portal
 da terra.
 
+**Horas e eventos que se repetem.** O Worker converte as horas do Google para
+hora de Portugal — o ficheiro do Google escreve-as em hora universal ou com
+etiqueta de fuso, e ler os algarismos tal e qual dava uma hora a menos no Verão
+e o **dia errado** em qualquer coisa depois da meia-noite. Eventos que se
+repetem também funcionam: diários, semanais (incluindo «às quartas e sextas»),
+mensais e anuais, com intervalo, número de repetições, data-limite e datas
+saltadas. Ficam de fora regras raras — «na terceira quarta-feira do mês», por
+exemplo. Quem precisar disso cria os eventos um a um: mais vale dar trabalho do
+que inventar datas. São mostradas até 60 repetições de cada evento e até um ano
+para a frente.
+
 **3. A agenda da Câmara**, lida automaticamente uma vez de seis em seis horas.
 Ligue ou desligue com `ROBO_CAMARA`.
 
