@@ -450,8 +450,11 @@ footer a{color:var(--rodape-txt)}
 
   <div class="box">
     <label for="assunto"><span data-i18n="q1"></span><span class="dica" data-i18n="q1d"></span></label>
-    <select id="assunto"></select>
+    <select id="assunto" onchange="mudouAssunto()"></select>
 
+    <div id="encaminha" class="aviso hidden"></div>
+
+    <div id="camposCarta">
     <label for="nome"><span data-i18n="q2"></span><span class="dica" data-i18n="q2d"></span></label>
     <input type="text" id="nome" data-i18n-ph="q2p" autocomplete="name">
 
@@ -464,16 +467,20 @@ footer a{color:var(--rodape-txt)}
     <label for="email"><span data-i18n="q5"></span><span class="dica" data-i18n="q5d"></span></label>
     <input type="email" id="email" data-i18n-ph="q5p" autocomplete="email">
 
-    <label for="local"><span data-i18n="q6"></span><span class="dica" data-i18n="q6d"></span></label>
-    <input type="text" id="local" data-i18n-ph="q6p">
+    <div id="campoLocal">
+      <label for="local"><span data-i18n="q6"></span><span class="dica" data-i18n="q6d"></span></label>
+      <input type="text" id="local" data-i18n-ph="q6p">
+    </div>
 
-    <label for="desde"><span data-i18n="q7"></span></label>
-    <input type="text" id="desde" data-i18n-ph="q7p">
+    <div id="campoDesde">
+      <label for="desde"><span data-i18n="q7"></span></label>
+      <input type="text" id="desde" data-i18n-ph="q7p">
+    </div>
 
     <label for="descricao"><span data-i18n="q8"></span><span class="dica" data-i18n="q8d"></span></label>
     <textarea id="descricao" data-i18n-ph="q8p"></textarea>
 
-    <div class="check"><input type="checkbox" id="junta" checked>
+    <div class="check"><input type="checkbox" id="junta" onchange="this.dataset.tocado='1'">
       <label for="junta" style="margin:0"><span data-i18n="ck1"></span><span class="dica" data-i18n="ck1d"></span></label></div>
     <div class="check"><input type="checkbox" id="fotos">
       <label for="fotos" style="margin:0"><span data-i18n="ck2"></span><span class="dica" data-i18n="ck2d"></span></label></div>
@@ -486,6 +493,7 @@ footer a{color:var(--rodape-txt)}
     </div>
     <p class="estado hidden" id="estado"></p>
     <p class="privacidade" data-i18n="nota_privacidade"></p>
+    </div>
   </div>
 
   <div id="resultado" class="hidden">
@@ -678,6 +686,9 @@ pt:{
  q5:'5. O seu email', q5d:'Se não tiver, deixe em branco.', q5p:'Ex.: maria@gmail.com',
  q6:'6. Onde é o problema?', q6d:'Diga a rua e um sinal que qualquer pessoa reconheça.', q6p:'Ex.: Rua do Outeiro, em frente ao café',
  q7:'7. Desde quando?', q7p:'Ex.: há cerca de três semanas',
+ q6_pedido:'6. A que casa ou terreno diz respeito?', q6d_pedido:'A morada do sítio de que está a falar.', q6p_pedido:'Ex.: Rua do Outeiro, n.º 3',
+ enc_apoio:'<strong>Este pedido não se faz por carta ao Presidente.</strong><br>Os apoios sociais do Município — tarifa social da água, Cartão Penamacor Social, apoio à habitação, despesas de saúde — tratam-se na Unidade de Educação, Ação Social e Saúde, e quase todos têm um impresso próprio que se preenche lá.<br><br>📞 <a href="tel:277394040">277 394 040</a><br>✉️ <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a><br>📍 Rua dos Bombeiros Voluntários, Penamacor<br>🕘 2.ª a 6.ª, das 9h00 às 12h30 e das 14h00 às 16h00<br><br>Leve o cartão de cidadão. <strong>Telefone antes</strong> a perguntar que papéis são precisos — poupa uma viagem.<br><br>Se já lá foi e não teve resposta, aí sim vale a pena escrever: escolha em cima «Outro assunto (escrevo eu)» e conte o que se passou.',
+ enc_botao:'Ver no guia «Como se faz»',
  q8:'8. Conte o que se passa, por palavras suas', q8d:'Não se preocupe com a maneira de escrever. Escreva como fala.',
  q8p:'Ex.: O contentor do lixo está sempre a transbordar e o lixo fica no chão. Já apareceram ratos e o cheiro é muito mau.',
 
@@ -689,7 +700,7 @@ pt:{
  btn_gerar_ocupado:'<span class="girar">⏳</span> A escrever a sua carta…',
  estado_espera:'A escrever a sua carta. Demora alguns segundos — não feche a página.',
  estado_falhou:'Não foi possível ligar ao assistente de escrita. A carta foi feita pelo modelo normal — está correcta e pode enviá-la à mesma.',
- nota_privacidade:'O seu nome, morada, telefone e email <strong>não saem deste telemóvel</strong>. Para escrever a carta só é enviada a descrição do problema e o local.',
+ nota_privacidade:'O seu nome, morada, telefone e email <strong>não saem deste telemóvel</strong>. Para escrever a carta só é enviado o que escreveu na descrição e, se o tiver preenchido, o local.',
  nota_ia:'Este texto foi redigido por um assistente automático a partir do que escreveu. <strong>Leia antes de enviar</strong> e mude o que quiser — pode escrever directamente na caixa.',
  nota_modelo:'Texto feito a partir de um modelo. Leia antes de enviar e mude o que quiser — pode escrever directamente na caixa.',
  res_h3:'A sua carta está pronta',
@@ -798,6 +809,9 @@ en:{
  q5:'5. Your email', q5d:'Leave blank if you have none.', q5p:'e.g. john@gmail.com',
  q6:'6. Where is the problem?', q6d:'Give the street and a landmark anyone would recognise.', q6p:'e.g. Rua do Outeiro, opposite the café',
  q7:'7. Since when?', q7p:'e.g. for about three weeks',
+ q6_pedido:'6. Which house or plot does this concern?', q6d_pedido:'The address of the place you are asking about.', q6p_pedido:'e.g. Rua do Outeiro 3',
+ enc_apoio:'<strong>This is not done by letter to the Presidente.</strong><br>The Câmara\'s social support — reduced water tariff, Cartão Penamacor Social, housing help, health costs — is handled by the Unidade de Educação, Ação Social e Saúde, and nearly all of it has its own form, filled in there.<br><br>📞 <a href="tel:277394040">277 394 040</a><br>✉️ <a href="mailto:gab.social@cm-penamacor.pt">gab.social@cm-penamacor.pt</a><br>📍 Rua dos Bombeiros Voluntários, Penamacor<br>🕘 Monday to Friday, 9.00–12.30 and 14.00–16.00<br><br>Take your ID with you. <strong>Ring first</strong> to ask which papers are needed — it saves a journey.<br><br>If you have already been and had no answer, then a letter is worth writing: pick «Something else (I will write it myself)» above and say what happened.',
+ enc_botao:'See it in the «How to» guide',
  q8:'8. Tell us what is happening, in your own words', q8d:'Do not worry about the wording. Write it as you would say it.',
  q8p:'e.g. The rubbish bin is always overflowing and waste ends up on the ground. There are rats now and the smell is very bad.',
 
@@ -809,7 +823,7 @@ en:{
  btn_gerar_ocupado:'<span class="girar">⏳</span> Writing your letter…',
  estado_espera:'Writing your letter. It takes a few seconds — please do not close the page.',
  estado_falhou:'Could not reach the writing assistant. The letter was built from the standard template instead — it is perfectly good and you can send it as it is.',
- nota_privacidade:'Your name, address, telephone and email <strong>never leave this phone</strong>. Only the description of the problem and the location are sent, so the letter can be written.',
+ nota_privacidade:'Your name, address, telephone and email <strong>never leave this phone</strong>. Only what you wrote in the description — and the location, if you filled it in — is sent, so the letter can be written.',
  nota_ia:'This text was drafted by an automatic assistant from what you wrote. <strong>Read it before sending</strong> and change anything you like — you can type straight into the box.',
  nota_modelo:'Text built from a standard template. Read it before sending and change anything you like — you can type straight into the box.',
  res_h3:'Your letter is ready',
@@ -951,79 +965,79 @@ var CATEGORIAS = [
    inglês do que a carta pede.
 ------------------------------------------------------- */
 var ASSUNTOS = [
- {id:'lixo',
+ {id:'lixo', tipo:'queixa', junta:true,
   pt:'Lixo — contentores cheios, sujidade ou recolha em falta',
   en:'Rubbish — overflowing bins, mess or missed collections',
   linha:'Recolha de resíduos e limpeza urbana',
   pedido:'a recolha do lixo com a regularidade devida e a reposição das condições de higiene no local',
   resumo:'asks the Câmara to collect the rubbish properly and restore hygienic conditions at the spot.'},
- {id:'monos',
+ {id:'monos', tipo:'queixa', junta:true,
   pt:'Móveis velhos ou electrodomésticos abandonados na rua',
   en:'Old furniture or appliances dumped in the street',
   linha:'Recolha de monos e resíduos volumosos',
   pedido:'a recolha dos resíduos volumosos depositados no local',
   resumo:'asks the Câmara to remove the bulky waste left at the spot.'},
- {id:'ervas',
+ {id:'ervas', tipo:'queixa', junta:true,
   pt:'Ervas, mato ou lixo em ruas, caminhos e espaços públicos',
   en:'Weeds, scrub or litter in streets, tracks and public spaces',
   linha:'Limpeza de espaços públicos',
   pedido:'a limpeza e corte da vegetação no local indicado',
   resumo:'asks the Câmara to clear and cut back the vegetation at the place named.'},
- {id:'estrada',
+ {id:'estrada', tipo:'queixa', junta:true,
   pt:'Buraco ou estrada, rua ou caminho em mau estado',
   en:'Pothole, or a road, street or track in poor condition',
   linha:'Reparação de via pública',
   pedido:'a reparação do pavimento e a reposição das condições de segurança na circulação',
   resumo:'asks the Câmara to repair the surface and make it safe to use again.'},
- {id:'luz',
+ {id:'luz', tipo:'queixa', junta:true,
   pt:'Candeeiro da rua fundido ou iluminação em falta',
   en:'Street light out, or no lighting at all',
   linha:'Iluminação pública avariada',
   pedido:'a reparação da iluminação pública no local indicado',
   resumo:'asks the Câmara to repair the street lighting at the place named.'},
- {id:'agua',
+ {id:'agua', tipo:'queixa', junta:false,
   pt:'Água — rotura, falta de água, água suja ou factura errada',
   en:'Water — burst pipe, no supply, dirty water or a wrong bill',
   linha:'Abastecimento de água',
   pedido:'a resolução da situação descrita e a verificação da rede de abastecimento',
   resumo:'asks the Câmara to sort out the problem and check the supply network.'},
- {id:'esgoto',
+ {id:'esgoto', tipo:'queixa', junta:true,
   pt:'Esgotos entupidos, cheiros ou saneamento',
   en:'Blocked drains, smells or sewerage',
   linha:'Saneamento e águas residuais',
   pedido:'a desobstrução e reparação da rede de saneamento no local indicado',
   resumo:'asks the Câmara to unblock and repair the sewer at the place named.'},
- {id:'terreno',
+ {id:'terreno', tipo:'queixa', junta:true,
   pt:'Terreno por limpar com perigo de incêndio',
   en:'Uncleared land posing a fire risk',
   linha:'Falta de gestão de combustível em terreno particular',
   pedido:'a notificação do proprietário para proceder à limpeza do terreno, nos termos da lei em vigor',
   resumo:'asks the Câmara to serve notice on the owner to clear the land, as the law requires.'},
- {id:'animais',
+ {id:'animais', tipo:'queixa', junta:true,
   pt:'Cães ou gatos abandonados na aldeia',
   en:'Stray dogs or cats in the village',
   linha:'Animais errantes',
   pedido:'a intervenção do Médico Veterinário Municipal e a recolha dos animais',
   resumo:'asks for the Municipal Veterinary Officer to step in and collect the animals.'},
- {id:'cemiterio',
+ {id:'cemiterio', tipo:'queixa', junta:false,
   pt:'Cemitério — sepulturas, limpeza ou taxas',
   en:'Cemetery — graves, upkeep or fees',
   linha:'Cemitério',
   pedido:'o esclarecimento e resolução da situação exposta',
   resumo:'asks the Câmara to clarify and resolve the matter set out.'},
- {id:'agua_tarifa',
+ {id:'agua_tarifa', tipo:'apoio', junta:false, guia:true,
   pt:'Pedir a tarifa social da água ou outro apoio social',
   en:'Apply for the reduced water tariff or other social support',
   linha:'Pedido de apoio social',
   pedido:'a apreciação do presente pedido e a informação sobre os documentos necessários',
   resumo:'asks the Câmara to consider the application and say which documents are needed.'},
- {id:'obras',
+ {id:'obras', tipo:'pedido', junta:false,
   pt:'Obras, licenças ou informação sobre urbanismo',
   en:'Building work, permits or planning information',
   linha:'Pedido de informação urbanística',
   pedido:'a prestação da informação solicitada',
   resumo:'asks the Câmara to supply the planning information requested.'},
- {id:'outro',
+ {id:'outro', tipo:'queixa', junta:false,
   pt:'Outro assunto (escrevo eu)',
   en:'Something else (I will write it myself)',
   linha:'Exposição de munícipe',
@@ -1627,6 +1641,60 @@ function encherAssuntos(){
     sel.appendChild(o);
   });
   if(actual) sel.value=actual;
+  mudouAssunto();
+}
+
+/* ------------------------------------------------------------------
+   O formulário acompanha o assunto escolhido — D-019.
+   Três coisas mudam: a cópia à Junta, as perguntas 6 e 7, e se há
+   sequer carta a escrever. Um pedido de apoio social não tem local
+   nem «desde quando», e não se dirige ao Presidente.
+------------------------------------------------------------------ */
+function assuntoActual(){
+  var sel=document.getElementById('assunto');
+  var r=ASSUNTOS.filter(function(x){return x.id===sel.value;});
+  return r[0]||ASSUNTOS[0];
+}
+
+function mudouAssunto(){
+  var a=assuntoActual();
+  var enc=document.getElementById('encaminha');
+  var campos=document.getElementById('camposCarta');
+  if(!enc||!campos) return;
+
+  /* assunto que não se resolve por carta: mostra-se o caminho certo */
+  if(a.guia){
+    enc.innerHTML=t('enc_apoio')+
+      '<div class="botoes" style="margin-top:.8rem"><button class="btn btn-2" onclick="abrir(\'glossario\')">'+
+      t('enc_botao')+'</button></div>';
+    enc.classList.remove('hidden');
+    campos.classList.add('hidden');
+    return;
+  }
+  enc.classList.add('hidden');
+  campos.classList.remove('hidden');
+
+  /* a cópia à Junta segue o assunto, nunca vem marcada de fábrica */
+  var ck=document.getElementById('junta');
+  if(ck && !ck.dataset.tocado) ck.checked = (a.junta===true);
+
+  /* pergunta 6: «onde é o problema» só faz sentido numa queixa */
+  var lbl=document.querySelector('#campoLocal [data-i18n]');
+  var dica=document.querySelector('#campoLocal .dica');
+  var inp=document.getElementById('local');
+  var chaveL=(a.tipo==='pedido')?'q6_pedido':'q6';
+  var chaveD=(a.tipo==='pedido')?'q6d_pedido':'q6d';
+  var chaveP=(a.tipo==='pedido')?'q6p_pedido':'q6p';
+  if(lbl){ lbl.setAttribute('data-i18n',chaveL); lbl.innerHTML=t(chaveL); }
+  if(dica){ dica.setAttribute('data-i18n',chaveD); dica.innerHTML=t(chaveD); }
+  if(inp){ inp.setAttribute('data-i18n-ph',chaveP); inp.placeholder=t(chaveP); }
+
+  /* pergunta 7: «desde quando» é de queixa e de mais nada */
+  var d=document.getElementById('campoDesde');
+  if(d){
+    if(a.tipo==='queixa') d.classList.remove('hidden');
+    else { d.classList.add('hidden'); if(document.getElementById('desde')) document.getElementById('desde').value=''; }
+  }
 }
 
 function desenharGlossario(){
@@ -2256,7 +2324,7 @@ function recolher(){
     morada: v('morada') || (LANG==='pt'?'[a sua morada]':'[your address]'),
     tel:    v('telefone'),
     mail:   v('email'),
-    local:  v('local')  || (LANG==='pt'?'[o local]':'[the place]'),
+    local:  v('local'),
     desde:  v('desde'),
     desc:   v('descricao') || (LANG==='pt'?'[descreva aqui o que se passa]':'[describe what is happening]'),
     junta:  document.getElementById('junta').checked,
@@ -2267,12 +2335,36 @@ function recolher(){
 
 /* ---- corpo escrito pelo modelo (sem internet) ---- */
 function corpoModelo(d){
+  /* Numeração calculada, não escrita à mão: sem local não há
+     parágrafo de local, e os pontos seguintes não saltam números.
+     Antes escrevia-se sempre «A situação verifica-se em …», o que
+     obrigava a inventar um sítio em assuntos que não têm sítio. D-019 */
+  var pontos=[];
+  var p1=d.desc; if(!/[.!?]$/.test(p1)) p1+='.';
+  pontos.push(p1);
+
+  if(d.local){
+    var p2=(d.a.tipo==='pedido')
+      ? 'O presente pedido diz respeito a '+d.local
+      : 'A situação verifica-se em '+d.local;
+    if(d.desde) p2+=', '+d.desde;
+    pontos.push(p2+'.');
+  } else if(d.desde){
+    pontos.push('A situação verifica-se '+d.desde+'.');
+  }
+
+  if(d.a.tipo==='pedido'){
+    pontos.push('Trata-se de matéria da competência do Município, pelo que se solicita a informação necessária para que o requerido possa ser tratado nos termos devidos.');
+  } else {
+    pontos.push('Trata-se de uma matéria da competência do Município, com impacto directo nas condições de vida e na segurança da população desta localidade.');
+  }
+
+  if(d.fotos) pontos.push('Junta-se fotografia(s) do local, que documentam o exposto.');
+
   var c='';
-  c+='1. '+d.desc; if(!/[.!?]$/.test(d.desc)) c+='.'; c+='\n\n';
-  c+='2. A situação verifica-se em '+d.local; if(d.desde) c+=', '+d.desde; c+='.\n\n';
-  c+='3. Trata-se de uma matéria da competência do Município, com impacto directo nas condições de vida e na segurança da população desta localidade.\n\n';
-  if(d.fotos) c+='4. Junta-se fotografia(s) do local, que documentam o exposto.\n\n';
-  c+='Nestes termos, solicita-se a V. Exa. '+d.a.pedido+', bem como a indicação do prazo previsto para a intervenção.';
+  for(var i=0;i<pontos.length;i++) c+=(i+1)+'. '+pontos[i]+'\n\n';
+  c+='Nestes termos, solicita-se a V. Exa. '+d.a.pedido+', bem como a indicação do prazo previsto para '+
+     (d.a.tipo==='pedido'?'a resposta':'a intervenção')+'.';
   return c;
 }
 
@@ -2311,6 +2403,7 @@ function pedirTexto(d){
 
   var carga = {
     assunto:  d.a.id,
+    tipo:     d.a.tipo||'queixa',
     rubrica:  d.a.linha,    /* linha de "Assunto:" da carta */
     pedido:   d.a.pedido,   /* o que se pede, em linguagem formal */
     descricao:d.desc.slice(0,1500),
