@@ -26,6 +26,8 @@ Escala 1-5. Score = Probabilidade × Impacto.
 | R-16 | **`worker.js` do repositório diferente do que está a correr.** O Pages publica `codigo/` sozinho, mas o Worker continua a ser actualizado à mão no painel — uma correcção feita no painel e não no repositório perde-se; uma feita no repositório e não no painel nunca chega ao ar | 3 | 4 | **12** | Regra: qualquer alteração ao Worker faz-se no ficheiro e vai a commit **antes** de ser colada no painel; **desde 3/9/2026 (ADR-020), mexer em `worker/` gera lembrete automático** — mas ninguém verifica o que está colado no painel | comportamento do Worker que não se explica pelo código do repositório | Hugo |
 | R-17 | **Regressão silenciosa de desenho com a letra grande.** Qualquer alteração ao CSS pode voltar a cortar nomes na barra, empurrar o conteúdo para fora do ecrã ou encher o primeiro ecrã de mobília — e nada disto dá erro | 4 | 3 | **12** | Ramo de pré-visualização `desenho` (ADR-018) + as três medidas antes de publicar (ver secção abaixo) | página anda para o lado; nomes cortados na barra; conteúdo só abaixo da dobra | Hugo |
 
+| R-21 | **As duas listas de localidades separam-se.** `LOCALIDADES` está no `index.html` e no `worker/worker.js`. Acrescentar uma terra num e não no outro faz o aviso chegar ao portal com uma terra que ele não conhece | 3 | 2 | **6** | Aviso escrito nos dois ficheiros; o portal mostra a chave em vez de esconder o aviso, portanto nunca desaparece informação | aviso com um nome de terra estranho, em vez do nome próprio | Hugo |
+
 | R-20 | **Dados das freguesias publicados a partir de fonte oficial velha.** As páginas das nove Juntas no site do Município têm data de actualização de **Dezembro de 2020**, e houve autárquicas pelo meio. Publicar nomes de presidentes e horários de 2020 como se fossem de hoje manda gente à porta errada à hora errada, e mina a confiança que é o único activo do portal | 4 | 3 | **12** | Moradas, telefones e emails entram; **nomes e horários só entram depois de confirmados por telefone**; etiqueta de fonte e data em cada contacto | um contacto que não atende ou um nome que já não é o presidente | Hugo |
 
 | R-19 | **Conta do calendário apagada por inactividade.** O Google apaga contas ao fim de dois anos sem ninguém entrar. O Worker a ler o `.ics` **não conta como actividade** — só uma pessoa a iniciar sessão conta. A agenda esvazia-se para as romarias fixas sem erro nenhum, e o `.ics` continua colado no Worker a apontar para o nada | 2 | 4 | **8** | Entrar na conta pelo menos uma vez por ano; palavra-passe guardada onde outra pessoa lhe chegue (ADR-022); degradação para o array `FESTAS` garante que a agenda nunca fica vazia (ADR-007) | `/agenda` deixa de trazer eventos com `fonte: agenda` | Hugo |
@@ -66,9 +68,15 @@ publicado».
 1. **A página não anda para o lado.** A largura do documento tem de ser igual à
    do ecrã em todos os separadores. Se for maior, há uma palavra que não parte —
    quase sempre um email ou um endereço.
-2. **Nenhum nome da barra de baixo está cortado.** Seis botões num ecrã de
-   telemóvel dão cerca de 60 px cada; o nome tem de caber nesses 60 px no
-   tamanho de letra maior.
+2. **A barra de baixo cabe no ecrã, e mede-se a barra — não a página.** Somar a
+   largura dos seis botões: a soma tem de ser igual ou menor que a largura do
+   ecrã, nos três tamanhos de letra. **O `scrollWidth` da página não serve para
+   isto**, e foi assim que a avaria passou despercebida durante seis versões: a
+   barra é `position:fixed` e um elemento fixo que transborda **não estica o
+   documento**. A página dizia 320 em 320 enquanto a barra ia em 370 e o último
+   botão estava fora do ecrã. Desde a v0.22 o CSS usa `minmax(0,1fr)`, que
+   impede as colunas de crescerem; se um nome não couber passa a duas linhas,
+   que é visível e recuperável.
 3. **O cabeçalho não come o primeiro ecrã.** Referência: abaixo de um terço da
    altura, no tamanho de letra maior.
 
@@ -79,6 +87,14 @@ Medições de 2/9/2026, antes e depois da correcção, num ecrã de 375 px:
 | Largura da página — Notícias | 496 px num ecrã de 375 | 375 |
 | Largura da página — Telefones | 483 px | 375 |
 | Nomes cortados na barra | 4 de 6 | nenhum |
+
+Medições de 4/9/2026, num ecrã de 320 px, com a soma das colunas da barra:
+
+| Letra | v0.19 (estava no ar) | v0.22 |
+|---|---|---|
+| 19 px | 320 / 320 | 320 / 320 |
+| 23 px | **355 / 320** — «Sugerir» fora do ecrã | 320 / 320 |
+| 28 px | **370 / 320** | 320 / 320 |
 | Cabeçalho no primeiro ecrã | 60% | 26% |
 
 ## Nota sobre o dia 3/9/2026: a carta do apoio social

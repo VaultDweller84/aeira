@@ -38,6 +38,16 @@ a partir do mês actual, dando a volta ao ano com indicação do ano. Vista de
 detalhe com mapa, `.ics`, Google Agenda e partilha.
 
 ### M-01.4 Notícias e avisos
+**Filtro por terra** no cimo dos avisos, com «Todas as terras» por defeito
+(T-23, D-024). Cada aviso mostra a terra a que pertence. Os avisos marcados
+«Todo o concelho» aparecem **sempre**, seja qual for a terra escolhida — o
+filtro tira, nunca esconde por omissão.
+
+> ⚠️ A lista `LOCALIDADES` existe **duas vezes**: no `index.html` e no
+> `worker/worker.js`. Se divergirem, um aviso publicado na gestão chega ao
+> portal com uma terra desconhecida. Está defendido — o portal mostra a chave
+> em vez de esconder o aviso — mas é o R-21.
+
 Avisos da terra em cima (4 categorias, cor por categoria, etiqueta NOVO até
 48 h, tempo relativo), notícias do Município em baixo (título, resumo, data,
 ligação externa). Termina com ligações à imprensa regional.

@@ -6,6 +6,71 @@
 
 Formato: data · o que mudou · porquê · IDs afectados.
 
+## 2026-09-04 — v0.22 · **O aviso passa a dizer de que terra é**
+
+Fecha a **T-20** e a **T-23**. É o que faltava para o âmbito do concelho deixar
+de ser só um subtítulo. `D-023`, `D-024`, `E-02`, `M-01.4`, `M-02.5`.
+
+**Cada aviso tem agora uma terra, e sem ela não se publica** (invariante I-06).
+A página de gestão passa a ter o campo, obrigatório e **sem valor por omissão**:
+«Todo o concelho» tem de ser uma escolha consciente, não um descuido de quem
+tinha pressa. Avisos criados antes disto contam como `concelho` — era o que
+eram quando foram escritos.
+
+**Filtro no cimo dos avisos**, com «Todas as terras» por defeito. Doze
+povoações. A escolha guarda-se e sobrevive a fechar e abrir o portal.
+
+**Duas regras de segurança ficaram escritas no código, não só na cabeça:**
+
+1. **Os avisos «Todo o concelho» aparecem sempre**, seja qual for a terra
+   escolhida. Um recenseamento ou um corte na estrada nacional não podem
+   desaparecer porque alguém filtrou pela sua aldeia.
+2. **Uma terra desconhecida nunca esconde o aviso** — o portal mostra a chave
+   em vez de o omitir. Se as duas listas de localidades se separarem (R-21
+   novo), o pior que acontece é um nome feio, não informação perdida.
+
+**Preferências guardadas** — terra, tema, tamanho de letra e língua, tudo em
+`try/catch` (ADR-024). A detecção do idioma do aparelho passa a valer só no
+primeiro arranque. Os dois botões de língua continuam sempre visíveis lado a
+lado, para que quem carregue em «English» por engano veja como voltar.
+
+---
+
+**E encontrou-se uma avaria que já estava no ar, mais grave do que tudo o que
+esta versão acrescenta.**
+
+**A barra de baixo saía do ecrã nos dois tamanhos de letra maiores.** Num ecrã
+de 320 px a barra media **355 px no tamanho médio e 370 no maior** — o botão
+«Sugerir» ficava cinquenta pixels para lá da margem direita, **invisível
+precisamente para quem aumentou a letra por não ver bem.** Não vinha da v0.20:
+já estava assim na v0.19, e provavelmente desde a v0.3.
+
+A causa era uma linha: `grid-template-columns:repeat(6,1fr)`. O `1fr` é
+`minmax(auto,1fr)`, e o mínimo `auto` deixa a coluna crescer até o nome caber —
+seis nomes a crescer não cabem em 320 px. Passa a `minmax(0,1fr)`: seis colunas
+iguais de 53 px, a acabar exactamente na margem, **nos três tamanhos**. E o modo
+de falha muda de natureza: um nome que não caiba passa a duas linhas e a barra
+fica mais alta, em vez de empurrar um botão para fora do ecrã. `R-17`.
+
+**Como escapou às medições anteriores, e a lição que fica.** Mediu-se o
+`scrollWidth` da página, que ficava nos 320 e dizia «não anda para o lado». Mas
+a barra é `position:fixed` — **não estica o documento, e por isso não aparece
+nessa medida.** Um elemento fixo que transborda é invisível ao teste mais
+óbvio. A verificação do R-17 no `06-RISKS.md` passa a medir a barra
+directamente, botão a botão, e não a página.
+
+**O cabeçalho do aviso também transbordava** depois de lhe acrescentar a
+etiqueta da terra: `.cabeca-aviso` passa a `flex-wrap:wrap`. Apanhado na mesma
+sessão, antes de sair.
+
+**Testado com um browser a sério**, a 320 px, nos três tamanhos de letra e nas
+duas línguas: filtro presente, avisos certos por terra, avisos do concelho
+sempre visíveis, aviso antigo sem terra tratado como concelho, escolha
+sobrevive a recarregar, tema e letra sobrevivem, mensagem própria quando a
+terra escolhida não tem avisos, e zero erros de JavaScript.
+
+`sw.js` → **v12**. O `worker.js` mudou: **commit antes de colar no painel** (R-16).
+
 ## 2026-09-04 — v0.21 · Duas decisões, sem código ainda
 
 Sem alterações ao produto. Duas decisões tomadas em conversa e escritas na

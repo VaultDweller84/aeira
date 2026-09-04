@@ -129,7 +129,11 @@ nav.menu{display:none}
 /* ---- Barra de navegação em baixo (telemóvel) ---- */
 nav.barra{
   position:fixed;left:0;right:0;bottom:0;z-index:50;
-  display:grid;grid-template-columns:repeat(6,1fr);
+  /* minmax(0,1fr) e não 1fr: com 1fr a coluna cresce até o nome caber,
+     e seis nomes a crescer não cabem em 320 px — a barra saía do ecrã
+     nos dois tamanhos de letra maiores e o último botão ficava invisível,
+     precisamente para quem aumentou a letra por não ver bem. R-17. */
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
   background:var(--card);border-top:1px solid var(--linha);
   box-shadow:0 -2px 14px rgba(16,35,46,.06);
   padding-bottom:env(safe-area-inset-bottom);
@@ -238,6 +242,16 @@ details.item[open] summary::before{content:"▾"}
   background:var(--chip);color:var(--ink-soft);border-radius:999px;padding:.15rem .7rem;margin-bottom:.5rem}
 .semresultado{padding:1.3rem;text-align:center;color:var(--ink-soft);font-size:1rem}
 
+/* ---- Filtro por terra (T-23) ---- */
+.filtro-terra{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:.2rem 0 .9rem}
+.filtro-terra label{font-weight:700;font-size:.95rem;color:var(--ink-soft)}
+.filtro-terra select{flex:1 1 12rem;min-width:0;font-family:inherit;font-size:1rem;
+  padding:.55rem .6rem;border:1px solid var(--linha);border-radius:.6rem;
+  background:var(--card);color:var(--ink)}
+:root[data-tema="contraste"] .filtro-terra select{border-width:3px}
+.cabeca-aviso .terra{font-weight:700;color:var(--marca);overflow-wrap:anywhere}
+:root[data-tema="contraste"] .cabeca-aviso .terra{color:#000}
+
 /* ---- Notícias e avisos ---- */
 .aviso-terra{background:var(--card);border:1px solid var(--linha);border-left-width:6px;
   border-radius:var(--r);box-shadow:var(--sombra);padding:1rem;margin-bottom:.7rem}
@@ -245,8 +259,9 @@ details.item[open] summary::before{content:"▾"}
 .aviso-terra.cat-servico{border-left-color:var(--marca)}
 .aviso-terra.cat-comunidade{border-left-color:var(--apoio)}
 .aviso-terra.cat-luto{border-left-color:var(--ink-soft)}
-.cabeca-aviso,.cabeca-noticia{display:flex;align-items:center;gap:.5rem;margin:0 0 .35rem;
-  font-size:.82rem;color:var(--ink-soft)}
+.cabeca-aviso,.cabeca-noticia{display:flex;align-items:center;gap:.4rem .5rem;margin:0 0 .35rem;
+  font-size:.82rem;color:var(--ink-soft);flex-wrap:wrap;min-width:0}
+.cabeca-aviso>*,.cabeca-noticia>*{min-width:0}
 .cabeca-aviso .icone{font-size:1.15rem}
 .novo{background:var(--marca);color:var(--marca-txt);font-size:.68rem;font-weight:700;
   border-radius:1rem;padding:.1rem .55rem;letter-spacing:.03em}
@@ -673,8 +688,11 @@ pt:{
  not_lead:'Os avisos da terra e as notícias do Município. Vale a pena espreitar todos os dias.',
  not_a_carregar:'A ir buscar as novidades…',
  not_falhou:'Não foi possível ir buscar as novidades agora. Sem rede, fica o que já tinha sido lido da última vez.',
- not_avisos_titulo:'Avisos da nossa terra',
+ not_avisos_titulo:'Avisos das nossas terras',
  not_sem_avisos:'Não há avisos neste momento. Boa notícia, provavelmente.',
+ not_sem_avisos_terra:'Não há avisos para {terra} neste momento. Escolha «Todas as terras» para ver os do resto do concelho.',
+ flt_rotulo:'Avisos de:',
+ flt_todas:'Todas as terras',
  not_camara_titulo:'Notícias do Município',
  not_sem_camara:'Sem notícias do Município de momento.',
  not_ler:'Ler no site da Câmara →',
@@ -800,8 +818,11 @@ en:{
  not_lead:'Village notices and news from the Município. Worth a look every day.',
  not_a_carregar:'Fetching the latest…',
  not_falhou:'Could not fetch the latest just now. With no connection, what shows is whatever was read last time.',
- not_avisos_titulo:'Notices from the village',
+ not_avisos_titulo:'Notices from the villages',
  not_sem_avisos:'No notices at the moment. Probably good news.',
+ not_sem_avisos_terra:'No notices for {terra} at the moment. Choose “All villages” to see the rest of the concelho.',
+ flt_rotulo:'Notices from:',
+ flt_todas:'All villages',
  not_camara_titulo:'News from the Município',
  not_sem_camara:'No council news at the moment.',
  not_ler:'Read on the Câmara website →',
@@ -912,11 +933,29 @@ en:{
 var LANG='pt';
 function t(k){ return T[LANG][k]; }
 
+/* ---------------- PREFERÊNCIAS GUARDADAS ----------------
+   ADR-024. Quatro escolhas de apresentação e mais nada: terra,
+   tema, letra e língua. Não há contas, não há senhas, não há
+   cookies, e nada disto sai do aparelho.
+
+   Tudo em try/catch: um browser que recuse o armazenamento
+   (janela anónima, definições apertadas) não pode partir o
+   portal — só esquecer. É o ADR-007 aplicado ao armazenamento.
+-------------------------------------------------------- */
+function lerPref(k,defeito){
+  try{ var v=window.localStorage.getItem('aeira.'+k); return (v===null?defeito:v); }
+  catch(e){ return defeito; }
+}
+function guardarPref(k,v){
+  try{ window.localStorage.setItem('aeira.'+k,v); }catch(e){}
+}
+
 function letra(px,btn){
   document.documentElement.style.setProperty('--base',px+'px');
   var g=btn.parentNode;
   Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){b.classList.remove('on');});
   btn.classList.add('on');
+  guardarPref('letra',px);
 }
 function setTema(nome,btn){
   document.documentElement.setAttribute('data-tema',nome);
@@ -926,6 +965,7 @@ function setTema(nome,btn){
   var cores={sereno:'#1B5E8C',terra:'#B4441F',contraste:'#000000'};
   var m=document.querySelector('meta[name=theme-color]');
   if(m) m.setAttribute('content',cores[nome]);
+  guardarPref('tema',nome);
 }
 function ajustarOpcoes(){
   var d=document.getElementById('opcoes');
@@ -958,6 +998,7 @@ function aplicarTextos(){
 }
 function setLang(l){
   LANG=l;
+  guardarPref('lingua',l);
   document.getElementById('btnPT').classList.toggle('on', l==='pt');
   document.getElementById('btnEN').classList.toggle('on', l==='en');
   aplicarTextos(); encherAssuntos(); desenharGlossario(); desenharNoticias(); desenharAgenda(); desenharTelefones();
@@ -969,6 +1010,37 @@ function setLang(l){
 /* =========================================================
    DADOS BILINGUES / BILINGUAL DATA
    ========================================================= */
+
+/* ---------------- LOCALIDADES ----------------
+   ⚠️ TEM DE SER IGUAL À LISTA DO worker/worker.js. Se divergirem,
+   um aviso publicado na gestão chega aqui com uma terra que o
+   portal não conhece. Está tratado para não desaparecer — mostra
+   a chave em vez de esconder o aviso —, mas fica feio e é sinal
+   de que as duas listas se separaram.
+
+   Os nomes das terras não se traduzem — ADR-002.
+------------------------------------------------- */
+var LOCALIDADES = [
+ {id:'concelho',                 pt:'Todo o concelho',        en:'The whole concelho'},
+ {id:'aguas',                    pt:'Águas'},
+ {id:'aldeia-de-joao-pires',     pt:'Aldeia de João Pires'},
+ {id:'aldeia-do-bispo',          pt:'Aldeia do Bispo'},
+ {id:'aranhas',                  pt:'Aranhas'},
+ {id:'bemposta',                 pt:'Bemposta'},
+ {id:'benquerenca',              pt:'Benquerença'},
+ {id:'meimao',                   pt:'Meimão'},
+ {id:'meimoa',                   pt:'Meimoa'},
+ {id:'pedrogao-de-s-pedro',      pt:'Pedrógão de S. Pedro'},
+ {id:'penamacor',                pt:'Penamacor'},
+ {id:'salvador',                 pt:'Salvador'},
+ {id:'vale-da-senhora-da-povoa', pt:'Vale da Senhora da Póvoa'}
+];
+function nomeLocalidade(id){
+  for(var i=0;i<LOCALIDADES.length;i++){
+    if(LOCALIDADES[i].id===id) return (LANG==='en'&&LOCALIDADES[i].en)?LOCALIDADES[i].en:LOCALIDADES[i].pt;
+  }
+  return id||'';   /* nunca esconder um aviso por não reconhecer a terra */
+}
 
 var CATEGORIAS = [
  {pt:'Lixo e ruas',        en:'Rubbish and streets'},
@@ -1871,6 +1943,13 @@ function eRecente(iso, horas){
 
 var ICONES_AVISO={urgente:'🚨', servico:'🛒', comunidade:'🎈', luto:'🕯️'};
 
+var TERRA=lerPref('localidade','todas');
+function mudarTerra(v){
+  TERRA=v;
+  guardarPref('localidade',v);
+  desenharNoticias();
+}
+
 function desenharNoticias(){
   var caixa=document.getElementById('listaNoticias');
   if(!caixa) return;
@@ -1903,17 +1982,43 @@ function desenharNoticias(){
   h1.textContent=t('not_avisos_titulo');
   caixa.appendChild(h1);
 
-  if(!avisos.length){
+  /* Filtro por terra. «Todas» é o valor de defeito e é uma decisão de
+     segurança, não de conveniência: um filtro que esconde por omissão
+     faz alguém perder um corte de água. Ver ADR-024 e T-23.
+     Os avisos marcados «Todo o concelho» aparecem sempre — servem
+     toda a gente, seja qual for a terra escolhida. */
+  var barra=document.createElement('div');
+  barra.className='filtro-terra';
+  var sel='<option value="todas">'+escaparHTML(t('flt_todas'))+'</option>';
+  for(var i=0;i<LOCALIDADES.length;i++){
+    if(LOCALIDADES[i].id==='concelho') continue;   /* não é uma terra, é o concelho todo */
+    sel+='<option value="'+LOCALIDADES[i].id+'"'+(LOCALIDADES[i].id===TERRA?' selected':'')+'>'+
+         escaparHTML(nomeLocalidade(LOCALIDADES[i].id))+'</option>';
+  }
+  barra.innerHTML='<label for="selTerra">'+escaparHTML(t('flt_rotulo'))+'</label>'+
+                  '<select id="selTerra" onchange="mudarTerra(this.value)">'+sel+'</select>';
+  caixa.appendChild(barra);
+
+  var visiveis=avisos.filter(function(a){
+    if(TERRA==='todas') return true;
+    return a.localidade===TERRA || a.localidade==='concelho' || !a.localidade;
+  });
+
+  if(!visiveis.length){
     var vazio=document.createElement('p');
-    vazio.className='semresultado'; vazio.innerHTML=t('not_sem_avisos');
+    vazio.className='semresultado';
+    vazio.innerHTML = (TERRA!=='todas' && avisos.length)
+      ? t('not_sem_avisos_terra').replace('{terra}', escaparHTML(nomeLocalidade(TERRA)))
+      : t('not_sem_avisos');
     caixa.appendChild(vazio);
   } else {
-    avisos.forEach(function(a){
+    visiveis.forEach(function(a){
       var el=document.createElement('div');
       el.className='aviso-terra cat-'+(a.categoria||'servico');
       el.innerHTML=
         '<p class="cabeca-aviso">'+
           '<span class="icone">'+(ICONES_AVISO[a.categoria]||'🛒')+'</span>'+
+          '<span class="terra">'+escaparHTML(nomeLocalidade(a.localidade||'concelho'))+'</span>'+
           '<span class="quando">'+escaparHTML(haQuantoTempo(a.quando))+'</span>'+
           (eRecente(a.quando,48)?'<span class="novo">'+t('novo')+'</span>':'')+
         '</p>'+
@@ -2604,8 +2709,22 @@ function limpar(){
 
 /* arranque */
 (function(){
+  /* ADR-024: o que ficou guardado manda; a detecção do idioma do
+     aparelho só vale no primeiro arranque, quando não há nada guardado. */
   var nav=(navigator.language||'pt').toLowerCase();
-  setLang(nav.indexOf('pt')===0 ? 'pt' : 'en');
+  var lingua=lerPref('lingua', nav.indexOf('pt')===0 ? 'pt' : 'en');
+
+  var tema=lerPref('tema','sereno');
+  var btnTema=document.querySelector('.tema[data-tema="'+tema+'"]');
+  if(btnTema) setTema(tema,btnTema);
+
+  var px=parseInt(lerPref('letra','19'),10);
+  if(px===23||px===28){
+    var btnLetra=document.querySelector('.painel .s'+(px===23?'2':'3'));
+    if(btnLetra) letra(px,btnLetra);
+  }
+
+  setLang(lingua==='en'?'en':'pt');
   ajustarOpcoes();
 })();
 

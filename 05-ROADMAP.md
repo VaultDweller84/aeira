@@ -55,8 +55,8 @@ portal promete nove freguesias e serve uma** — e o anúncio (T-09) não se faz
 
 | ID | Tarefa | R | I | C | E | RICE | Estado |
 |---|---|---|---|---|---|---|---|
-| T-20 | **Localidade no aviso** (E-02, página de gestão e portal) | 1800 | 3 | 0,9 | 3 | **1620** | por fazer |
-| T-23 | **Filtro de aldeia nos avisos, com a escolha guardada** (D-024) | 1800 | 2 | 0,8 | 2 | **1440** | por fazer |
+| T-20 | **Localidade no aviso** (E-02, página de gestão e portal) | 1800 | 3 | 0,9 | 3 | **1620** | ✔ 4/9 |
+| T-23 | **Filtro de aldeia nos avisos, com a escolha guardada** (D-024) | 1800 | 2 | 0,8 | 2 | **1440** | ✔ 4/9 |
 | T-21 | Junta certa por localidade na carta (D-019, D-021) | 1800 | 2 | 0,8 | 4 | **720** | por fazer |
 | T-22 | Romarias e contactos das outras oito freguesias | 1800 | 2 | 0,7 | 8 | **315** | por fazer |
 
@@ -123,8 +123,12 @@ desaparecer do painel. Rever de seis em seis meses.
 
 ## Ordem de execução recomendada
 
-T-20 → T-23 → T-22 → T-07 → T-17 → **T-09** → T-21 → T-08 → T-13/T-14
-(rotinas) → T-11 → T-16 → T-18 → T-12.
+T-22 → T-07 → T-17 → **T-09** → T-21 → T-08 → T-13/T-14 (rotinas) → T-11 →
+T-16 → T-18 → T-12.
+
+**T-20 e T-23 saíram da lista a 4/9/2026.** Falta a T-22 — as romarias e os
+contactos das outras oito freguesias — para o âmbito do concelho deixar de ser
+uma promessa, e só depois se anuncia.
 
 **A ordem mudou a 4/9/2026 com o ADR-023.** O anúncio deixou de ser a próxima
 coisa a fazer e passou para depois do conteúdo do concelho e dos co-editores.

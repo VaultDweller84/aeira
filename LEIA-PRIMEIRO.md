@@ -19,12 +19,12 @@ telefones úteis e sugestões.
 
 | Campo | Valor |
 |---|---|
-| Versão | v0.21 |
-| Última alteração | 2026-09-04 · âmbito do concelho (ADR-023), botões renomeados, localStorage aberto a preferências (ADR-024) |
+| Versão | v0.22 |
+| Última alteração | 2026-09-04 · terra no aviso e filtro que se lembra (T-20, T-23); barra de baixo corrigida — saía do ecrã com a letra grande |
 | **No ar** | site `a-eira.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
 | **Código** | `github.com/VaultDweller84/aeira` · público |
 | Verificado em produção | 4/9: agenda a mostrar eventos do calendário no portal, com hora certa e repetições desdobradas · 3/9: v0.16 no ar, portal instalado em telemóvel, carta gerada de ponta a ponta |
-| Em falta | **T-20 localidade nos avisos** + **T-23 filtro de aldeia** (o âmbito é promessa por cumprir sem estes), T-22 romarias das outras freguesias, T-21 Junta por localidade, domínio `aeira.pt` (T-17), T-19 |
+| Em falta | **T-22 romarias e contactos das outras oito freguesias** (é o que falta para o âmbito deixar de ser promessa), T-07 co-editores, T-21 Junta por localidade, domínio `aeira.pt` (T-17), T-19 |
 | Fase | 6/7 Publicação |
 | Bloqueio | nenhum |
 | Risco principal | R-01 mantenedor único, score 20 |

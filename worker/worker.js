@@ -662,6 +662,9 @@ async function lerAvisos(env) {
     try {
       const a = JSON.parse(bruto);
       if (a.expira && a.expira < hoje) continue;   /* já passou */
+      /* avisos criados antes do ADR-023 não têm localidade: valem para
+         toda a gente, que é o que eram quando foram escritos */
+      if (!a.localidade) a.localidade = 'concelho';
       itens.push(a);
     } catch {}
   }
@@ -736,6 +739,36 @@ const escapar = (s) => String(s || '')
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
 
+/* ---------------- LOCALIDADES ----------------
+   As povoações do concelho, tal como o Município as escreve.
+   Desde o ADR-023 o portal é do concelho e um aviso sem
+   localidade não se publica (invariante I-06): «corte de água»
+   sem dizer onde é informação em falta disfarçada de informação.
+
+   ⚠️ ESTA LISTA TEM DE SER IGUAL À DO index.html. Se divergirem,
+   um aviso publicado aqui aparece no portal sem nome de terra.
+   É o mesmo tipo de armadilha do R-14: não dá erro nenhum.
+
+   ⚠️ [L] POR CONFIRMAR antes da T-09: são as doze povoações que
+   constam das páginas das nove Juntas. O concelho pode ter mais
+   lugares. Acrescentar um é uma linha aqui e uma linha no portal.
+------------------------------------------------- */
+const LOCALIDADES = {
+  'concelho':                 'Todo o concelho',
+  'aguas':                    'Águas',
+  'aldeia-de-joao-pires':     'Aldeia de João Pires',
+  'aldeia-do-bispo':          'Aldeia do Bispo',
+  'aranhas':                  'Aranhas',
+  'bemposta':                 'Bemposta',
+  'benquerenca':              'Benquerença',
+  'meimao':                   'Meimão',
+  'meimoa':                   'Meimoa',
+  'pedrogao-de-s-pedro':      'Pedrógão de S. Pedro',
+  'penamacor':                'Penamacor',
+  'salvador':                 'Salvador',
+  'vale-da-senhora-da-povoa': 'Vale da Senhora da Póvoa'
+};
+
 const CATEGORIAS_AVISO = {
   urgente:    { rotulo: 'Urgente',      icone: '🚨', dias: 3 },
   servico:    { rotulo: 'Serviços',     icone: '🛒', dias: 7 },
@@ -772,10 +805,13 @@ async function rotaAdmin(request, env) {
       const cat = CATEGORIAS_AVISO[String(form.get('categoria'))] ? String(form.get('categoria')) : 'servico';
       let expira = limpar(form.get('expira'), 10);
       if (!/^\d{4}-\d{2}-\d{2}$/.test(expira)) expira = maisDias(CATEGORIAS_AVISO[cat].dias);
-      if (titulo.length >= 3) {
+      /* I-06: sem localidade não se publica. Não há valor por omissão de
+         propósito — «concelho» tem de ser uma escolha, não um descuido. */
+      const loc = String(form.get('localidade') || '');
+      if (titulo.length >= 3 && LOCALIDADES[loc]) {
         const id = Date.now() + '-' + Math.random().toString(36).slice(2, 8);
         await env.SUGESTOES.put('aviso:' + id, JSON.stringify({
-          id, titulo, texto, categoria: cat,
+          id, titulo, texto, categoria: cat, localidade: loc,
           quando: new Date().toISOString(), expira
         }));
       }
@@ -831,6 +867,10 @@ async function rotaAdmin(request, env) {
   sugestoes.sort((a, b) => String(b.quando).localeCompare(String(a.quando)));
 
   /* ---------------- desenhar ---------------- */
+  const opcoesLoc = Object.keys(LOCALIDADES).map((c) =>
+    `<option value="${c}">${escapar(LOCALIDADES[c])}</option>`
+  ).join('');
+
   const opcoesCat = Object.keys(CATEGORIAS_AVISO).map((c) =>
     `<option value="${c}">${CATEGORIAS_AVISO[c].icone} ${CATEGORIAS_AVISO[c].rotulo} — apaga-se sozinho em ${CATEGORIAS_AVISO[c].dias} dias</option>`
   ).join('');
@@ -841,7 +881,7 @@ async function rotaAdmin(request, env) {
     return `
     <article class="${passou ? 'feita' : ''}">
       <p class="topo"><b>${c.icone} ${c.rotulo}</b>
-        <span>${passou ? 'já não aparece' : 'até ' + escapar(a.expira)}</span></p>
+        <span>${escapar(LOCALIDADES[a.localidade] || 'Todo o concelho')} · ${passou ? 'já não aparece' : 'até ' + escapar(a.expira)}</span></p>
       <p class="titulo">${escapar(a.titulo)}</p>
       ${a.texto ? `<p class="texto">${escapar(a.texto).replace(/\n/g, '<br>')}</p>` : ''}
       <form method="post">
@@ -919,6 +959,14 @@ São a razão pela qual as pessoas abrem o portal todos os dias — vale a pena 
     <label>Texto <small>Opcional. Os pormenores, se houver.</small>
       <textarea name="texto" maxlength="1200"
         placeholder="Ex.: A Câmara vai fazer uma reparação na conduta da Rua do Outeiro. Encham garrafões na véspera."></textarea></label>
+
+    <label>Onde é
+      <small>Obrigatório. Quem estiver noutra terra pode filtrar e não ver este aviso —
+      escolha «Todo o concelho» só quando for mesmo para toda a gente.</small>
+      <select name="localidade" required>
+        <option value="">— escolha a terra —</option>
+        ${opcoesLoc}
+      </select></label>
 
     <label>Tipo
       <select name="categoria">${opcoesCat}</select></label>
