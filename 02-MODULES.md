@@ -75,12 +75,19 @@ iguais, portanto **oito ou nove caracteres** é o tecto real num ecrã de 320 px
 | Guia | Guia: como se faz… |
 | Notícias | Notícias e avisos |
 | Agenda | Agenda cultural |
-| Telefones | Telefones úteis |
+| Números | Números úteis |
 | Sugerir | Sugerir ou avisar |
 
 «Queixa» foi corrigido para «Escrever» porque contradizia o D-019: o gerador
 faz queixas **e** pedidos, e quem queria pedir não carregava num botão que
 dizia «Queixa».
+
+**«Telefones» foi tentado e recuado.** Mede ~58 px numa coluna de 53 e encostava
+ao nome do lado — três nomes colados leem-se como um só, precisamente para quem
+vê mal. Voltou a «Números», que cabe, e o ícone do auscultador desfaz a
+ambiguidade. **Sete caracteres é o tecto real** num ecrã de 320 px; o CSS passou
+a ter uma barreira (`max-width:100%` no nome) para que um nome grande demais
+parta em duas linhas em vez de invadir o vizinho.
 
 ## M-02 Worker `worker.js`
 

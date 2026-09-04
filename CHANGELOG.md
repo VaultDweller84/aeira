@@ -69,6 +69,18 @@ sempre visíveis, aviso antigo sem terra tratado como concelho, escolha
 sobrevive a recarregar, tema e letra sobrevivem, mensagem própria quando a
 terra escolhida não tem avisos, e zero erros de JavaScript.
 
+**«Telefones» durou uma hora.** Foi proposto na v0.20 para o nome da barra
+bater certo com o do cartão, mediu-se, e recuou-se: ~58 px numa coluna de 53,
+com o texto a encostar ao nome do botão do lado. Três nomes colados leem-se
+como um só. Voltou a **«Números»**, e o cartão e a secção passaram a «Números
+úteis» para continuarem a bater certo. O ícone do auscultador desfaz a
+ambiguidade da palavra. Fica escrito no `02-MODULES.md` que **sete caracteres é
+o tecto** num ecrã de 320 px.
+
+**E ficou uma barreira no CSS** para isto não voltar: `max-width:100%` no nome
+do botão. Um nome grande demais passa a partir em duas linhas — feio, mas
+legível — em vez de invadir o botão do lado. `R-17`.
+
 `sw.js` → **v12**. O `worker.js` mudou: **commit antes de colar no painel** (R-16).
 
 ## 2026-09-04 — v0.21 · Duas decisões, sem código ainda

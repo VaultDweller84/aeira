@@ -146,6 +146,10 @@ nav.barra button{
   overflow:visible;hyphens:auto;
 }
 nav.barra button .ic{font-size:clamp(15px,.95rem,19px);line-height:1}
+/* o nome nunca sai da sua coluna: sem isto, um nome mais largo do que a
+   coluna encosta ao do botão do lado e três nomes leem-se como um só.
+   Se não couber, parte — que é feio mas legível. R-17. */
+nav.barra button>span:last-child{max-width:100%;overflow-wrap:anywhere;text-align:center}
 nav.barra button.on{color:var(--marca);background:none}
 nav.barra button.on .ic{background:var(--chip);border-radius:999px;padding:.18rem .85rem}
 :root[data-tema="contraste"] nav.barra{border-top-width:3px}
@@ -677,11 +681,11 @@ pt:{
  lbl_opcoes:'⚙ Letra e cores',
  tema_sereno:'Clara', tema_terra:'Quente', tema_contraste:'Contraste',
 
- bar1:'Escrever', bar2:'Guia', bar3:'Agenda', bar4:'Telefones', bar5:'Sugerir', bar6:'Notícias',
+ bar1:'Escrever', bar2:'Guia', bar3:'Agenda', bar4:'Números', bar5:'Sugerir', bar6:'Notícias',
  menu1t:'Escrever uma queixa ou pedido<small>O portal escreve a carta por si</small>',
  menu2t:'Guia: como se faz…<small>Passo a passo para cada assunto</small>',
  menu3t:'Agenda cultural<small>Tudo o que se faz no concelho</small>',
- menu4t:'Telefones úteis<small>Câmara, Junta, Bombeiros, GNR, Saúde</small>',
+ menu4t:'Números úteis<small>Câmara, Junta, Bombeiros, GNR, Saúde</small>',
  menu5t:'Sugerir<small>Um aviso para dar, uma festa, ou o que falta no portal</small>',
  menu6t:'Notícias e avisos<small>O que há de novo na terra e no concelho</small>',
  not_h2:'Notícias e avisos',
@@ -791,7 +795,7 @@ pt:{
  sug_privacidade:'O nome e o contacto são opcionais e só servem para lhe responder. Não são publicados nem usados para mais nada.',
  sug_aviso:'<strong>Isto não substitui uma queixa à Câmara.</strong> Se o assunto é para o Município resolver — lixo, buracos, água — use o separador <em>Queixa</em>: só assim fica registo oficial.',
 
- tel_h2:'Telefones úteis',
+ tel_h2:'Números úteis',
  tel_lead:'No telemóvel, basta carregar no número para ligar.',
 
  foot1:'<strong>A Eira</strong> — a eira é onde a aldeia se junta. Este portal é feito por gente da terra, para a gente da terra. Não é um site oficial da Câmara nem da Junta.',
