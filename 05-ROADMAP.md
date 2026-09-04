@@ -56,6 +56,7 @@ portal promete nove freguesias e serve uma** — e o anúncio (T-09) não se faz
 | ID | Tarefa | R | I | C | E | RICE | Estado |
 |---|---|---|---|---|---|---|---|
 | T-20 | **Localidade no aviso** (E-02, página de gestão e portal) | 1800 | 3 | 0,9 | 3 | **1620** | por fazer |
+| T-23 | **Filtro de aldeia nos avisos, com a escolha guardada** (D-024) | 1800 | 2 | 0,8 | 2 | **1440** | por fazer |
 | T-21 | Junta certa por localidade na carta (D-019, D-021) | 1800 | 2 | 0,8 | 4 | **720** | por fazer |
 | T-22 | Romarias e contactos das outras oito freguesias | 1800 | 2 | 0,7 | 8 | **315** | por fazer |
 
@@ -67,6 +68,17 @@ freguesias é pior do que não haver aviso nenhum: «corte de água» é informa
 em João Pires e é alarme falso na Meimoa.
 
 **A T-22 é investigação, não código** — e a fonte oficial está velha. Ver R-20.
+
+**A T-23 só se faz depois da T-20**, e as duas juntas são o que torna o âmbito
+do concelho verdadeiro em vez de anunciado. O filtro vive **no cimo dos avisos,
+não na barra de topo**: o cabeçalho já foi reduzido de 60% para 26% do primeiro
+ecrã na v0.11 e não se volta a enchê-lo, e um selector no topo prometeria
+filtrar o portal inteiro quando só filtra uma secção — o guia, a carta, os
+telefones e as notícias do Município são do concelho todo.
+
+**Sai da lista de sugestões por implementar** a linha «Lembrar língua e tema com
+`localStorage`»: deixou de contrariar o ADR-011 e passou a fazer parte da T-23,
+pelo ADR-024.
 
 ## Fase 2 — Não morrer (primeiro mês) — **a fase que decide o projecto**
 
@@ -111,8 +123,8 @@ desaparecer do painel. Rever de seis em seis meses.
 
 ## Ordem de execução recomendada
 
-T-20 → T-22 → T-07 → T-17 → **T-09** → T-21 → T-08 → T-13/T-14 (rotinas) →
-T-11 → T-16 → T-18 → T-12.
+T-20 → T-23 → T-22 → T-07 → T-17 → **T-09** → T-21 → T-08 → T-13/T-14
+(rotinas) → T-11 → T-16 → T-18 → T-12.
 
 **A ordem mudou a 4/9/2026 com o ADR-023.** O anúncio deixou de ser a próxima
 coisa a fazer e passou para depois do conteúdo do concelho e dos co-editores.
@@ -126,7 +138,6 @@ tarefa com risco associado (R-11).
 
 | Ideia | Benefício | Custo | Risco de não fazer |
 |---|---|---|---|
-| Lembrar língua e tema com `localStorage` | menos atrito em cada visita | 1 h | baixo — contraria ADR-011, exige ADR novo |
 | Notificações push de avisos urgentes | corte de água chega a quem não abriu | 6 h | médio — mas pede permissões e mina a simplicidade |
 | Página pública de estatísticas do portal | transparência, mostra que está vivo | 3 h | baixo |
 | Arquivo de avisos passados | memória da terra | 2 h | baixo |

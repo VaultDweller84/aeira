@@ -41,12 +41,17 @@ Forma normalizada dentro do portal, vinda de três fontes.
 | `categoria` | enum | `urgente` \| `servico` \| `comunidade` \| `luto` |
 | `quando` | ISO | criação |
 | `expira` | `YYYY-MM-DD` | por omissão: 3/7/14/10 dias conforme categoria |
+| `localidade` | enum | **obrigatório desde o ADR-023** — uma das nove freguesias, ou `concelho` para o que serve toda a gente |
 
 **Invariantes**
 - I-04: `expira < hoje` → não é devolvido por `/noticias`. Fica visível na
   gestão, marcado. `[F]`
 - I-05: `categoria: luto` exige consentimento da família — regra humana, não
   técnica. Avisada na página de gestão. Ver R-06.
+- I-06: aviso **sem `localidade` não se publica**. Num portal de nove
+  freguesias, «corte de água» sem dizer onde é informação em falta disfarçada
+  de informação. A página de gestão obriga ao campo; avisos antigos, criados
+  antes do ADR-023, contam como `concelho`. `[F]`
 
 ## E-03 Notícia — efémera, cache 3 h
 

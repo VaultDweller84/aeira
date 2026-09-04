@@ -6,6 +6,52 @@
 
 Formato: data · o que mudou · porquê · IDs afectados.
 
+## 2026-09-04 — v0.21 · Duas decisões, sem código ainda
+
+Sem alterações ao produto. Duas decisões tomadas em conversa e escritas na
+mesma sessão, como manda a regra 1. **`D-024`**.
+
+**O `localStorage` deixa de estar proibido — para quatro preferências e nada
+mais.** Aldeia escolhida, tema, tamanho de letra e língua. Substitui a
+proibição absoluta do ADR-011; **contas, palavras-passe e cookies continuam
+proibidos**, e é isso que aquele ADR realmente protegia. A frase que o
+justifica continua verdadeira palavra por palavra: «não há contas, não há
+senhas — se alguma coisa lhe pedir isso em nome deste portal, é burla».
+
+**O que forçou a decisão foi um raciocínio simples: um filtro que esquece é
+pior do que não haver filtro.** Quem escolhe «Meimoa» hoje e amanhã vê os
+avisos todos outra vez não conclui que o portal não guarda preferências —
+conclui que está avariado, ou que o aviso dela desapareceu. O mesmo já se
+passava com o tamanho de letra, e aí atinge exactamente quem o aumentou por não
+ver bem. `T-23`, `D-011`, `D-024`.
+
+**O aviso ganha localidade obrigatória** — `E-02`, invariante **I-06** nova:
+aviso sem localidade não se publica. Num portal de nove freguesias, «corte de
+água» sem dizer onde é informação em falta disfarçada de informação. Avisos
+criados antes do ADR-023 contam como `concelho`. `T-20`.
+
+**Tarefa nova T-23** — o filtro de aldeia, com a escolha guardada. Fica logo a
+seguir à T-20 na ordem de execução, e as duas juntas são o que torna o âmbito
+do concelho verdadeiro em vez de anunciado.
+
+**O filtro fica no cimo dos avisos, não na barra de topo**, e foi decidido
+contra a proposta inicial. Duas razões: o cabeçalho foi reduzido de 60% para
+26% do primeiro ecrã na v0.11 e não se volta a enchê-lo — vale o princípio
+escrito de que cresce o texto que se lê, não a mobília; e um selector no topo
+prometeria filtrar o portal inteiro quando só filtra uma secção, porque o guia,
+a carta, os telefones e as notícias do Município são do concelho todo. `R-17`.
+
+**Bandeiras em vez de «Português» e «English»: proposto e recusado.** As
+bandeiras não herdam a cor do tema — o tema de alto contraste existe para quem
+vê mal e passaria a ter dois rectângulos coloridos onde tinha duas palavras; em
+emoji nem sequer aparecem no Windows, saem as letras «PT» e «GB»; e bandeira não
+é língua, o que atinge o P-03, os proprietários estrangeiros, para quem «English»
+diz o que a bandeira do Reino Unido não diz. É a mesma razão pela qual a v0.12
+tirou os emoji da navegação. `D-002`, `D-017`, `M-01.7`.
+
+**Sai da lista de sugestões por implementar** a linha «Lembrar língua e tema com
+`localStorage`»: deixou de contrariar um ADR e passou a fazer parte da T-23.
+
 ## 2026-09-04 — v0.20 · **O portal passa a ser do concelho**
 
 A maior mudança de âmbito desde que o projecto começou, e a que mais promete

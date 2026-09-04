@@ -19,12 +19,12 @@ telefones úteis e sugestões.
 
 | Campo | Valor |
 |---|---|
-| Versão | v0.20 |
-| Última alteração | 2026-09-04 · âmbito passa ao concelho (ADR-023) e botões renomeados |
+| Versão | v0.21 |
+| Última alteração | 2026-09-04 · âmbito do concelho (ADR-023), botões renomeados, localStorage aberto a preferências (ADR-024) |
 | **No ar** | site `a-eira.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
 | **Código** | `github.com/VaultDweller84/aeira` · público |
 | Verificado em produção | 4/9: agenda a mostrar eventos do calendário no portal, com hora certa e repetições desdobradas · 3/9: v0.16 no ar, portal instalado em telemóvel, carta gerada de ponta a ponta |
-| Em falta | **T-20 localidade nos avisos** (o âmbito é promessa por cumprir sem isto), T-21 Junta certa por localidade, T-22 romarias das outras freguesias, domínio `aeira.pt` (T-17), T-19 |
+| Em falta | **T-20 localidade nos avisos** + **T-23 filtro de aldeia** (o âmbito é promessa por cumprir sem estes), T-22 romarias das outras freguesias, T-21 Junta por localidade, domínio `aeira.pt` (T-17), T-19 |
 | Fase | 6/7 Publicação |
 | Bloqueio | nenhum |
 | Risco principal | R-01 mantenedor único, score 20 |
@@ -106,7 +106,7 @@ dizer portal partido — quer dizer que faltou uma delas. Para correr à mão:
 | 008 | Agenda: romarias fixas + Google Calendar + robô da Câmara |
 | 009 | Notícias sem resumo por IA; sem scraping da imprensa |
 | 010 | PWA como via principal, APK como segunda via |
-| 011 | Sem contas e sem armazenamento no browser |
+| 011 | Sem contas nem senhas — **armazenamento substituído pelo 024** |
 | 012 | Notícias e avisos como separador inicial |
 | 013 | Nome «A Eira» — **âmbito substituído pelo 023** |
 | 014 | **Alojamento no Cloudflare Pages, mesma conta do Worker** |
@@ -119,6 +119,7 @@ dizer portal partido — quer dizer que faltou uma delas. Para correr à mão:
 | 021 | Carta continua dirigida ao Presidente; **email passa a incluir o serviço competente** |
 | 022 | **O calendário da agenda é de uma conta Google do projecto,** não da conta pessoal |
 | 023 | **O âmbito passa a ser o concelho,** nove freguesias; o nome e o domínio não mudam |
+| 024 | **`localStorage` para quatro preferências** (aldeia, tema, letra, língua); contas e senhas continuam proibidas |
 
 ## Vocabulário
 
