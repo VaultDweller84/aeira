@@ -8,7 +8,7 @@ Escala 1-5. Score = Probabilidade × Impacto.
 
 | ID | Risco | P | I | Score | Mitigação | Sinal de alerta | Dono |
 |---|---|---|---|---|---|---|---|
-| R-01 | **Mantenedor único.** Ninguém além do Hugo publica avisos ou eventos; o portal desactualiza-se e morre | 4 | 5 | **20** | Dar edição do Google Calendar e a chave de gestão a 2-3 pessoas da terra (F-07); **código em repositório público desde 2/9/2026 (ADR-015)** — outra pessoa pode pegar-lhe | duas semanas sem avisos novos | Hugo |
+| R-01 | **Mantenedor único.** Ninguém além do Hugo publica avisos ou eventos; o portal desactualiza-se e morre | 4 | 5 | **20** | Dar edição do Google Calendar e a chave de gestão a 2-3 pessoas da terra (F-07); **código em repositório público desde 2/9/2026 (ADR-015)** — outra pessoa pode pegar-lhe; **calendário numa conta do projecto desde 4/9/2026 (ADR-022)** — a agenda deixa de estar pendurada numa identidade pessoal | duas semanas sem avisos novos | Hugo |
 | R-02 | **Robô da Câmara parte.** O site muda e agenda/notícias perdem a fonte principal | 4 | 3 | **12** | Degradação já garantida; etiqueta de fonte; verificação periódica | `/agenda` ou `/noticias` devolve 0 itens da Câmara | Hugo |
 | R-03 | **Datas mal lidas** pelo robô (reconhecimento de padrões no texto) levam alguém a uma festa no dia errado | 3 | 4 | **12** | Aviso visível nos eventos da Câmara + ligação à fonte; **desde 2/9/2026 as horas do Google Calendar são convertidas para hora de Portugal e os eventos repetidos desdobrados** | queixa de munícipe | Hugo |
 | R-04 | **Adopção nula.** Portal publicado e ninguém usa | 3 | 5 | **15** | Notícias como separador inicial; avisos frequentes; lançamento no grupo de Facebook | <10 visitas/semana ao fim de um mês | Hugo |
@@ -26,14 +26,17 @@ Escala 1-5. Score = Probabilidade × Impacto.
 | R-16 | **`worker.js` do repositório diferente do que está a correr.** O Pages publica `codigo/` sozinho, mas o Worker continua a ser actualizado à mão no painel — uma correcção feita no painel e não no repositório perde-se; uma feita no repositório e não no painel nunca chega ao ar | 3 | 4 | **12** | Regra: qualquer alteração ao Worker faz-se no ficheiro e vai a commit **antes** de ser colada no painel; **desde 3/9/2026 (ADR-020), mexer em `worker/` gera lembrete automático** — mas ninguém verifica o que está colado no painel | comportamento do Worker que não se explica pelo código do repositório | Hugo |
 | R-17 | **Regressão silenciosa de desenho com a letra grande.** Qualquer alteração ao CSS pode voltar a cortar nomes na barra, empurrar o conteúdo para fora do ecrã ou encher o primeiro ecrã de mobília — e nada disto dá erro | 4 | 3 | **12** | Ramo de pré-visualização `desenho` (ADR-018) + as três medidas antes de publicar (ver secção abaixo) | página anda para o lado; nomes cortados na barra; conteúdo só abaixo da dobra | Hugo |
 
+| R-19 | **Conta do calendário apagada por inactividade.** O Google apaga contas ao fim de dois anos sem ninguém entrar. O Worker a ler o `.ics` **não conta como actividade** — só uma pessoa a iniciar sessão conta. A agenda esvazia-se para as romarias fixas sem erro nenhum, e o `.ics` continua colado no Worker a apontar para o nada | 2 | 4 | **8** | Entrar na conta pelo menos uma vez por ano; palavra-passe guardada onde outra pessoa lhe chegue (ADR-022); degradação para o array `FESTAS` garante que a agenda nunca fica vazia (ADR-007) | `/agenda` deixa de trazer eventos com `fonte: agenda` | Hugo |
+
 | R-18 | **Assunto novo sem `tipo` nem `junta`.** Acrescentar um assunto ao gerador sem declarar o tipo e a cópia à Junta devolve, em silêncio, o defeito que o D-019 corrigiu: campos que não se aplicam, vocabulário errado e cópia à Freguesia num assunto pessoal | 3 | 4 | **12** | Regra escrita no D-019 e no `02-MODULES.md`; a lista `ASSUNTOS` tem os dois campos em todas as entradas | assunto na lista sem `tipo:` | Hugo |
 
 ## Top 3 por score
 
 1. **R-01 (20)** — mantenedor único. Não é um risco técnico e não se resolve
    com código. O repositório público (ADR-015) tirou-lhe a metade técnica — o
-   código deixou de morrer com um disco. A metade que importa continua igual:
-   ninguém além do Hugo publica.
+   código deixou de morrer com um disco. A conta do calendário (ADR-022) tirou-lhe
+   a dependência de uma identidade pessoal para a agenda. A metade que importa
+   continua igual: **ninguém além do Hugo publica.** Só a T-07 mexe nisso.
 2. **R-04 (15)** — adopção. Um portal correcto que ninguém abre falhou.
 3. **R-02 / R-03 / R-05 / R-11 / R-16 / R-17 / R-18 (12)** — empatados.
 

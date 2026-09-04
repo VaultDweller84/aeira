@@ -128,13 +128,35 @@ Funcionam sem rede e sem Worker. Se quiser acrescentar ou corrigir, é aí.
 no concelho e que a Câmara não publica: arraiais, provas, convívios, reuniões de
 associações.
 
+> ⚠️ **O calendário não é de si — é do projecto.** Faça isto com sessão iniciada
+> na **conta Google do projecto**, não na sua conta pessoal. Numa conta Google
+> normal a propriedade de um calendário não se transfere: pode dar «fazer
+> alterações» a quem quiser, mas o dono é sempre a conta que o criou, e se essa
+> conta desaparecer desaparece o calendário e o endereço colado no Worker. O
+> porquê está no ADR-022. Confirme o campo **Proprietário** antes de criar.
+
 1. Em <https://calendar.google.com>, crie um calendário novo:
    **Outros calendários → +  → Criar calendário**. Chame-lhe *Agenda de Penamacor*.
 2. Abra **Definições** desse calendário → **Autorizações de acesso** →
    ligue **Tornar disponível ao público**.
-3. Ainda nas definições, desça até **Integrar calendário** e copie o
+3. **Ao lado dessa opção, ponha «Ver todos os detalhes do evento».** O Google
+   repõe sozinho *«Ver apenas livre/ocupado»* quando se marca a caixa, e nessa
+   posição o ficheiro sai com os eventos **sem título, sem local e sem
+   descrição**. A agenda encheria de nada, e não dá erro nenhum.
+4. Ainda nas definições, desça até **Integrar calendário** e copie o
    **Endereço público em formato iCal** (termina em `/public/basic.ics`).
-4. Cole esse endereço na variável `CALENDARIO_ICS` do Worker e faça **Deploy**.
+5. Cole esse endereço na variável `CALENDARIO_ICS` do Worker.
+6. **Publique a versão nova.** Acrescentar uma variável no painel da Cloudflare
+   **não a põe a servir**: cria uma versão que fica na história com 0% do
+   tráfego, e o Worker continua a correr a versão antiga, sem a variável. Vá a
+   **Deployments**, confirme que a *Active deployment* é a versão que diz «Add
+   variable: CALENDARIO_ICS» e, se não for, abra o menu `···` dessa versão →
+   **Promote version** → 100%.
+7. **Confirme de fora.** Abra `…workers.dev/agenda` e procure eventos com
+   `"fonte":"agenda"`. Se só aparecerem os de `"fonte":"camara"`, alguma coisa
+   das anteriores falhou — e nenhuma delas dá erro. Repare que o Worker guarda a
+   resposta durante 6 horas, por isso a confirmação a seguir a uma correcção
+   pode ter de ser feita de outra rede ou passado esse tempo.
 
 O que a agenda aproveita de cada evento: o **título**, a **data e hora**, o
 **local** (usado para o mapa — escreva-o como o escreveria no Google Maps, por
@@ -146,6 +168,16 @@ pessoas específicas**, dê **«Fazer alterações a eventos»** a quem trata da
 pelo telemóvel, na aplicação Google Calendar que já conhecem, sem lhe pedir nada e
 sem tocar em código. É a diferença entre um portal que depende de si e um portal
 da terra.
+
+**Duas coisas que a conta do projecto exige, e que ninguém se lembra de fazer:**
+
+- **Entre na conta pelo menos uma vez por ano.** O Google apaga contas ao fim de
+  dois anos sem actividade, e o Worker a ler o calendário **não conta como
+  actividade** — só uma pessoa a iniciar sessão conta. É o R-19.
+- **Guarde o utilizador, a palavra-passe e a data de nascimento num sítio onde
+  outra pessoa lhes chegue.** Uma conta do projecto cuja palavra-passe só uma
+  pessoa sabe é a conta pessoal dessa pessoa com outro nome — e o ponto do
+  ADR-022 perde-se todo.
 
 **Horas e eventos que se repetem.** O Worker converte as horas do Google para
 hora de Portugal — o ficheiro do Google escreve-as em hora universal ou com

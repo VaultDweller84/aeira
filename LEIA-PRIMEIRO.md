@@ -18,12 +18,12 @@ telefones úteis e sugestões.
 
 | Campo | Valor |
 |---|---|
-| Versão | v0.18 |
-| Última alteração | 2026-09-03 · repositório Git, publicação automática, correcções com a letra grande, linguagem visual nova, ramo de pré-visualização, leitor de calendário corrigido e separação entre queixa e pedido |
+| Versão | v0.19 |
+| Última alteração | 2026-09-04 · agenda ligada ao Google Calendar do projecto (T-03) |
 | **No ar** | site `a-eira.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
 | **Código** | `github.com/VaultDweller84/aeira` · público |
-| Verificado em produção | 3/9: v0.16 no ar, portal instalado em telemóvel, carta gerada de ponta a ponta, Worker a devolver 12 notícias |
-| Em falta | domínio `aeira.pt` (T-17), Google Calendar (T-03), T-19 (numeração e aviso de local, escritos e por publicar) |
+| Verificado em produção | 4/9: agenda a mostrar eventos do calendário no portal, com hora certa e repetições desdobradas · 3/9: v0.16 no ar, portal instalado em telemóvel, carta gerada de ponta a ponta |
+| Em falta | domínio `aeira.pt` (T-17), T-19 (numeração e aviso de local, escritos e por publicar) |
 | Fase | 6/7 Publicação |
 | Bloqueio | nenhum |
 | Risco principal | R-01 mantenedor único, score 20 |
@@ -37,6 +37,7 @@ telefones úteis e sugestões.
 | Pré-visualização | ramo `desenho` | `https://desenho.a-eira.pages.dev` |
 | Worker | `aeira` | `https://aeira.hugompalmeida.workers.dev` |
 | KV | `aeira-sugestoes` | ligado ao Worker como `SUGESTOES` |
+| Calendário | `Agenda de Penamacor` | conta Google **do projecto**, ligado como `CALENDARIO_ICS` — ADR-022 |
 | Página de gestão | — | `…workers.dev/admin?chave=` + `CHAVE_ADMIN` |
 | Domínio | `aeira.pt` | decidido no ADR-016, **por comprar** |
 
@@ -115,6 +116,7 @@ dizer portal partido — quer dizer que faltou uma delas. Para correr à mão:
 | 019 | **Queixa e pedido são coisas diferentes;** apoio social sai do gerador; cópia à Junta nunca marcada de fábrica |
 | 020 | **Verificação automática das três regras de commit** no GitHub |
 | 021 | Carta continua dirigida ao Presidente; **email passa a incluir o serviço competente** |
+| 022 | **O calendário da agenda é de uma conta Google do projecto,** não da conta pessoal |
 
 ## Vocabulário
 

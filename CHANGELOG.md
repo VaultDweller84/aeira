@@ -6,6 +6,55 @@
 
 Formato: data · o que mudou · porquê · IDs afectados.
 
+## 2026-09-04 — v0.19 · **A agenda da terra passa a existir**
+
+Fecha a **T-03** e com ela a última fonte de conteúdo que faltava ligar. A
+agenda deixa de mostrar só o que a Câmara publica e as romarias de sempre:
+passa a haver um sítio onde quem organiza uma coisa na terra a põe, sem pedir
+nada a ninguém. **`D-022`**, `M-04.1`, `T-03`, `R-01`.
+
+**A conta é do projecto, não do Hugo.** Foi criada uma conta Google própria,
+dona do calendário **Agenda de Penamacor**. A decisão estava adiada de propósito
+desde a v0.14 e o raciocínio está no ADR-022: numa conta Google normal a
+propriedade de um calendário não se transfere, e o que se decidiu foi o mesmo
+que se decidiu para o código no ADR-015 — não tornar o projecto imortal,
+torná-lo entregável.
+
+**Sem alterações ao código.** Nem `codigo/`, nem `worker/`. Só a variável
+`CALENDARIO_ICS` no Worker e a documentação. A `VERSAO` do `sw.js` não muda.
+
+**O leitor de calendário da v0.14 viu um ficheiro real do Google pela primeira
+vez, e passou.** Foi posto um evento de teste semanal para o pôr à prova:
+
+- hora certa — 17h00 no Google, 17h00 no portal, com o fuso do Verão pelo meio;
+- repetição desdobrada — 4, 11, 18 e 25 de Setembro, cada sexta a sua entrada;
+- local e descrição chegam inteiros, e o local alimenta o mapa;
+- ordenação certa, intercalado com os eventos da Câmara e com a etiqueta de
+  origem correcta.
+
+Verificado no portal publicado, não só na resposta do Worker. `M-01.3`,
+`M-02.2`, `R-03`.
+
+**Duas armadilhas do caminho, agora escritas no `INSTALAR.md`** — nenhuma delas
+dá erro, as duas deixariam a agenda em silêncio:
+
+1. **Marcar «tornar disponível ao público» repõe sozinho «ver apenas
+   livre/ocupado».** O `.ics` sai com eventos sem título, sem local e sem
+   descrição.
+2. **Acrescentar uma variável no painel da Cloudflare não a põe a servir.** Cria
+   uma versão nova que fica na história, com o tráfego todo na versão antiga.
+   Foi o que aconteceu aqui: a primeira verificação deu a agenda sem um único
+   evento do calendário, e a variável estava correcta. Faltava promover a
+   versão. `R-16`.
+
+**Risco novo: R-19** — a conta do calendário. O Google apaga contas ao fim de
+dois anos sem ninguém entrar, e o Worker a ler o calendário não conta como
+actividade. É uma forma de a agenda se esvaziar em silêncio, sem erro nenhum.
+
+**Por fazer, e é agora a única peça que falta na Fase 1:** o domínio `aeira.pt`
+(T-17). E a T-07 ficou mais fácil do que era — dar edição do calendário a duas
+ou três pessoas deixou de significar dar acesso a uma conta pessoal.
+
 ## 2026-09-03 — v0.18 · Os contactos da Câmara, reconferidos
 
 Sem decisão nova. Fecha o `[L]` do D-021 e corrige o que se encontrou pelo

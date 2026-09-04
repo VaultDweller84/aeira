@@ -14,7 +14,7 @@ Esforço em horas-pessoa.
 |---|---|---|---|---|---|---|---|
 | T-01 | Escolher alojamento HTTPS e publicar os ficheiros | 200 | 3 | 1,0 | 2 | **300** | ✔ 1/9 |
 | T-02 | Publicar o Worker e definir as variáveis | 200 | 3 | 0,9 | 1,5 | **360** | ✔ 1/9 |
-| T-03 | Criar o Google Calendar público e ligar `CALENDARIO_ICS` | 150 | 2 | 0,9 | 0,5 | **540** | por fazer |
+| T-03 | Criar o Google Calendar público e ligar `CALENDARIO_ICS` | 150 | 2 | 0,9 | 0,5 | **540** | ✔ 4/9 |
 | T-04 | Criar o KV, ligar `SUGESTOES`, definir `CHAVE_ADMIN` | 200 | 2 | 1,0 | 0,5 | **800** | ✔ 1/9 |
 | T-05 | Chave do fornecedor de IA (Gemini ou Groq) | 100 | 2 | 0,9 | 0,5 | **360** | ✔ 1/9 |
 | T-06 | Testar com uma queixa real do grupo de Facebook | 200 | 3 | 0,8 | 1 | **480** | ✔ 3/9 |
@@ -36,9 +36,17 @@ chegada, e testar o copiar e o imprimir. Verificado a 3/9: portal instalado no
 telemóvel, carta gerada de ponta a ponta, e a versão nova apanhada depois de
 fechar e reabrir a aplicação.
 
-**T-17 antes da T-09.** O que se diz a uma população que aponta endereços em
-papel não se desdiz. E ao ligar o domínio há que acrescentar `https://aeira.pt`
-ao `ORIGENS` do Worker — R-14.
+**A T-03 custou o que estava estimado (meia hora), mas não onde se esperava.**
+O código estava feito e testado desde a v0.14; o trabalho foi a propriedade da
+conta (ADR-022) e duas armadilhas de configuração que não dão erro — o Google a
+repor «ver apenas livre/ocupado» ao tornar o calendário público, e o painel da
+Cloudflare a guardar a variável numa versão que não está a servir. Ambas estão
+escritas no `INSTALAR.md`. Fica a lição: **numa tarefa de configuração, a
+verificação de fora não é opcional** — as duas falhas passavam por «está feito».
+
+**T-17 antes da T-09, e é o que falta.** O que se diz a uma população que aponta
+endereços em papel não se desdiz. E ao ligar o domínio há que acrescentar
+`https://aeira.pt` ao `ORIGENS` do Worker — R-14.
 
 ## Fase 2 — Não morrer (primeiro mês) — **a fase que decide o projecto**
 
