@@ -1,4 +1,4 @@
-> **A Eira** · portal da Aldeia de João Pires, concelho de Penamacor.
+> **A Eira** · portal do concelho de Penamacor.
 > Ficheiro `LEIA-PRIMEIRO.md` — mapa do projecto e estado actual.
 > É o primeiro ficheiro a ler numa sessão nova.
 
@@ -6,8 +6,9 @@
 
 ## O que é
 
-Portal comunitário da Aldeia de João Pires (concelho de Penamacor, Castelo
-Branco), feito pelo Hugo Almeida. Serve gente de meia-idade e mais velha, com
+Portal comunitário do **concelho de Penamacor** (Castelo Branco), feito pelo
+Hugo Almeida. Serve as nove freguesias e uniões do concelho — Aldeia de João
+Pires incluída, que é onde nasceu. Serve gente de meia-idade e mais velha, com
 informática muito básica. Seis áreas: notícias e avisos da terra, gerador de
 queixas para a Câmara, guia «como se faz», agenda cultural do concelho,
 telefones úteis e sugestões.
@@ -18,12 +19,12 @@ telefones úteis e sugestões.
 
 | Campo | Valor |
 |---|---|
-| Versão | v0.19 |
-| Última alteração | 2026-09-04 · agenda ligada ao Google Calendar do projecto (T-03) |
+| Versão | v0.20 |
+| Última alteração | 2026-09-04 · âmbito passa ao concelho (ADR-023) e botões renomeados |
 | **No ar** | site `a-eira.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
 | **Código** | `github.com/VaultDweller84/aeira` · público |
 | Verificado em produção | 4/9: agenda a mostrar eventos do calendário no portal, com hora certa e repetições desdobradas · 3/9: v0.16 no ar, portal instalado em telemóvel, carta gerada de ponta a ponta |
-| Em falta | domínio `aeira.pt` (T-17), T-19 (numeração e aviso de local, escritos e por publicar) |
+| Em falta | **T-20 localidade nos avisos** (o âmbito é promessa por cumprir sem isto), T-21 Junta certa por localidade, T-22 romarias das outras freguesias, domínio `aeira.pt` (T-17), T-19 |
 | Fase | 6/7 Publicação |
 | Bloqueio | nenhum |
 | Risco principal | R-01 mantenedor único, score 20 |
@@ -107,7 +108,7 @@ dizer portal partido — quer dizer que faltou uma delas. Para correr à mão:
 | 010 | PWA como via principal, APK como segunda via |
 | 011 | Sem contas e sem armazenamento no browser |
 | 012 | Notícias e avisos como separador inicial |
-| 013 | Nome «A Eira»; identidade da aldeia, conteúdo do concelho |
+| 013 | Nome «A Eira» — **âmbito substituído pelo 023** |
 | 014 | **Alojamento no Cloudflare Pages, mesma conta do Worker** |
 | 015 | **Repositório Git público; publicação automática a partir do `main`** |
 | 016 | Domínio `aeira.pt`; `aldeia.pt` rejeitado por preço e por âmbito |
@@ -117,11 +118,15 @@ dizer portal partido — quer dizer que faltou uma delas. Para correr à mão:
 | 020 | **Verificação automática das três regras de commit** no GitHub |
 | 021 | Carta continua dirigida ao Presidente; **email passa a incluir o serviço competente** |
 | 022 | **O calendário da agenda é de uma conta Google do projecto,** não da conta pessoal |
+| 023 | **O âmbito passa a ser o concelho,** nove freguesias; o nome e o domínio não mudam |
 
 ## Vocabulário
 
-**Câmara** = Câmara Municipal de Penamacor. **Junta** = União de Freguesias de
-Aldeia do Bispo, Águas e Aldeia de João Pires. **Worker** = o Cloudflare Worker
+**Câmara** = Câmara Municipal de Penamacor. **Junta** = a Junta ou União de
+Freguesias da localidade de quem escreve — são **nove** no concelho, e desde o
+ADR-023 não se pode assumir qual. **Freguesia de João Pires** = União de
+Freguesias de Aldeia do Bispo, Águas e Aldeia de João Pires, onde o projecto
+nasceu. **Worker** = o Cloudflare Worker
 (`worker/worker.js`), publicado como `aeira`. **Portal** = o `codigo/index.html`,
 publicado como `a-eira`. **Avisos** = mensagens curtas da terra, escritas na
 página de gestão. **Notícias** = o que a Câmara publica. **Romarias fixas** =

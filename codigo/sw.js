@@ -12,7 +12,7 @@
    pessoas irem buscar a versão nova em vez da guardada.
    ============================================================ */
 
-const VERSAO = 'v10';
+const VERSAO = 'v11';
 const CACHE_CASCA = 'aldeia-casca-' + VERSAO;
 const CACHE_DADOS = 'aldeia-dados-' + VERSAO;
 

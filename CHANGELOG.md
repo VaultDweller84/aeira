@@ -1,10 +1,89 @@
-> **A Eira** · portal da Aldeia de João Pires, concelho de Penamacor.
+> **A Eira** · portal do concelho de Penamacor.
 > Ficheiro `CHANGELOG.md` — histórico de alterações por versão.
 > Decisões em `decisions/ADR-*.md`. Mapa em `LEIA-PRIMEIRO.md`.
 
 # CHANGELOG
 
 Formato: data · o que mudou · porquê · IDs afectados.
+
+## 2026-09-04 — v0.20 · **O portal passa a ser do concelho**
+
+A maior mudança de âmbito desde que o projecto começou, e a que mais promete
+sem ainda cumprir. **`D-023`**, que substitui a parte de âmbito do `D-013`.
+
+**O portal deixa de ser da Aldeia de João Pires e passa a ser do concelho de
+Penamacor** — nove freguesias e uniões. João Pires deixa de ser o dono e passa
+a ser uma das localidades servidas, e é onde nasceu.
+
+**O nome não muda, e isso não é sorte.** O ADR-013 escolheu «A Eira» com este
+argumento escrito: *«todas as aldeias têm eira, por isso serve a Bemposta e a
+Meimoa sem deixar de ser da terra»*. A decisão de hoje é a que aquele nome já
+permitia. O `aeira.pt` também não muda. `D-013`, `D-016`.
+
+**O subtítulo é a alteração mais delicada, e quase correu mal.** «Aldeia de
+João Pires · concelho de Penamacor» passa a **«Concelho de Penamacor · feito
+por gente da terra»**. A segunda metade não é enfeite: sem ela, um portal que
+diz apenas «Concelho de Penamacor» fica **mais** parecido com o site da Câmara,
+não menos — agravava o R-12 em vez de o deixar quieto. Quem mexer neste texto
+tem de manter lá quem o faz. `M-01.7`, `R-12`.
+
+**Os contactos das nove Juntas estão recolhidos** e no `08-CONTEUDOS.md`, com
+uma reserva séria: as páginas individuais do Município têm data de actualização
+de **Dezembro de 2020** e houve autárquicas pelo meio. Moradas, telefones e
+emails entram; **nomes de presidentes e horários só entram confirmados por
+telefone.** Risco novo **R-20**.
+
+**Três tarefas novas, e a aritmética do roadmap mudou com elas.** O alcance
+deixou de ser a população da aldeia e passou a ser a do concelho, o que empurra
+estas à frente de quase tudo: **T-20** localidade no aviso, **T-21** Junta certa
+por localidade, **T-22** romarias e contactos das outras oito freguesias.
+
+**O anúncio (T-09) foi adiado de propósito.** Ficou decidido lançar como portal
+do concelho — mas depois do conteúdo, não antes. Quem vier da Meimoa e
+encontrar telefones que não são os dele fecha o separador e não volta. Nova
+ordem: T-20 → T-22 → T-07 → T-17 → T-09.
+
+**E a T-07 mudou de natureza.** Recrutar co-editores era desejável; com nove
+freguesias passa a ser **condição do âmbito**. Um portal que promete nove
+freguesias com avisos de uma parece abandonado em oito. `R-01`.
+
+---
+
+**Os botões, no mesmo dia.** Revisão dos nomes da navegação para quem tem 70
+anos e informática básica. Sem alterações de estrutura — seis separadores,
+mesmo destino, só os nomes.
+
+**«Queixa» passa a «Escrever», e é a correcção que mais vale de toda a lista.**
+O `D-019` decidiu que queixa e pedido são coisas diferentes e o gerador faz as
+duas — mas o botão só dizia «Queixa». Quem queria *pedir* apoio social ou uma
+informação não carregava ali. Uma palavra, e o separador deixa de excluir
+metade de quem precisa dele. `M-01.1`, `D-019`.
+
+**A barra e os cartões diziam coisas diferentes.** Queixa/«Escrever uma queixa
+ou pedido», Guia/«Como se faz…», Números/«Telefones úteis»,
+Sugerir/«Sugestões». Quem aprende pelo cartão e usa pela barra encontrava duas
+palavras para a mesma coisa. Passa a haver **regra escrita** no
+`02-MODULES.md`: o nome na barra é a primeira palavra do cartão e da secção, e
+cabe em oito ou nove caracteres. `M-01.7`, `R-17`.
+
+**«Sugerir» estava a esconder o que faz.** É por ali que se dá um aviso e se
+anuncia uma festa — as Notícias e a Agenda mandam lá as pessoas —, mas o cartão
+dizia «Sugestões», que soa a caixa de reclamações do portal. Passa a «Sugerir»,
+com o subtítulo a dizer para que serve. `M-01.5`.
+
+**Mudanças:** `bar1` Queixa→Escrever · `bar4` Números→Telefones · cartão e
+secção do guia passam a «Guia: como se faz…» · cartão e secção das sugestões
+passam a «Sugerir» e «Sugerir ou avisar». Em inglês: Letter→Write, Ideas→
+Suggest, e os cartões alinhados da mesma maneira.
+
+**Por verificar antes de juntar ao `main`:** «Telefones» tem nove caracteres e
+a barra tem seis colunas. A `clamp` da v0.11 impede a letra de crescer e o
+`hyphens:auto` parte a palavra em vez de a cortar, mas isto **não foi medido —
+foi lido do CSS**. Tem de ser visto no ramo `desenho`, no telemóvel, nos três
+tamanhos de letra, antes de ir para o ar. É exactamente o que o ADR-018 existe
+para impedir. `R-17`.
+
+`sw.js` → **v11**.
 
 ## 2026-09-04 — v0.19 · **A agenda da terra passa a existir**
 

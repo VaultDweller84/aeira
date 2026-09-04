@@ -1,4 +1,4 @@
-> **A Eira** · portal da Aldeia de João Pires, concelho de Penamacor.
+> **A Eira** · portal do concelho de Penamacor.
 > Ficheiro `03-DATA-MODEL.md` — entidades E-01 a E-07 e invariantes.
 > Decisões em `decisions/ADR-*.md`. Mapa em `LEIA-PRIMEIRO.md`.
 

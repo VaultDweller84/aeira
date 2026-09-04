@@ -1,4 +1,4 @@
-> **A Eira** · portal da Aldeia de João Pires, concelho de Penamacor.
+> **A Eira** · portal do concelho de Penamacor.
 > Ficheiro `08-CONTEUDOS.md` — factos investigados: contactos, prazos legais, romarias, fontes.
 > Decisões em `decisions/ADR-*.md`. Mapa em `LEIA-PRIMEIRO.md`.
 
@@ -42,13 +42,43 @@ e o prazo da limpeza de terrenos todos os Março.
 | Veterinário municipal | 922 231 473 |
 | Biblioteca | 277 394 931 · CPCJ 963 183 195 |
 
-## União de Freguesias `[F]`
+## As nove Juntas e Uniões de Freguesias do concelho
 
-Aldeia do Bispo, Águas e Aldeia de João Pires.
-Presidente: José Aníbal Geraldes Lopes Birra.
+Recolhido a **4/9/2026** das páginas oficiais do Município.
+
+> ⚠️ **Leia o R-20 antes de publicar isto.** As nove páginas individuais do
+> Município têm data de actualização de **4 de Dezembro de 2020**, e houve
+> autárquicas pelo meio. Moradas, telefones e emails são plausíveis e entram
+> no portal com etiqueta de data. **Nomes de presidentes e horários não
+> entram sem confirmação por telefone** — mandar alguém de 75 anos à porta
+> errada à hora errada é pior do que não ter a informação. `[L]`
+
+| Freguesia | Telefone | Email | Morada |
+|---|---|---|---|
+| Aranhas | 277 385 383 · 926 387 361 | jfaranhas@gmail.com | Rua do Espírito Santo, n.º 1, 6090-236 Aranhas |
+| Benquerença | 277 377 101 | jfbenquerenca@gmail.com | Rua da Junta de Freguesia, 6090-345 Benquerença |
+| Meimão | 271 615 207 · 969 813 615 | jfmeimao@gmail.com | Largo da Fonte, n.º 30, 6320-192 Meimão |
+| Meimoa | 277 377 500 · 963 670 885 | jfmeimoa@gmail.com | Rua Fonte das Quelhas, 6090-398 Meimoa |
+| Penamacor | 277 394 564 | juntafreguesia.penamacor@gmail.com | Largo Tenente Coronel Júlio Rodrigues da Silva (Ex-Quartel), 6090-545 Penamacor |
+| Salvador | 277 305 760 · 960 195 435 | juntafreguesiasalvador@gmail.com | Rua Artur Pereira da Silva, 6090-616 Salvador |
+| U. F. de Aldeia do Bispo, Águas e Aldeia de João Pires | 277 385 400 | uniaofreguesias050713@gmail.com | Aldeia de João Pires: Estrada Nacional 332, 6090-159 · Aldeia do Bispo: Rua Pina Ferraz, 6090-112 · Águas: Rua Dona Maria Helena Megre, 6090-047 |
+| U. F. de Pedrógão de S. Pedro e Bemposta | 277 313 011 | ufpedrogaospedrobemposta@gmail.com | Pedrógão de S. Pedro: Rua Tenente Manuel Morais, 6090-469 · Bemposta: Largo de São Sebastião, 6090-281 |
+| Vale da Senhora da Póvoa | 960 461 972 | geral@freguesia-vspovoa.pt | Estrada Nacional 233, 6090-716 Vale da Sr.ª da Póvoa |
+
+**Sites próprios encontrados:** Meimão `www.fregmeimao.com`, Penamacor
+`freguesiapenamacor.pt`, Vale da Senhora da Póvoa `freguesia-vspovoa.pt`.
+
+**Nome oficial:** o índice do Município escreve «União de Aldeia do Bispo…» e
+as páginas individuais escrevem «União de **Freguesias** de Aldeia do Bispo…».
+Usa-se a forma longa, que é a legal. Não se traduz — D-002.
+
+### Freguesia onde o projecto nasceu `[F]`
+
+União de Freguesias de Aldeia do Bispo, Águas e Aldeia de João Pires.
+Presidente: José Aníbal Geraldes Lopes Birra — **por confirmar, R-20**.
 Telefone 277 385 400 · uniaofreguesias050713@gmail.com
 Atendimento em **Aldeia de João Pires às quartas-feiras, a partir das 19h30**
-(Estrada Nacional 332, 6090-159).
+(Estrada Nacional 332, 6090-159) — **por confirmar, R-20**.
 
 ## Emergência e outros `[F]`
 

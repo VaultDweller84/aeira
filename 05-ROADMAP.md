@@ -1,4 +1,4 @@
-> **A Eira** · portal da Aldeia de João Pires, concelho de Penamacor.
+> **A Eira** · portal do concelho de Penamacor.
 > Ficheiro `05-ROADMAP.md` — tarefas T-01 a T-18 priorizadas por RICE.
 > Decisões em `decisions/ADR-*.md`. Mapa em `LEIA-PRIMEIRO.md`.
 
@@ -48,6 +48,26 @@ verificação de fora não é opcional** — as duas falhas passavam por «está
 endereços em papel não se desdiz. E ao ligar o domínio há que acrescentar
 `https://aeira.pt` ao `ORIGENS` do Worker — R-14.
 
+## Fase 1-B — Cumprir o âmbito do concelho (ADR-023)
+
+Estas três não existiam antes de 4/9/2026. **Enquanto não estiverem feitas, o
+portal promete nove freguesias e serve uma** — e o anúncio (T-09) não se faz.
+
+| ID | Tarefa | R | I | C | E | RICE | Estado |
+|---|---|---|---|---|---|---|---|
+| T-20 | **Localidade no aviso** (E-02, página de gestão e portal) | 1800 | 3 | 0,9 | 3 | **1620** | por fazer |
+| T-21 | Junta certa por localidade na carta (D-019, D-021) | 1800 | 2 | 0,8 | 4 | **720** | por fazer |
+| T-22 | Romarias e contactos das outras oito freguesias | 1800 | 2 | 0,7 | 8 | **315** | por fazer |
+
+**Alcance 1800 = população do concelho**, não da aldeia. É o que muda a
+aritmética: estas tarefas passam à frente de quase tudo o que estava na Fase 2.
+
+**A T-20 é a que decide.** Um aviso sem localidade num portal de nove
+freguesias é pior do que não haver aviso nenhum: «corte de água» é informação
+em João Pires e é alarme falso na Meimoa.
+
+**A T-22 é investigação, não código** — e a fonte oficial está velha. Ver R-20.
+
 ## Fase 2 — Não morrer (primeiro mês) — **a fase que decide o projecto**
 
 | ID | Tarefa | R | I | C | E | RICE | Dono |
@@ -91,8 +111,13 @@ desaparecer do painel. Rever de seis em seis meses.
 
 ## Ordem de execução recomendada
 
-T-17 → T-03 → T-06 → **T-09** → T-08 → T-07 → T-13/T-14 (rotinas) → T-11 →
-T-16 → T-18 → T-12.
+T-20 → T-22 → T-07 → T-17 → **T-09** → T-21 → T-08 → T-13/T-14 (rotinas) →
+T-11 → T-16 → T-18 → T-12.
+
+**A ordem mudou a 4/9/2026 com o ADR-023.** O anúncio deixou de ser a próxima
+coisa a fazer e passou para depois do conteúdo do concelho e dos co-editores.
+A T-07 subiu porque deixou de ser desejável e passou a ser condição: nove
+freguesias com um único mantenedor parecem abandonadas em oito.
 
 T-12 (APK) fica deliberadamente no fim: RICE mais baixo de toda a lista e é a
 tarefa com risco associado (R-11).

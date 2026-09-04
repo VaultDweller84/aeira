@@ -1,4 +1,4 @@
-> **A Eira** · portal da Aldeia de João Pires, concelho de Penamacor.
+> **A Eira** · portal do concelho de Penamacor.
 > Ficheiro `02-MODULES.md` — módulos M-01 a M-04 com IDs estáveis.
 > Decisões em `decisions/ADR-*.md`. Mapa em `LEIA-PRIMEIRO.md`.
 
@@ -51,6 +51,26 @@ ligação externa). Termina com ligações à imprensa regional.
 - Letra: 19 / 23 / 28 px, aplicada à raiz.
 - Navegação: barra inferior de 6 separadores em telemóvel; grelha de cartões
   em ecrã largo.
+
+**Regra dos nomes, desde 4/9/2026.** O nome na barra é sempre a **primeira
+palavra do cartão e do título da secção**. Quem aprende pelo cartão e usa pela
+barra não pode encontrar duas palavras para a mesma coisa — é o tipo de atrito
+que este público não perdoa. E o nome tem de caber: a barra são seis colunas
+iguais, portanto **oito ou nove caracteres** é o tecto real num ecrã de 320 px
+(R-17).
+
+| Barra | Cartão e secção |
+|---|---|
+| Escrever | Escrever uma queixa ou pedido |
+| Guia | Guia: como se faz… |
+| Notícias | Notícias e avisos |
+| Agenda | Agenda cultural |
+| Telefones | Telefones úteis |
+| Sugerir | Sugerir ou avisar |
+
+«Queixa» foi corrigido para «Escrever» porque contradizia o D-019: o gerador
+faz queixas **e** pedidos, e quem queria pedir não carregava num botão que
+dizia «Queixa».
 
 ## M-02 Worker `worker.js`
 

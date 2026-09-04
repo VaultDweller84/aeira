@@ -1,4 +1,4 @@
-> **A Eira** · portal da Aldeia de João Pires, concelho de Penamacor.
+> **A Eira** · portal do concelho de Penamacor.
 > Ficheiro `06-RISKS.md` — registo de riscos R-01 a R-18.
 > Decisões em `decisions/ADR-*.md`. Mapa em `LEIA-PRIMEIRO.md`.
 
@@ -26,6 +26,8 @@ Escala 1-5. Score = Probabilidade × Impacto.
 | R-16 | **`worker.js` do repositório diferente do que está a correr.** O Pages publica `codigo/` sozinho, mas o Worker continua a ser actualizado à mão no painel — uma correcção feita no painel e não no repositório perde-se; uma feita no repositório e não no painel nunca chega ao ar | 3 | 4 | **12** | Regra: qualquer alteração ao Worker faz-se no ficheiro e vai a commit **antes** de ser colada no painel; **desde 3/9/2026 (ADR-020), mexer em `worker/` gera lembrete automático** — mas ninguém verifica o que está colado no painel | comportamento do Worker que não se explica pelo código do repositório | Hugo |
 | R-17 | **Regressão silenciosa de desenho com a letra grande.** Qualquer alteração ao CSS pode voltar a cortar nomes na barra, empurrar o conteúdo para fora do ecrã ou encher o primeiro ecrã de mobília — e nada disto dá erro | 4 | 3 | **12** | Ramo de pré-visualização `desenho` (ADR-018) + as três medidas antes de publicar (ver secção abaixo) | página anda para o lado; nomes cortados na barra; conteúdo só abaixo da dobra | Hugo |
 
+| R-20 | **Dados das freguesias publicados a partir de fonte oficial velha.** As páginas das nove Juntas no site do Município têm data de actualização de **Dezembro de 2020**, e houve autárquicas pelo meio. Publicar nomes de presidentes e horários de 2020 como se fossem de hoje manda gente à porta errada à hora errada, e mina a confiança que é o único activo do portal | 4 | 3 | **12** | Moradas, telefones e emails entram; **nomes e horários só entram depois de confirmados por telefone**; etiqueta de fonte e data em cada contacto | um contacto que não atende ou um nome que já não é o presidente | Hugo |
+
 | R-19 | **Conta do calendário apagada por inactividade.** O Google apaga contas ao fim de dois anos sem ninguém entrar. O Worker a ler o `.ics` **não conta como actividade** — só uma pessoa a iniciar sessão conta. A agenda esvazia-se para as romarias fixas sem erro nenhum, e o `.ics` continua colado no Worker a apontar para o nada | 2 | 4 | **8** | Entrar na conta pelo menos uma vez por ano; palavra-passe guardada onde outra pessoa lhe chegue (ADR-022); degradação para o array `FESTAS` garante que a agenda nunca fica vazia (ADR-007) | `/agenda` deixa de trazer eventos com `fonte: agenda` | Hugo |
 
 | R-18 | **Assunto novo sem `tipo` nem `junta`.** Acrescentar um assunto ao gerador sem declarar o tipo e a cópia à Junta devolve, em silêncio, o defeito que o D-019 corrigiu: campos que não se aplicam, vocabulário errado e cópia à Freguesia num assunto pessoal | 3 | 4 | **12** | Regra escrita no D-019 e no `02-MODULES.md`; a lista `ASSUNTOS` tem os dois campos em todas as entradas | assunto na lista sem `tipo:` | Hugo |
@@ -38,7 +40,7 @@ Escala 1-5. Score = Probabilidade × Impacto.
    a dependência de uma identidade pessoal para a agenda. A metade que importa
    continua igual: **ninguém além do Hugo publica.** Só a T-07 mexe nisso.
 2. **R-04 (15)** — adopção. Um portal correcto que ninguém abre falhou.
-3. **R-02 / R-03 / R-05 / R-11 / R-16 / R-17 / R-18 (12)** — empatados.
+3. **R-02 / R-03 / R-05 / R-11 / R-16 / R-17 / R-18 / R-20 (12)** — empatados.
 
 ## Riscos aceites por escrito
 
