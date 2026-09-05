@@ -6,6 +6,40 @@
 
 Formato: data · o que mudou · porquê · IDs afectados.
 
+## 2026-09-05 — v0.23 · O rodapé e as fontes
+
+Duas correcções de texto, ambas apontadas pelo Hugo, ambas com mais por baixo do
+que parecia. `M-01.4`, `M-01.7`, `D-013`, `D-023`, `R-12`.
+
+**O rodapé repetia-se quatro vezes, não uma.** «A Eira — **a eira** é onde…»
+repetia a palavra logo a seguir a si própria; «feito por gente **da terra**,
+para a gente **da terra**» repetia outra vez; o **subtítulo**, mudado na v0.20,
+já dizia «feito por gente da terra» três linhas acima; e «onde a **aldeia** se
+junta» ficara fora de âmbito com o ADR-023, que fez do portal um portal do
+concelho. Passa a: «**A Eira** — o largo onde a terra se junta. Portal de
+moradores do concelho de Penamacor. **Não é um site oficial da Câmara nem da
+Junta.**»
+
+**O inglês mantém a explicação de «eira»**, e mantém-na porque é uma
+consequência escrita do ADR-013 — em português o público sabe o que é uma eira,
+em inglês não faz ideia.
+
+**«Onde mais se lê sobre o concelho» já estava errado antes desta versão.** A
+Rádio Cova da Beira estava na lista, e rádio não se lê. Passa a **«Jornais e
+rádios da região»**.
+
+**Entra a Rádio Voz da Raia, e entra sem ligação.** É a rádio do concelho —
+**privada, não municipal**: o Município lista-a no roteiro de comércio e
+serviços, e o portal não pode sugerir que é da Câmara (R-12). **Não tem site
+próprio**: o endereço que a Câmara indica é um agregador e a APR só lhe conhece
+um Facebook. Entra como **nome, frequência e telefone** — «Rádio Voz da Raia ·
+87.7 FM · 277 394 133», com o telefone clicável. **Para quem a ouve no rádio da
+cozinha, a frequência vale mais do que um endereço**, e mandar essa pessoa a um
+agregador com publicidade seria dar-lhe o pior de dois mundos. Contactos e
+proveniência no `08-CONTEUDOS.md`.
+
+`sw.js` → **v13**. Sem alterações ao `worker.js`.
+
 ## 2026-09-05 — Verificação em produção da v0.22
 
 Sem alterações ao produto. Regista o que se confirmou depois de publicar, e duas

@@ -137,6 +137,21 @@ Outros: **Festival da Chanfana**, Meimão, habitualmente em Abril.
 **Mercado ECO**, Mercado Municipal de Penamacor, 1.ª e 3.ª quarta-feira de
 cada mês, 9h00–12h30.
 
+## Rádio Voz da Raia `[F]`
+
+A rádio do concelho. Verificado a 5/9/2026 na página do Município (roteiro de
+comércio e serviços) e no directório da APR.
+
+- Nome legal: **Rádio Voz da Raia – Sociedade Unipessoal, Lda.** — **privada,
+  não é municipal.** Está no roteiro de comércio, não nos serviços da Câmara.
+  O portal não pode sugerir o contrário — R-12.
+- **87.7 FM** · telefone **277 394 133** · `radiovozdaraia@sapo.pt`
+- Convento de Santo António, 6090-547 Penamacor
+- **Não tem site próprio.** O «site» que a Câmara indica é um agregador
+  (`radios-online.pt`), e a APR só lista um Facebook. Por isso entra no portal
+  **sem ligação**: nome, frequência e telefone. Para quem a ouve no rádio da
+  cozinha, a frequência vale mais do que um endereço.
+
 ## Fontes e o que não existe
 
 | Fonte | Situação |

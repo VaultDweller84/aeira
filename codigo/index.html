@@ -282,9 +282,13 @@ details.item[open] summary::before{content:"▾"}
 .noticia h4{margin:0 0 .3rem;font-size:1rem;line-height:1.35}
 .noticia .resumo{margin:.2rem 0;font-size:.88rem;color:var(--ink-soft)}
 .fontes{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 0}
-.fontes a{display:inline-block;border:2px solid var(--linha);border-radius:.6rem;
-  padding:.5rem .85rem;text-decoration:none;font-size:.9rem;font-weight:700;
-  color:var(--link);background:var(--card);min-height:2.6rem}
+.fontes>a,.fontes>.fonte-radio{display:inline-block;border:2px solid var(--linha);
+  border-radius:.6rem;padding:.5rem .85rem;text-decoration:none;font-size:.9rem;
+  font-weight:700;color:var(--link);background:var(--card);min-height:2.6rem}
+/* a Voz da Raia não tem site: o nome não é ligação, mas o telefone é —
+   é assim que este público a usa, no rádio da cozinha e não no browser */
+.fontes>.fonte-radio{color:var(--ink-soft)}
+.fontes>.fonte-radio a{color:var(--link);font-weight:700;white-space:nowrap}
 
 /* ---- Agenda cultural ---- */
 .cabecaAgenda .aviso{margin-top:0}
@@ -570,6 +574,8 @@ footer a{color:var(--rodape-txt)}
     <a href="https://www.reconquista.pt" target="_blank" rel="noopener">Reconquista</a>
     <a href="https://www.diariodigitalcastelobranco.pt" target="_blank" rel="noopener">Diário Digital de Castelo Branco</a>
     <a href="https://radio-covilha.pt" target="_blank" rel="noopener">Rádio Cova da Beira</a>
+    <span class="fonte-radio"><span data-i18n="not_fontes_radio"></span> ·
+      <a href="tel:277394133" data-i18n="not_fontes_radio_tel"></a></span>
   </div>
 </section>
 
@@ -701,8 +707,10 @@ pt:{
  not_sem_camara:'Sem notícias do Município de momento.',
  not_ler:'Ler no site da Câmara →',
  not_aviso:'<strong>Tem um aviso para dar?</strong> Corte de água, missa mudada de hora, uma máquina que não vem — diga no separador <em>Sugerir</em> ou fale com quem trata do portal, e é publicado aqui.',
- not_fontes_titulo:'Onde mais se lê sobre o concelho',
- not_fontes_lead:'Os jornais e rádios da região. As ligações abrem o site deles — o trabalho é dessa gente e é lá que deve ser lido.',
+ not_fontes_titulo:'Jornais e rádios da região',
+ not_fontes_lead:'As ligações abrem os sites deles — o trabalho é dessa gente e é lá que deve ser lido. A Rádio Voz da Raia, que é a do concelho, não tem site: ouve-se nos <strong>87.7 FM</strong>.',
+ not_fontes_radio:'Rádio Voz da Raia · 87.7 FM',
+ not_fontes_radio_tel:'277 394 133',
  novo:'NOVO', agora:'agora mesmo', ontem:'ontem',
  ha_min:'há {n} min', ha_horas:'há {n} horas', ha_dias:'há {n} dias',
 
@@ -798,7 +806,7 @@ pt:{
  tel_h2:'Números úteis',
  tel_lead:'No telemóvel, basta carregar no número para ligar.',
 
- foot1:'<strong>A Eira</strong> — a eira é onde a aldeia se junta. Este portal é feito por gente da terra, para a gente da terra. Não é um site oficial da Câmara nem da Junta.',
+ foot1:'<strong>A Eira</strong> — o largo onde a terra se junta. Portal de moradores do concelho de Penamacor. <strong>Não é um site oficial da Câmara nem da Junta.</strong>',
  foot2:'As informações foram recolhidas do sítio oficial do <a href="https://www.cm-penamacor.pt" target="_blank" rel="noopener">Município de Penamacor</a> e de fontes públicas. Regras e prazos podem mudar: em caso de dúvida, confirme pelo telefone <a href="tel:277394106">277 394 106</a>.',
  foot3:'Última actualização: Setembro de 2026.'
 },
@@ -831,8 +839,10 @@ en:{
  not_sem_camara:'No council news at the moment.',
  not_ler:'Read on the Câmara website →',
  not_aviso:'<strong>Got a notice to share?</strong> A water cut, a change of mass time, a delivery van not coming — use the <em>Ideas</em> tab or speak to whoever looks after the portal, and it gets posted here.',
- not_fontes_titulo:'Where else the municipality is covered',
- not_fontes_lead:'The regional papers and radio. The links open their own sites — the work is theirs and that is where it should be read.',
+ not_fontes_titulo:'Local newspapers and radio',
+ not_fontes_lead:'The links open their own sites — the work is theirs and that is where it should be read. Rádio Voz da Raia, the concelho’s own station, has no website: listen on <strong>87.7 FM</strong>.',
+ not_fontes_radio:'Rádio Voz da Raia · 87.7 FM',
+ not_fontes_radio_tel:'277 394 133',
  novo:'NEW', agora:'just now', ontem:'yesterday',
  ha_min:'{n} min ago', ha_horas:'{n} hours ago', ha_dias:'{n} days ago',
 
@@ -928,7 +938,7 @@ en:{
  tel_h2:'Useful numbers',
  tel_lead:'On a mobile, just tap the number to call.',
 
- foot1:'<strong>A Eira</strong> — an <em>eira</em> is the threshing floor where a village gathers. This portal is made by people of the village, for the people of the village. It is not an official Câmara or Junta website.',
+ foot1:'<strong>A Eira</strong> — an <em>eira</em> is the threshing floor where a village gathers. A portal made by people who live in the concelho de Penamacor. <strong>It is not an official Câmara or Junta website.</strong>',
  foot2:'Information gathered from the official <a href="https://www.cm-penamacor.pt" target="_blank" rel="noopener">Município de Penamacor</a> website and other public sources. Rules and deadlines change: if in doubt, ring <a href="tel:277394106">277 394 106</a> to confirm.',
  foot3:'Last updated: September 2026.'
 }

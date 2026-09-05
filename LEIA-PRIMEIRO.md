@@ -19,8 +19,8 @@ telefones úteis e sugestões.
 
 | Campo | Valor |
 |---|---|
-| Versão | v0.22 |
-| Última alteração | 2026-09-04 · terra no aviso e filtro que se lembra (T-20, T-23); barra de baixo corrigida — saía do ecrã com a letra grande |
+| Versão | v0.23 |
+| Última alteração | 2026-09-05 · rodapé sem repetições, secção das fontes corrigida, Rádio Voz da Raia acrescentada |
 | **No ar** | site `a-eira.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
 | **Código** | `github.com/VaultDweller84/aeira` · público |
 | Verificado em produção | 5/9: Worker `68fcc036` activo com o campo de localidade; agenda limpa e a responder (7 eventos da Câmara); portal a servir a v0.22 com o filtro · 4/9: calendário lido e desdobrado com hora certa |
