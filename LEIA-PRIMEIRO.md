@@ -23,7 +23,7 @@ telefones úteis e sugestões.
 | Última alteração | 2026-09-04 · terra no aviso e filtro que se lembra (T-20, T-23); barra de baixo corrigida — saía do ecrã com a letra grande |
 | **No ar** | site `a-eira.pages.dev` · Worker `aeira.hugompalmeida.workers.dev` |
 | **Código** | `github.com/VaultDweller84/aeira` · público |
-| Verificado em produção | 4/9: agenda a mostrar eventos do calendário no portal, com hora certa e repetições desdobradas · 3/9: v0.16 no ar, portal instalado em telemóvel, carta gerada de ponta a ponta |
+| Verificado em produção | 5/9: Worker `68fcc036` activo com o campo de localidade; agenda limpa e a responder (7 eventos da Câmara); portal a servir a v0.22 com o filtro · 4/9: calendário lido e desdobrado com hora certa |
 | Em falta | **T-22 romarias e contactos das outras oito freguesias** (é o que falta para o âmbito deixar de ser promessa), T-07 co-editores, T-21 Junta por localidade, domínio `aeira.pt` (T-17), T-19 |
 | Fase | 6/7 Publicação |
 | Bloqueio | nenhum |
@@ -49,6 +49,20 @@ e sugestões em silêncio, deixando as notícias a funcionar — R-14.
 
 ## Como se publica
 
+**Antes de começar a trabalhar no `desenho`, alinhe-o com o `main`:**
+
+```
+git branch -f desenho main
+```
+
+Sem isto, o `git checkout desenho` recusa-se a trocar de ramo assim que houver
+ficheiros por guardar — e recusa-se com uma mensagem sobre ficheiros
+sobrescritos que não diz o que se passa. O ramo fica para trás sempre que um
+commit só de documentação vai directo ao `main`, o que acontece a toda a hora.
+**É a lacuna do ADR-018:** aquele ADR descreve o caminho de ida e não diz nada
+sobre manter o ramo alinhado. Aconteceu a 4/9/2026, e da primeira vez o commit
+foi parar ao ramo errado.
+
 **Alteração ao `codigo/`? Passa primeiro pelo ramo `desenho`** (ADR-018):
 sobe-se para lá, vê-se em `desenho.a-eira.pages.dev` **no telemóvel** — três
 tamanhos de letra, três temas, notícias e agenda a carregar —, e só depois se
@@ -65,7 +79,11 @@ Três regras que viajam com cada alteração:
 2. Mudou o produto? Muda o `CHANGELOG.md` **no mesmo commit**.
 3. Mexeu no Worker? A alteração faz-se no ficheiro `worker/worker.js` e vai a
    commit **antes** de ser colada no painel do Cloudflare (R-16). O Pages não
-   publica o Worker.
+   publica o Worker. **No painel, o editor abre preso a uma versão antiga:**
+   escolha primeiro a versão marcada *Latest* no selector do topo e carregue em
+   **Apply**, senão a Cloudflare não deixa editar — e publicar a partir de uma
+   versão antiga faria voltar as variáveis dessa altura. Depois do Deploy,
+   confirme em **Deployments** que a versão nova ficou *Active*.
 
 Formato das mensagens de commit: no `README.md`.
 

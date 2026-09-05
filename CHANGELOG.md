@@ -6,6 +6,46 @@
 
 Formato: data · o que mudou · porquê · IDs afectados.
 
+## 2026-09-05 — Verificação em produção da v0.22
+
+Sem alterações ao produto. Regista o que se confirmou depois de publicar, e duas
+armadilhas de processo que apareceram pelo caminho.
+
+**Worker `68fcc036` activo, 100% do tráfego.** Confirmado no painel, não
+assumido. `/noticias` traz 12 notícias do Município e `/agenda` responde — o
+código novo não partiu nada.
+
+**O editor do Worker abre preso a uma versão antiga.** A Cloudflare só deixa
+editar a mais recente e mostra um selector no topo: é preciso escolher a versão
+marcada *Latest* e carregar em **Apply** antes de colar. Não é um detalhe de
+interface — **publicar a partir de uma versão antiga faria voltar as variáveis
+dessa altura**, e neste caso teria apagado o `CALENDARIO_ICS` ligado na
+véspera, deixando a agenda sem os eventos do Google, em silêncio. Escrito na
+regra 3 do `LEIA-PRIMEIRO.md`. `R-16`.
+
+**O ramo `desenho` fica para trás sempre que um commit só de documentação vai
+directo ao `main`,** e o `git checkout desenho` passa a recusar-se com uma
+mensagem sobre ficheiros sobrescritos que não explica nada. A 4/9 isto pôs um
+commit no ramo errado. A correcção é uma linha antes de começar —
+`git branch -f desenho main` — e passa a estar escrita no `LEIA-PRIMEIRO.md`.
+**É a lacuna do ADR-018:** aquele ADR descreve o caminho de ida e não diz nada
+sobre manter o ramo alinhado.
+
+**O evento de teste do calendário foi apagado**, e a limpeza foi verificada de
+outra rede para escapar à cache de seis horas do `/agenda`: zero eventos com
+`fonte: agenda`, sete eventos reais da Câmara. Fica provado que o leitor de
+calendário funciona nos dois sentidos — o que se acrescenta aparece, o que se
+apaga desaparece. **E fica a medida do que custou:** um único evento semanal de
+teste desdobrou-se em **58 entradas até Outubro de 2027** e ocupou 88% da
+agenda de um portal já publicado. Um evento de teste num calendário que se
+repete não é um item — é uma inundação.
+
+**T-24 nova.** O campo da gestão chama-se «Onde é» e o gerador de cartas tem a
+pergunta «6. Onde é o problema?». O próprio autor do projecto leu «Onde é» e foi
+ao formulário errado. Se lhe aconteceu a ele, acontece a qualquer co-editor da
+T-07 — que é precisamente quem não pode tropeçar. Passa a «De que terra é este
+aviso» quando houver outra ida ao Worker.
+
 ## 2026-09-04 — v0.22 · **O aviso passa a dizer de que terra é**
 
 Fecha a **T-20** e a **T-23**. É o que faltava para o âmbito do concelho deixar

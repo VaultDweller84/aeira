@@ -57,6 +57,7 @@ portal promete nove freguesias e serve uma** — e o anúncio (T-09) não se faz
 |---|---|---|---|---|---|---|---|
 | T-20 | **Localidade no aviso** (E-02, página de gestão e portal) | 1800 | 3 | 0,9 | 3 | **1620** | ✔ 4/9 |
 | T-23 | **Filtro de aldeia nos avisos, com a escolha guardada** (D-024) | 1800 | 2 | 0,8 | 2 | **1440** | ✔ 4/9 |
+| T-24 | Rótulo «Onde é» na gestão → «De que terra é este aviso» | 5 | 2 | 0,9 | 0,25 | **36** | por fazer |
 | T-21 | Junta certa por localidade na carta (D-019, D-021) | 1800 | 2 | 0,8 | 4 | **720** | por fazer |
 | T-22 | Romarias e contactos das outras oito freguesias | 1800 | 2 | 0,7 | 8 | **315** | por fazer |
 
@@ -68,6 +69,13 @@ freguesias é pior do que não haver aviso nenhum: «corte de água» é informa
 em João Pires e é alarme falso na Meimoa.
 
 **A T-22 é investigação, não código** — e a fonte oficial está velha. Ver R-20.
+
+**A T-24 vale mais do que o RICE lhe dá.** O campo novo da gestão chama-se
+«Onde é», e o gerador de cartas do portal tem a pergunta «6. Onde é o
+problema?». A 5/9/2026 o próprio autor do projecto leu «Onde é» e foi ao
+formulário errado. Se lhe aconteceu a ele, acontece a qualquer co-editor da
+T-07 — que é precisamente quem não pode tropeçar. Alcance baixo (só quem
+publica), impacto alto para essas poucas pessoas.
 
 **A T-23 só se faz depois da T-20**, e as duas juntas são o que torna o âmbito
 do concelho verdadeiro em vez de anunciado. O filtro vive **no cimo dos avisos,
